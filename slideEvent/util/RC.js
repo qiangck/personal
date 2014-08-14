@@ -57,7 +57,7 @@ define(function (){
                 if(that.isSlide = true) {
                     // 判断是否是触发slide的touch
                     [].slice.apply(touches).forEach(function(touch, index) {
-                        if(touch.indentifier == that.touchIdentifier && typeof that.opt.slideMove === 'function') {
+                        if(touch.identifier == that.touchIdentifier && typeof that.opt.slideMove === 'function') {
                             that.opt.slideMove(touch);
                         }
                     });
