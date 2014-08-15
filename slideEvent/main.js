@@ -80,13 +80,13 @@ require(['util/RC'], function (RC){
         }
         var length = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
         angle = 360 - angle;
-        showInfo(angle, length);
+        showInfo2(angle, length);
         showArrow(angle, length);
     }
     function showInfo(htmlStr) {
         document.querySelector('.info').innerHTML += (htmlStr + '<br>');
     }
-    function showInfo(angle, length) {
+    function showInfo2(angle, length) {
         document.querySelector('.info').innerHTML += ('当前角度: ' + angle + '<br>当前距离:' + length);
     }
     function getAngle(x1, y1, x2, y2) {
