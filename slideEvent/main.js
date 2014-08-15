@@ -9,6 +9,7 @@ require(['util/RC'], function (RC){
         slideBegin: function(touch){
             startPoint = touch;
 //            console.log('slide start');
+            showInfo('slide start');
             try {
                 showArrow(null, null, touch);
             } catch(e) {
@@ -17,6 +18,7 @@ require(['util/RC'], function (RC){
         },
         slideMove: function(touch) {
 //            console.log('slide move');
+            showInfo('slide move');
             endPoint = touch;
             try {
                 calculate(startPoint, endPoint);
@@ -27,9 +29,9 @@ require(['util/RC'], function (RC){
         slideEnd: function(touch){
 //            console.log('slide end');
 //            console.log('go');
+            showInfo('slide end');
             startPoint = null;
             endPoint = null;
-            alert("slide end");
             try {
                 hideArrow();
             } catch(e) {
@@ -79,9 +81,11 @@ require(['util/RC'], function (RC){
         showInfo(angle, length);
         showArrow(angle, length);
     }
-
+    function showInfo(htmlStr) {
+        document.querySelector('.info').innerHTML += htmlStr;
+    }
     function showInfo(angle, length) {
-        document.querySelector('.info').innerHTML = ('当前角度: ' + angle + '<br>当前距离:' + length);
+        document.querySelector('.info').innerHTML += ('当前角度: ' + angle + '<br>当前距离:' + length);
     }
     function getAngle(x1, y1, x2, y2) {
         // 直角的边长
