@@ -55,7 +55,7 @@ define(function (){
             });
             obj.addEventListener(RC.EVENT.TOUCH_MOVE, function(e) {
                 e.preventDefault();
-                var touches = (e.targetTouches.length) ? e.targetTouches[0] : e.changedTouches[0];
+                var touches = (e.targetTouches.length) ? e.targetTouches : e.changedTouches;
                 if(that.isSlide = true) {
                     // 判断是否是触发slide的touch
                     [].slice.apply(touches).forEach(function(touch, index) {
