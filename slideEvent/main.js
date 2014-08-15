@@ -101,6 +101,10 @@ require(['util/RC'], function (RC){
         var radina = Math.acos(cos);
         // 角度
         var angle =  180 / (Math.PI / radina);
+        showInfo('z' + z);
+        showInfo('cos' + cos);
+        showInfo('radina' + radina);
+        showInfo('angle' + angle);
         return angle;
      }
 });
