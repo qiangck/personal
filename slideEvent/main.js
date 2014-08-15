@@ -21,6 +21,7 @@ require(['util/RC'], function (RC){
             console.log('go');
             startPoint = null;
             endPoint = null;
+            alert("slide end");
             hideArrow();
         }
     });
