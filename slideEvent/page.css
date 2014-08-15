@@ -34,8 +34,8 @@ em,i{ font-style:normal;}
     position:absolute;
     background: url("images/image.jpeg") center right no-repeat #000;
     background-size: contain;
-    transform:rotate(0deg);
+    -webkit-transform:rotate(0deg);
     height:50px;
-    transform-origin:left  center;
+    -webkit-transform-origin:left  center;
 
 }

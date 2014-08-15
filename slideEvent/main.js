@@ -44,7 +44,7 @@ require(['util/RC'], function (RC){
 
     function hideArrow() {
         document.querySelector('.arrow').style.width = 0;
-        document.querySelector('.arrow').style.transform = 'rotate(0deg)';
+        document.querySelector('.arrow').style['-webkit-transform'] = 'rotate(0deg)';
     }
 
     function showArrow(angle,length, point) {
@@ -54,7 +54,7 @@ require(['util/RC'], function (RC){
         } else {
 
             document.querySelector('.arrow').style.width = length + 'px';
-            document.querySelector('.arrow').style.transform = 'rotate(' + angle + 'deg)';
+            document.querySelector('.arrow').style['-webkit-transform'] = 'rotate(' + angle + 'deg)';
         }
     }
 
