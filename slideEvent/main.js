@@ -82,7 +82,7 @@ require(['util/RC'], function (RC){
         document.querySelector('.info').innerHTML += (htmlStr + '<br>');
     }
     function showInfo2(angle, length) {
-        document.querySelector('.info').innerHTML += ('当前角度: ' + angle + '<br>当前距离:' + length + '<br>');
+        document.querySelector('.info').innerHTML = ('当前角度: ' + angle + '<br>当前距离:' + length + '<br>');
     }
     function getAngle(x1, y1, x2, y2) {
         // 直角的边长
