@@ -29,3 +29,13 @@ em,i{ font-style:normal;}
     height:150px;
     background-color:red;
 }
+
+.arrow{
+    position:absolute;
+    background: url("images/image.jpeg") center right no-repeat #000;
+    background-size: contain;
+    transform:rotate(0deg);
+    height:50px;
+    transform-origin:left  center;
+
+}
