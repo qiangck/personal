@@ -10,6 +10,9 @@ require(['util/RC'], function (RC){
             startPoint = touch;
 //            console.log('slide start');
             showInfo('slide start');
+            showInfo('pageX' + touch.pageX);
+            showInfo('clientX' + touch.clientX);
+            showInfo('identifier' + touch.identifier);
             try {
                 showArrow(null, null, touch);
             } catch(e) {
@@ -18,7 +21,6 @@ require(['util/RC'], function (RC){
         },
         slideMove: function(touch) {
 //            console.log('slide move');
-            showInfo('slide move');
             endPoint = touch;
             try {
                 calculate(startPoint, endPoint);
@@ -82,7 +84,7 @@ require(['util/RC'], function (RC){
         showArrow(angle, length);
     }
     function showInfo(htmlStr) {
-        document.querySelector('.info').innerHTML += htmlStr;
+        document.querySelector('.info').innerHTML += (htmlStr + '<br>');
     }
     function showInfo(angle, length) {
         document.querySelector('.info').innerHTML += ('当前角度: ' + angle + '<br>当前距离:' + length);
