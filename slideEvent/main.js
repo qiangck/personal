@@ -87,12 +87,18 @@ require(['util/RC'], function (RC){
         document.querySelector('.info').innerHTML += (htmlStr + '<br>');
     }
     function showInfo2(angle, length) {
-        document.querySelector('.info').innerHTML += ('当前角度: ' + angle + '<br>当前距离:' + length);
+        document.querySelector('.info').innerHTML += ('当前角度: ' + angle + '<br>当前距离:' + length + '<br>');
     }
     function getAngle(x1, y1, x2, y2) {
         // 直角的边长
         var x = Math.abs(x1 - x2);
         var y = Math.abs(y1 - y2);
+        showInfo('x1' + x1);
+        showInfo('x2' + x2);
+        showInfo('x' + x);
+        showInfo('y1' + y1);
+        showInfo('y2' + y2);
+        showInfo('y' + y);
         // 斜边长
         var z = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
         // 余弦
@@ -101,10 +107,6 @@ require(['util/RC'], function (RC){
         var radina = Math.acos(cos);
         // 角度
         var angle =  180 / (Math.PI / radina);
-        showInfo('z' + z);
-        showInfo('cos' + cos);
-        showInfo('radina' + radina);
-        showInfo('angle' + angle);
         return angle;
      }
 });
