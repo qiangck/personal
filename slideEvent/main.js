@@ -8,21 +8,33 @@ require(['util/RC'], function (RC){
         elemQuery: 'body',
         slideBegin: function(touch){
             startPoint = touch;
-            console.log('slide start');
-            showArrow(null, null, touch);
+//            console.log('slide start');
+            try {
+                showArrow(null, null, touch);
+            } catch(e) {
+                alert(e.message);
+            }
         },
         slideMove: function(touch) {
-            console.log('slide move');
+//            console.log('slide move');
             endPoint = touch;
-            calculate(startPoint, endPoint);
+            try {
+                calculate(startPoint, endPoint);
+            } catch(e) {
+                alert(e.message);
+            }
         },
         slideEnd: function(touch){
-            console.log('slide end');
-            console.log('go');
+//            console.log('slide end');
+//            console.log('go');
             startPoint = null;
             endPoint = null;
             alert("slide end");
-            hideArrow();
+            try {
+                hideArrow();
+            } catch(e) {
+                alert(e.message);
+            }
         }
     });
 
