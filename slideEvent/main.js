@@ -9,10 +9,6 @@ require(['util/RC'], function (RC){
         slideBegin: function(touch){
             startPoint = touch;
 //            console.log('slide start');
-            showInfo('slide start');
-            showInfo('pageX' + touch.pageX);
-            showInfo('clientX' + touch.clientX);
-            showInfo('identifier' + touch.identifier);
             try {
                 showArrow(null, null, touch);
             } catch(e) {
@@ -31,7 +27,6 @@ require(['util/RC'], function (RC){
         slideEnd: function(touch){
 //            console.log('slide end');
 //            console.log('go');
-            showInfo('slide end');
             startPoint = null;
             endPoint = null;
             try {
@@ -93,12 +88,6 @@ require(['util/RC'], function (RC){
         // 直角的边长
         var x = Math.abs(x1 - x2);
         var y = Math.abs(y1 - y2);
-        showInfo('x1' + x1);
-        showInfo('x2' + x2);
-        showInfo('x' + x);
-        showInfo('y1' + y1);
-        showInfo('y2' + y2);
-        showInfo('y' + y);
         // 斜边长
         var z = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
         // 余弦
