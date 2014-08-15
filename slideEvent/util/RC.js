@@ -33,6 +33,7 @@ define(function (){
         var elems = [].slice.call(document.querySelectorAll(elemQuery));
         elems.forEach(function(obj, index) {
             obj.addEventListener(RC.EVENT.TOUCH_START, function(e) {
+                e.preventDefault();
                 var touches = e.touches;
                 if(that.touchIdentifier == null) {
                     that.touchIdentifier = touches[0].identifier;
@@ -53,6 +54,7 @@ define(function (){
                 }
             });
             obj.addEventListener(RC.EVENT.TOUCH_MOVE, function(e) {
+                e.preventDefault();
                 var touches = e.touches;
                 if(that.isSlide = true) {
                     // 判断是否是触发slide的touch
@@ -64,6 +66,7 @@ define(function (){
                 }
             });
             obj.addEventListener(RC.EVENT.TOUCH_END, function(e) {
+                e.preventDefault();
                 var touches = e.changedTouches;
                 if(that.isSlide === true) {
                     // 判断是否是触发slide的touch
