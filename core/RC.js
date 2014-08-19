@@ -49,18 +49,18 @@ define(function (){
                     that.isSlide = true;
                     that.currentTarget = obj;
                     if(typeof that.opt.slideBegin === 'function') {
-                        that.opt.slideBegin(touches[0]);
+                        that.opt.slideBegin(RC.merge({}, touches[0]));
                     }
                 }
             });
             obj.addEventListener(RC.EVENT.TOUCH_MOVE, function(e) {
                 e.preventDefault();
-                var touches = e.touches;
+                var touches = (e.targetTouches.length) ? e.targetTouches : e.changedTouches;
                 if(that.isSlide = true) {
                     // 判断是否是触发slide的touch
                     [].slice.apply(touches).forEach(function(touch, index) {
                         if(touch.identifier == that.touchIdentifier && typeof that.opt.slideMove === 'function') {
-                            that.opt.slideMove(touch);
+                            that.opt.slideMove(RC.merge({}, touch));
                         }
                     });
                 }
@@ -76,7 +76,7 @@ define(function (){
                             that.currentTarget = null;
                             that.touchIdentifier = null;
                             if(typeof that.opt.slideEnd === 'function') {
-                                that.opt.slideEnd(touch);
+                                that.opt.slideEnd(RC.merge({}, touch));
                             }
                         }
                     });
