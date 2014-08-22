@@ -1,0 +1,64 @@
+@charset "utf-8";
+/* CSS Document */
+body{ padding:0; margin:0;  font:normal 12px/190% "宋体"; color:#333;text-align:center; background:#ededed;}
+h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,button,input,textarea,th,td{margin:0;padding:0;}
+h1,h2,h3{font-family: "微软雅黑";}
+div{margin:0 auto;text-align:left;font:normal 12px/190% "宋体";}
+li,p{text-align:left;font:normal 12px/190% "宋体";}
+a:link,a:visited{color:#333; text-decoration:none;}
+a:hover{color:#333; text-decoration:underline;}
+img{ border:none;}
+ol,ul,li{list-style:none;}
+em,i{ font-style:normal;}
+/* clearfix */
+.clearfix:before, .clearfix:after {content:"";display:table;}
+.clearfix:after{clear:both;overflow:hidden;}
+.clearfix{zoom:1;}
+
+.container,
+.img-wrap{
+    width: 302px;
+    height: 302px;
+    border: 1px solid #555;
+    font: 14px Arial;
+
+    /* flexbox setup */
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
+
+    display: flex;
+    flex-direction: column;
+    border: 1px solid red;
+}
+.container .row,
+.img-wrap .row{
+    -webkit-flex: auto;
+    flex: auto;
+    display:flex;
+    display:-webkit-flex;
+    -webkit-transition: width 0.7s ease-out;
+    transition: width 0.7s ease-out;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    width:100%;
+}
+.container .row:nth-child(2),
+.img-wrap .row:nth-child(2){
+    border-top: 1px solid red;
+    border-bottom: 1px solid red;
+}
+.container .row .item,
+.img-wrap .row .item{
+    width:100%;
+    -webkit-flex: auto;
+    flex: auto;
+    background-color:#fff;
+}
+.container .row .item:nth-child(2),
+.img-wrap .row .item:nth-child(2){
+    border-left: 1px solid red;
+    border-right: 1px solid red;
+}
+.img-wrap .row .item img{
+    width: 100%;
+}
