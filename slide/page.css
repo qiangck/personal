@@ -29,6 +29,7 @@ em,i{ font-style:normal;}
     height:150px;
     background-color:red;
 }
+.info{display:inline-block}
 
 .arrow{
     position:absolute;
@@ -38,4 +39,10 @@ em,i{ font-style:normal;}
     height:50px;
     -webkit-transform-origin:left  center;
 
+}
+
+#gameScreen{
+    position:absolute;
+    top:0;
+    left:0;
 }
