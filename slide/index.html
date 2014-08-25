@@ -9,6 +9,14 @@
     <div class="info"></div>
     <div class="arrow"></div>
     <canvas id="gameScreen"></canvas>
-    <script type="application/javascript" src="require.js" data-main="main"></script>
+    <script type="application/javascript" src="require.js" ></script>
+    <script>
+        require.config({
+            urlArgs: "bust=" + (new Date()).getTime()
+        });
+        require( ["main"], function(someModule,    myModule) {
+
+        });
+    </script>
 </body>
 </html>
