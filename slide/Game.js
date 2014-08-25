@@ -2,6 +2,10 @@
  * Created by rechie on 14-8-21.
  */
 define( function() {
+    var bgImg = new Image();
+    bgImg.src = 'images/tfz.jpg';
+    var arrowImg = new Image();
+    arrowImg.src = 'images/image.jpeg';
     var Game = function(id){
         this.canvasElem = document.getElementById('gameScreen');
         this.ctx = this.canvasElem.getContext('2d');
@@ -12,8 +16,6 @@ define( function() {
         this.draw();
     };
     Game.prototype.draw = function () {
-        var bgImg = new Image();
-        bgImg.src = 'images/tfz.jpg';
         var imgScale = 288 / 455;
         var winScale = this.ctx.width / this.ctx.height;
         var nowWidth, nowHeigh;
@@ -24,6 +26,7 @@ define( function() {
             nowWidth = this.ctx.width;
             nowHeigh = this.ctx.width / imgScale;
         }
+        this.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
         this.ctx.drawImage(bgImg, 0, 0, nowWidth, nowHeigh);
     };
     Game.prototype.drawArrow = function(angle, length, x, y) {
@@ -31,9 +34,6 @@ define( function() {
         if(length == 0) {
             return;
         }
-        var arrowImg = new Image();
-        arrowImg.src = 'images/image.jpeg';
-
 
         var rx = x, ry = y;
         var px = x+length/2, py = y;
@@ -45,12 +45,6 @@ define( function() {
         this.ctx.rotate(angle * Math.PI/180);
         this.ctx.drawImage(arrowImg, 0, -10, length, 20);
         this.ctx.translate(-dx, -dy);
-
-
-//        ctx.translate(x, y);
-//        this.ctx.rotate(angle*Math.PI/180);
-//        ctx.translate(xpos, ypos);
-//        this.ctx.drawImage(arrowImg, x, y, length, 20);
         this.ctx.restore();
     };
 
