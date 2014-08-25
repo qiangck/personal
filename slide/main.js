@@ -1,7 +1,7 @@
 /**
  * Created by rechie on 14-8-7.
  */
-define(['../core/RC', '../util/MathUtil', '../util/ElementUtil', 'Game'], function (RC, MathUtil, ElemUtil, Game){
+define(['../core/RC', '../util/MathUtil', '../util/ElemUtil', 'Game'], function (RC, MathUtil, ElemUtil, Game){
     var game;
     var startPoint = null;
     var endPoint = null;
@@ -39,9 +39,9 @@ define(['../core/RC', '../util/MathUtil', '../util/ElementUtil', 'Game'], functi
 
     init();
     function showInfo(htmlStr) {
-        ElementUtil.query('.info').innerHTML += (htmlStr + '<br>');
+        ElemUtil.query('.info').innerHTML += (htmlStr + '<br>');
     }
     function showInfo2(angle, length) {
-        ElementUtil.query('.info').innerHTML = ('当前角度: ' + angle + '<br>当前距离:' + length + '<br>');
+        ElemUtil.query('.info').innerHTML = ('当前角度: ' + angle + '<br>当前距离:' + length + '<br>');
     }
 });
