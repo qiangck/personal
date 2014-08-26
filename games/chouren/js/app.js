@@ -121,49 +121,8 @@ $(document).ready(function() {
         game.start();
         var slide = new RC.Slide({ 
             elemQuery: 'body',
-            slideBegin: function(touch){
-                try{
-                    startPoint = touch;
-                    var element = document.elementFromPoint(touch.pageX, touch.pageY);
-                    if($(element).attr('id') === 'userWrap') {
-                        if(bOver === false) {
-                            console.log('start shake');
-                            console.log(element);
-                            bOver = true;
-                            index ++ ;
-                            Game.View.setScore(index);
-                            console.log('shake time: ' + index);
-                            animate1(0, function(){
-                            });
-                        }
-                    } else {
-                        bOver = false;
-                    }
-                } catch(e) {
-                    alert('begin error: ' + e.message);
-                }
-            },
-            slideMove: function(touch) {
-                try{
-                    var element = document.elementFromPoint(touch.pageX, touch.pageY);
-                    if($(element).attr('id') === 'userWrap') {
-                        if(bOver === false) {
-                            console.log('move shake');
-                            console.log(element);
-                            bOver = true;
-                            index ++ ;
-                            Game.View.setScore(index);
-                            console.log('shake time: ' + index);
-                            animate1(0, function(){
-                            });
-                        }
-                    } else {
-                        bOver = false;
-                    }
-                } catch(e) {
-                    alert('move error: ' + e.message);
-                }
-            },
+            slideBegin: resolvePosition,
+            slideMove: resolvePosition,
             slideEnd: function(touch){
                 try{
                     bOver = false;
@@ -172,6 +131,20 @@ $(document).ready(function() {
                 }
             }
         });
+    }
+
+    function resolvePosition(touch) {
+        var element = document.elementFromPoint(touch.pageX, touch.pageY);
+        if($(element).attr('id') === 'userWrap' || $(element).parents('#userWrap').length > 0) {
+            if(bOver === false) {
+                bOver = true;
+                index ++ ;
+                Game.View.setScore(index);
+                animate1(0, function(){});
+            }
+        } else {
+            bOver = false;
+        }
     }
 
     var timeId = null;
@@ -209,4 +182,55 @@ $(document).ready(function() {
             timeId = null
         }
     }
+});
+
+// 微信分享代码
+// 所有功能必须包含在 WeixinApi.ready 中进行
+WeixinApi.ready(function(Api){
+
+    // 微信分享的数据
+    var wxData = {
+        "imgUrl":'http://182.92.186.42/personal/slide/images/tfz.jpg',
+        "link":'http://182.92.186.42/personal/slide/images/tfz.jpg',
+        "desc":'大家好，我是rechie，测试微信分享功能',
+        "title":"大家好，我是rechie"
+    };
+
+    // 分享的回调
+    var wxCallbacks = {
+        // 分享操作开始之前
+        ready:function () {
+            $('.weixinState').html('ready');
+            // 你可以在这里对分享的数据进行重组
+        },
+        // 分享被用户自动取消
+        cancel:function (resp) {
+            $('.weixinState').html('cancel');
+            // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
+        },
+        // 分享失败了
+        fail:function (resp) {
+            $('.weixinState').html('fail');
+            // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
+        },
+        // 分享成功
+        confirm:function (resp) {
+            $('.weixinState').html('confirm');
+            // 分享成功了，我们是不是可以做一些分享统计呢？
+        },
+        // 整个分享过程结束
+        all:function (resp) {
+            $('.weixinState').html('end');
+            // 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
+        }
+    };
+
+    // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+    Api.shareToFriend(wxData, wxCallbacks);
+
+    // 点击分享到朋友圈，会执行下面这个代码
+    Api.shareToTimeline(wxData, wxCallbacks);
+
+    // 点击分享到腾讯微博，会执行下面这个代码
+    Api.shareToWeibo(wxData, wxCallbacks);
 });

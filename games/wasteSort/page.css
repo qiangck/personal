@@ -55,7 +55,7 @@ h2, b, p{margin:0;}
 
 
 /*item show keyframe*/
-.itemAnimation{animation: animationFrames ease 0.6s;animation-iteration-count: 1;transform-origin: ;-webkit-animation: animationFrames ease 0.6s;-webkit-animation-iteration-count: 1;-webkit-transform-origin: ;-moz-animation: animationFrames ease 0.6s;-moz-animation-iteration-count: 1;-moz-transform-origin: ;-o-animation: animationFrames ease 0.6s;-o-animation-iteration-count: 1;-o-transform-origin: ;-ms-animation: animationFrames ease 0.6s;-ms-animation-iteration-count: 1;-ms-transform-origin: ;}
+.itemAnimation{animation: animationFrames ease 0.6s;animation-iteration-count: 1;-webkit-animation: animationFrames ease 0.6s;-webkit-animation-iteration-count: 1;-moz-animation: animationFrames ease 0.6s;-moz-animation-iteration-count: 1;-o-animation: animationFrames ease 0.6s;-o-animation-iteration-count: 1;-ms-animation: animationFrames ease 0.6s;-ms-animation-iteration-count: 1;}
 @keyframes animationFrames{
   0% {left:0px;top:0px;opacity:1;transform:  rotate(0deg) scaleX(0) scaleY(0) ;}
   101% {left:0px;top:0px;opacity:1;transform:  rotate(0deg) scaleX(1) scaleY(1) ;}
