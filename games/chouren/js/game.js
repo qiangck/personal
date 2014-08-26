@@ -129,7 +129,7 @@ Game.View = {
 	scoreTimeId : null,
 	setTimer: function(current, sum) {
 		var remain = sum - current;
-		$('#timer .numb').html('00:' + (remain<10 ? ('0' + remain ): remain));
+		$('#timer').html('00:' + (remain<10 ? ('0' + remain ): remain));
 		$('#gameScreen .bottom .progress-wrap .progress').width(Math.floor(remain/sum*100) + '%');
 	},
 	setHitCombo: function(hitCombo) {
@@ -166,7 +166,7 @@ Game.View = {
 		$('.failed').hide();
 	},
 	reset: function() {
-		$('#timer .numb').html('01:00');
+		$('#timer').html('01:00');
 	}
 };
 

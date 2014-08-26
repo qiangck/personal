@@ -131,6 +131,7 @@ $(document).ready(function() {
                             console.log(element);
                             bOver = true;
                             index ++ ;
+                            Game.View.setScore(index);
                             console.log('shake time: ' + index);
                             animate1(0, function(){
                             });
@@ -151,6 +152,7 @@ $(document).ready(function() {
                             console.log(element);
                             bOver = true;
                             index ++ ;
+                            Game.View.setScore(index);
                             console.log('shake time: ' + index);
                             animate1(0, function(){
                             });

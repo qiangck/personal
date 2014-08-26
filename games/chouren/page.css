@@ -25,6 +25,7 @@ h2, b, p{margin:0;}
 	height:400px;
 	position:relative;
 	margin:0 auto;
+	background-color: red;
 }
 #userWrap .user{
 	background:url(http://www.zhouwenbin.com/wp-content/uploads/2011/01/3.jpg); 
