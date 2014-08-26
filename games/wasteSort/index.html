@@ -1,0 +1,122 @@
+
+
+<!DOCTYPE>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=GB2312">
+    <meta http-equiv="Content-Language" content="utf-8" />
+    <meta content="all" name="robots" />
+    <title>互动游戏：垃圾分类大师手机版--环保--人民网</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="filetype" content="1" />
+    <meta name="publishedtype" content="1" />
+    <meta name="pagetype" content="2" />
+    <meta name="catalogs" content="384189" />
+    <link href="page.css" type="text/css" rel="stylesheet" media="all" />
+    <meta name="viewport" content="user-scalable=no" />
+</head>
+
+<body ontouchmove="event.preventDefault()">
+<div class="container">
+    <div class="wrap">
+        <div id="gameIntro">
+            <div class="title">
+                <img src="images/title-bg.png" />
+            </div>
+            <div class="content">
+                <div class="weekRank">
+                    <div class="head">
+                        <div class="phone-hd">手机号</div>
+                        <div class="score-hd">得分</div>
+                    </div>
+                    <div class="list-wrap">
+                        <div class="list-container week-list1">
+                        </div>
+                        <div class="list-container week-list2">
+                        </div>
+                    </div>
+                </div>
+                <div class="help"></div>
+                <div class="totalRank">
+                    <div class="head">
+                        <div class="phone-hd">手机号</div>
+                        <div class="score-hd">得分</div>
+                    </div>
+                    <div class="list-wrap">
+                        <div class="list-container week-list1">
+                        </div>
+                        <div class="list-container week-list2">
+                        </div>
+                    </div>
+                </div>
+                <div id="play"><img src="images/play-btn.png"></div>
+            </div>
+            <div class="bottom">
+                <img src="images/logo.png" />
+            </div>
+        </div>
+        <div id="gameScreen">
+            <div class="bins">
+                <div class="recycled">
+                    <img src="images/blank.png" width="59" height="72" class="bin" data-category="recycled">
+                    <div class="scored"><img src="images/success.png" /></div>
+                    <div class="failed"><img src="images/error.png" /></div>
+                </div>
+                <div class="other">
+                    <img src="images/blank.png" width="59" height="72" class="bin" data-category="other">
+                    <div class="scored"><img src="images/success.png" /></div>
+                    <div class="failed"><img src="images/error.png" /></div>
+                </div>
+                <div class="harmful">
+                    <img src="images/blank.png" width="59" height="72" class="bin" data-category="harmful">
+                    <div class="scored"><img src="images/success.png" /></div>
+                    <div class="failed"><img src="images/error.png" /></div>
+                </div>
+                <div class="kitchen">
+                    <img src="images/blank.png" width="59" height="72" class="bin" data-category="kitchen">
+                    <div class="scored"><img src="images/success.png" /></div>
+                    <div class="failed"><img src="images/error.png" /></div>
+                </div>
+            </div>
+            <div class="rubbish-wrap clearfix">
+            </div>
+            <div class="bottom">
+                <img src="images/logo.png" class="logoImg">
+                <div id="timer"><span class="numb">01:00</span></div>
+                <div class="progress-wrap">
+                    <div class="progress">
+                        <img src="images/progress-on.png">
+                    </div>
+                </div>
+                <div id="hitCombo">0</div>
+                <div id="score">000</div>
+            </div>
+        </div>
+        <div id="result">
+            <div class="opacity"></div>
+            <div class="result-wrap">
+                <div class="content">
+                    <h2>您本次的成绩为：<b>80分</b></h2>
+                    <p>恭喜你成为垃圾分类初级学徒，继续加油吧~<br>精美奖品等你拿，分数越高挑战次数越多，中奖机会越大！
+                    </p>
+                </div>
+                <div class="replay">
+                    <img src="images/replay-btn.png" id="replay">
+                </div>
+                <form method="get">
+                    <div><label for="name">姓名:</label><input id="name" name="name" type="text" /></div><div><label for="tel">电话:</label><input id="tel" type="tel" name="tel" /></div><img id="submit" src="/img/MAIN/2014/04/114430/images/submit-btn.png">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/zepto.js"></script>
+<script type="text/javascript" src="js/zepto.dragdrop.js"></script>
+<script type="text/javascript" src="js/game.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/app.js" charset="utf-8"></script>
+</script>
+</body>
+
+</html>
