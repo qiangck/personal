@@ -5,7 +5,7 @@ define( function() {
     var bgImg = new Image();
     bgImg.src = 'images/tfz.jpg';
     var arrowImg = new Image();
-    arrowImg.src = 'images/image.jpeg';
+    arrowImg.src = 'images/arrow.png';
     var Game = function(id){
         this.canvasElem = document.getElementById('gameScreen');
         this.ctx = this.canvasElem.getContext('2d');
