@@ -1,0 +1,35 @@
+@charset "utf-8";
+@font-face {
+    font-family: "jiankatong";
+    src:url("jiankatong.TTF") format("truetype");/*non-IE*/
+}
+/* CSS Document */
+html, body{height:100%;overflow:hidden;padding:0;margin:0;background-color:#D5DCD4;}
+ol,ul,li{list-style:none;}
+em,i{ font-style:normal;}
+h2, b, p{margin:0;}
+/* clearfix */
+.clearfix:before, .clearfix:after {content:"";display:table;}
+.clearfix:after{clear:both;overflow:hidden;}
+.clearfix{zoom:1;}
+
+.fl{float:left;}
+.fr{float:right;}
+
+.container{top:50%;left:50%;position:relative;transform-origin:center center;width:320px;height:480px;}
+.wrap{top:-50%;left:-50%;position:relative;width:320px;height:480px;background:url(images/bg.jpg) center no-repeat;position:relative;}
+#gameIntro, #gameScreen{position:absolute;top:0;left:0;width:320px;height:480px;}
+#gameScreen{display:none;}
+#userWrap{
+	width:200px;
+	height:400px;
+	position:relative;
+	margin:0 auto;
+}
+#userWrap .user{
+	background:url(http://www.zhouwenbin.com/wp-content/uploads/2011/01/3.jpg); 
+	width:95px; 
+	height:95px;
+	position:absolute;
+	background-position: -5px -0px;
+}
