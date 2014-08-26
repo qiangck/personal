@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+body{ padding:0; margin:0;  font:normal 12px/190% "宋体"; color:#333;text-align:center; background:url(images/bg01.jpg) center 30px repeat #ECECEC;}
+h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,button,input,textarea,th,td{margin:0;padding:0;}
+h1,h2,h3{font-family: "微软雅黑";}
+div{margin:0 auto;text-align:left;font:normal 12px/190% "宋体";}
+li,p{text-align:left;font:normal 12px/190% "宋体";}
+a:link,a:visited{color:#333; text-decoration:none;}
+a:hover{color:#333; text-decoration:underline;}
+img{ border:none;}
+ol,ul,li{list-style:none;}
+em,i{ font-style:normal;} 
+/* clearfix */
+.clearfix:before, .clearfix:after {content:"";display:table;}
+.clearfix:after{clear:both;overflow:hidden;}
+.clearfix{zoom:1;}
+
+.fl{float:left;}
+.fr{float:right;}
+.w980{width:980px;}
+.top01{background: url(images/top.jpg) repeat-x;height:30px;min-width:980px;}
+.top01 em{float: left;line-height: 30px;}
+.top01 i{float:right;line-height:30px;}

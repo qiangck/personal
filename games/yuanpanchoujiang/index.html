@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Language" content="utf-8" />
+        <meta content="all" name="robots" />
+        <title>
+            {TAG_14226_TAG}
+        </title>
+        <meta name="keywords" content="{TAG_59446_TAG}" />
+        <meta name="description" content="{TAG_59447_TAG}" />
+        <meta name="filetype" content="1" />
+        <meta name="publishedtype" content="1" />
+        <meta name="pagetype" content="2" />
+        <meta name="catalogs" content="{TAG_83943_TAG}" />
+        <meta name="viewport"content="target-densitydpi=device-dpi, width=device-width " />
+
+        <!-- 调用样式表 -->
+        <link rel="stylesheet" href="main.css" type="text/css" media="all" />
+    </head>
+    
+    <body>
+        <div class="container">
+            <div class="header">
+                <img src="images/top.jpg" />
+            </div>
+            <div id="wheelWrap">
+	            <div class="wheel">
+	                <!-- <img src="images/wheel.png" /> -->
+	                <img src="images/heart.png" class="heart"/>
+	                <img src="images/pointer.png" id="pointer" />
+	            </div>
+	            <div class="btn">
+	            	<img src="images/btn.png" id="RotateBtn" />
+	            </div>
+	            <div class="intro">
+	            	吃货指南答谢粉丝<br>
+					按下按钮，即刻领取代金券<br>
+					请各位亲牢记弹出的代金券号码，此券在<span>中酒网</span>使用，有效期至<span>2014年6月30日</span>止！<br>
+					<br>
+					<p>转发给朋友，一起来领券儿吧</p>
+	            </div>
+	        </div>
+	        <div id="Result">
+	        	<div><img src="images/top.jpg" /></div>
+	        	<div>
+	        		<img src="images/tip.jpg">
+	        		<span class="serial">asdfasdfasdfasdf</span>
+	        	</div>
+	        	<img src="images/close.png" class="close"/>
+	        </div>
+	        <div class="opacity"></div>
+        </div>
+        <script type="text/javascript" src="js/zepto.min.js"></script>
+        <script type="text/javascript">
+	        function setDegree($obj, deg) {   
+	        	deg = deg-45; 
+	        	$obj.css({
+	        		'transform':   'rotate(' + deg + 'deg)',
+	                '-moz-transform': 'rotate(' + deg + 'deg)',
+	                '-webkit-transform': 'rotate(' + deg + 'deg)',
+	                '-ms-transform': 'rotate(' + deg + 'deg)',
+	                '-o-transform':  'rotate(' + deg + 'deg)'    
+	    		});
+			} 
+			function rotate(offset) {     
+			    offset = (typeof offset == 'number') ? offset : 0; //0-4,代表需要停到的奖项,由后端传入
+			    var $tar = $('#pointer'), i, 
+			    	cnt = 100, //用做ratio的索引(10-29)
+			        total = 0,  //记录上一次的变化结果
+			        ratio = [], //存放角度的变化比例，制造快慢过渡效果
+			        amount = 18 - (0.45 * offset), //每次每多出45/200=0.225度,200次就多偏转45度
+			        result = "运气真好！请填写收件地址和联系方式，以便我们邮寄奖品。把你的好运也分享给朋友吧！"; //奖项名称用于显示,由后端传入
+			        ratio[1] = [0.2, 0.4, 0.6, 0.8, 1, 1, 1.2, 1.4, 1.6, 1.8];    
+			    	ratio[2] = [1.8, 1.6, 1.4, 1.2, 1, 1, 0.8, 0.6, 0.4, 0.2];     
+			    for (i = 0; i < 200; i++) {             //设计为200次50ms的间隔，10s出结果感觉比较好
+			        setTimeout(function() {     //计算每次偏转增量，对应阶段的增减比例最终造成快慢变化              
+			            var deg = amount * (ratio[String(cnt).substr(0, 1)][String(cnt).substr(1, 1)]);            
+			            setDegree($tar, deg + total); //改变偏转
+			            total += deg; //记录
+			            cnt++; //依据次数用作ratio的索引，这里用到了闭包不能使用i
+			        }, i * 50);    
+			    }
+			    setTimeout(function() {     
+			    	if(offset !== 0 ){
+				        $('#Result').show();
+				        $('.opacity').show();
+				        Flag = false;
+			    	}       
+			    }, 200 * 50 + 500);
+			} 
+			//绑定事件，点击指针开始
+			var Flag = false;
+			$(function() {   
+				$("#RotateBtn").click(function() {        
+			        if (!Flag) {            
+			        	Flag = true;
+			        	rotate(1);//0-3对应的奖项从低到高
+			        }    
+			    });
+			});
+
+			$('.close').bind('click', function() {
+				        $('#Result').hide();
+				        $('.opacity').hide();
+			});
+        </script>
+        <script src="/css/2010tianrun/webdig_test.js" language="javascript" type="text/javascript">
+        </script>
+    </body>
+
+</html>
