@@ -192,8 +192,8 @@ WeixinApi.ready(function(Api){
     var wxData = {
         "imgUrl":'http://182.92.186.42/personal/slide/images/tfz.jpg',
         "link":'http://182.92.186.42/personal/slide/images/tfz.jpg',
-        "desc":'大家好，我是rechie，测试微信分享功能',
-        "title":"大家好，我是rechie"
+        "desc":'\u5927\u5bb6\u597d\uff0c\u6211\u662frechie\uff0c\u6d4b\u8bd5\u5fae\u4fe1\u5206\u4eab\u529f\u80fd',
+        "title":"\u5927\u5bb6\u597d\uff0c\u6211\u662frechie"
     };
 
     // 分享的回调
