@@ -3,55 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>AlloyPhoto Demo1</title>
-    <style type="text/css">
-        .wrap{
-            position:relative;
-            width:500px;
-            height:500px;
-        }
-        .zIndex1{position:absolute;z-index:1;}
-        .zIndex2{position:absolute;z-index:2;}
-        .zIndex3{position:absolute;z-index:3;}
-        .zIndex4{position:absolute;z-index:4;}
-        .zIndex5{position:absolute;z-index:5;}
-        .lian{
-            left: 100px;
-            top: 100px;
-        }
-        .toufahou{
-            left: 160px;
-            top: 277px;
-        }
-        .toufaqian{
-            left: 90px;
-            top: 52px;
-        }
-        .bizi{
-            left: 253px;
-            top: 208px;
-        }
-        .maozi{
-            left: 93px;
-            top: 10px;
-        }
-        .meimao{
-            left: 191px;
-            top: 214px;
-        }
-        .tezheng{
-            left: 121px;
-            top: 149px;
-        }
-        .yanjing{
-            left: 170px;
-            top: 233px;
-        }
-        .zui{
-            left: 212px;
-            top: 301px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="page.css">
     <script type="text/javascript" src="assets/js/alloyimage.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -65,6 +20,7 @@
     <img src="assets/images/TYyanjing0.png" class="yanjing zIndex3" />
     <img src="assets/images/TYzui0.png" class="zui zIndex3">
 </div>
+<canvas id="imageScreen"></canvas>
 <script type="text/javascript">
     var pics = document.getElementsByTagName("img");
     var pics = [

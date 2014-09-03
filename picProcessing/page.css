@@ -1,0 +1,71 @@
+
+body{
+    margin:0;
+    padding:0;
+    width:640px;
+    height:960px;
+    -webkit-transform-origin:0 0;
+    -webkit-transform: scale(0.5, 0.5);
+}
+.wrap{
+    position:relative;
+    width:420px;
+    height:450px;
+    margin:0 auto;
+}
+.zIndex1{
+    position:absolute;
+    z-index:1;
+}
+.zIndex2{
+    position:absolute;
+    z-index:2;
+}
+.zIndex3{
+    position:absolute;
+    z-index:3;
+}
+.zIndex4{
+    position:absolute;
+    z-index:4;
+}
+.zIndex5{
+    position:absolute;
+    z-index:5;
+}
+.lian{
+    left: 20px;
+    top: 50px;
+}
+.toufahou{
+    left: 80px;
+    top: 227px;
+}
+.toufaqian{
+    left: 10px;
+    top: 2px;
+}
+.bizi{
+    left: 173px;
+    top: 157px;
+}
+.maozi{
+    left: 13px;
+    top: -40px;
+}
+.meimao{
+    left: 111px;
+    top: 164px;
+}
+.tezheng{
+    left: 41px;
+    top: 99px;
+}
+.yanjing{
+    left: 90px;
+    top: 183px;
+}
+.zui{
+    left: 132px;
+    top: 251px;
+}
