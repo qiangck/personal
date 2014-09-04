@@ -941,13 +941,12 @@ try {
 }("psLib"), function (e) {
     window[e].module("Filter.noise", function (e) {
         var t = {process: function (e, t) {
-            console.log(arguments);
             var n = parseInt(t[0]) || 100, r = e.data, i = e.width, s = e.height, o = n * 2 + 1;
             for (var u = 0; u < i; u++)for (var a = 0; a < s; a++) {
                 var f = a * i + u;
-                r[f * 4 + 0] += -33
-                r[f * 4 + 1] += -55
-                r[f * 4 + 2] += -66
+                r[f * 4 + 0] += window.color[0]-255;
+                r[f * 4 + 1] += window.color[1]-255;
+                r[f * 4 + 2] += window.color[2]-255;
 //                var list =[-100, -200, -10]
 //                for (var l = 0; l < 3; l++) {
 //                    r[f * 4 + l] += list[l-1]

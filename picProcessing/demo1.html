@@ -25,18 +25,16 @@
     var pics = document.getElementsByTagName("img");
     var pics = [
         {
-            elem: document.getElementById('lian'),
-            color: -99
+            elem: document.getElementById('lian')
         },
         {
-            elem: document.getElementById('toufahou'),
-            color: -99
+            elem: document.getElementById('toufahou')
         },
         {
-            elem: document.getElementById('toufaqian'),
-            color: -99
+            elem: document.getElementById('toufaqian')
         },
     ]
+    window.color = [199, 131, 136]
 
     for(var i = 0;i < pics.length;i ++){
         pics[i].elem.loadOnce(function(){
