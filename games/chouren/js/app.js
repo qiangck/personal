@@ -19,10 +19,6 @@ function resizeContainer() {
         'transform': 'scale(' + scale + ', ' + scale + ')',
     };
     $('.container').css(cssObj);
-    $('.wrap').css({
-        top: '-' + 50/scale + '%',
-        left: '-' + 50/scale + '%'
-    });
 }
 
 var frame1List = [{

@@ -4,7 +4,15 @@
     src:url("jiankatong.TTF") format("truetype");/*non-IE*/
 }
 /* CSS Document */
-html, body{height:100%;overflow:hidden;padding:0;margin:0;background-color:#D5DCD4;}
+html, body{height:100%;overflow:hidden;padding:0;margin:0;background-color:#fff;}
+body{
+    margin:0;
+    padding:0;
+    width:640px;
+    height:960px;
+    -webkit-transform-origin:0 0;
+    -webkit-transform: scale(0.5, 0.5);
+}
 ol,ul,li{list-style:none;}
 em,i{ font-style:normal;}
 h2, b, p{margin:0;}
@@ -16,21 +24,135 @@ h2, b, p{margin:0;}
 .fl{float:left;}
 .fr{float:right;}
 
-.container{top:50%;left:50%;position:relative;transform-origin:center center;width:320px;height:480px;}
-.wrap{top:-50%;left:-50%;position:relative;width:320px;height:480px;background:url(images/bg.jpg) center no-repeat;position:relative;}
-#gameIntro, #gameScreen{position:absolute;top:0;left:0;width:320px;height:480px;}
+.container{position:relative;transform-origin:center center;width:640px;height:960px;}
+.wrap{position:relative;width:640px;height:960px;background:#FFF;position:relative;}
+#gameIntro, #gameScreen{position:absolute;top:0;left:0;width:640px;height:960px;}
 #gameScreen{display:none;}
 #userWrap{
-	width:200px;
-	height:400px;
-	position:relative;
-	margin:0 auto;
-	background-color: red;
+    width:200px;
+    height:400px;
+    position:relative;
+    margin:0 auto;
+    background-color: red;
 }
 #userWrap .user{
-	background:url(http://www.zhouwenbin.com/wp-content/uploads/2011/01/3.jpg); 
-	width:95px; 
-	height:95px;
-	position:absolute;
-	background-position: -5px -0px;
+    background:url(http://www.zhouwenbin.com/wp-content/uploads/2011/01/3.jpg);
+    width:95px;
+    height:95px;
+    position:absolute;
+    background-position: -5px -0px;
+}
+
+
+.figure{
+    position:absolute;
+    width:640px;
+    height:600px;
+    top:280px;
+    left:0;
+}
+.zIndex1{
+    position:absolute;
+    z-index:1;
+}
+.zIndex2{
+    position:absolute;
+    z-index:12;
+}
+.zIndex3{
+    position:absolute;
+    z-index:13;
+}
+.zIndex4{
+    position:absolute;
+    z-index:14;
+}
+.zIndex5{
+    position:absolute;
+    z-index:15;
+}
+.lian{
+    left: 146px;
+    top: 68px;
+}
+.toufahou{
+    left: 81px;
+    top: 118px;
+}
+.toufaqian{
+    left: 47px;
+    top: -105px;
+}
+.bizi{
+    left: 281px;
+    top: 218px;
+}
+.maozi{
+    left: 13px;
+    top: -40px;
+}
+.meimao{
+    left: 218px;
+    top: 141px;
+}
+.tezheng{
+    left: 211px;
+    top: 176px;
+}
+.yanjing{
+    left: 224px;
+    top: 185px;
+}
+.zui{
+    left: 258px;
+    top: 286px;
+}
+
+.shenti{
+    position:absolute;
+    z-index:10;
+    left: 191px;
+    top:442px;
+}
+
+
+.title{
+    background:url("assets/images/title-bg.jpg") center no-repeat;
+    width:640px;
+    height:223px;
+    text-align:center;
+    margin-top:40px;
+}
+.title{
+    font-family: "黑体";
+}
+.title .touxian{
+    font-size:36px;
+    color:#000;
+    font-weight:normal;
+    line-height:68px;
+}
+.title .name{
+    font-size:60px;
+    color:#000;
+    font-weight:bold;line-height:60px;
+}
+.title .info{
+    font-size:40px;
+    color:#f40707;
+    font-weight:normal;
+    line-height:80px;
+}
+
+#play{
+    position:absolute;
+    bottom:35px;
+    left:190px;
+}
+
+.tips{
+    position:absolute;
+    left:6px;
+    top:388px;
+    z-index:20;
 }
