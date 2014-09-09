@@ -29,18 +29,12 @@ h2, b, p{margin:0;}
 #gameIntro, #gameScreen{position:absolute;top:0;left:0;width:640px;height:960px;}
 #gameScreen{display:none;}
 #userWrap{
-    width:200px;
+    width:640px;
     height:400px;
     position:relative;
     margin:0 auto;
-    background-color: red;
 }
 #userWrap .user{
-    background:url(http://www.zhouwenbin.com/wp-content/uploads/2011/01/3.jpg);
-    width:95px;
-    height:95px;
-    position:absolute;
-    background-position: -5px -0px;
 }
 
 
@@ -110,9 +104,9 @@ h2, b, p{margin:0;}
 
 .shenti{
     position:absolute;
-    z-index:10;
-    left: 191px;
-    top:442px;
+    z-index: 1;
+    left: 190px;
+    top: 442px;
 }
 
 
@@ -155,4 +149,26 @@ h2, b, p{margin:0;}
     left:6px;
     top:388px;
     z-index:20;
+}
+.copyright{
+    width: 640px;
+    position:absolute;
+    left:0;
+    bottom:0;
+    text-align:center;
+    font-size:24px;
+    color:#000;
+}
+
+/*game screen 游戏主界面*/
+#gameScreen .figure{-webkit-transform:scale(0.4);top: 156px;z-index: 2;}
+#gameScreen .gebo{
+    position:absolute;
+    top: -25px;
+    z-index: 1;
+    left: 158px;
+}
+#gameScreen .shenti{
+    top: 394px;
+    left: -6px;
 }

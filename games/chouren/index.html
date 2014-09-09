@@ -23,10 +23,9 @@
             </div>
             <div class="figure">
                 <img src="assets/images/lian/TYlian0.png" class="lian zIndex2" id="lian" />
-                <img src="assets/images/toufahou/TYtoufahou120.png" class="toufahou zIndex1" id="toufahou" />
+                <img src="assets/images/toufahou/TYtoufahou122.png" class="toufahou zIndex1" id="toufahou" />
                 <img src="assets/images/toufaqian/TYtoufaqian22.png" class="toufaqian zIndex4" id="toufaqian" />
                 <img src="assets/images/bizi/TYbizi1.png" class="bizi zIndex3" />
-                <!-- <img src="assets/images/maozi/TYmaozi1.png" class="maozi zIndex5" /> -->
                 <img src="assets/images/meimao/TYmeimao0.png" class="meimao zIndex3" />
                 <img src="assets/images/tezheng/TYtezheng1.png" class="tezheng zIndex3" />
                 <img src="assets/images/yanjing/TYyanjing0.png" class="yanjing zIndex3" />
@@ -39,15 +38,22 @@
                 <img src="assets/images/info-tip.png" />
             </div>
             <div id="play"><img src="assets/images/anniu1.png"></div>
+            <div class="copyright">艾米游戏出品</div>
         </div>
         <div id="gameScreen">
             <div id="timer"></div>
             <div id="score"></div>
             <div id="userWrap">
                 <div class="user">
-
+                    <div class="figure">
+                    </div>
+                    <div class="gebo">
+                        <img src="assets/images/dongzuo/donghua0.png"/>
+                    </div>
+                    <div class="shenti">
+                        <img src="assets/images/dongzuo/donghuaM1.png"]/>
+                    </div>
                 </div>
-                <div class="test" style="width:200px;height:300px;background-color:blue;"></div>
             </div>
         </div>
         <div id="result">
@@ -88,6 +94,10 @@
             });
         })(i);
     }
+
+    setTimeout(function(){
+        document.querySelector('#userWrap .user .figure').innerHTML = document.querySelector('#gameIntro .figure').innerHTML
+    }, 5000)
 </script>
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/zepto.js" charset="utf-8"></script>
