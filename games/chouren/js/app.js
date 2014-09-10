@@ -2,14 +2,14 @@
  * Created by rechie on 14-8-26.
  */
 function resizeContainer() {
-    var widthScale = $(window).width()/320;
-    var heightScale = $(window).height()/480;
+    var widthScale = $(window).width()/640;
+    var heightScale = $(window).height()/960;
     if(heightScale < widthScale) {
         $(document.body).addClass('bg-body');
     }
     var scale = Math.min(widthScale, heightScale);
-    var realWidth = 320 * scale;
-    var realHeight = 480 * scale;
+    var realWidth = 640 * scale;
+    var realHeight = 960 * scale;
     window.scale = scale;
     var cssObj = {
         '-webkit-transform': 'scale(' + scale + ', ' + scale + ')',
@@ -17,7 +17,7 @@ function resizeContainer() {
         '-o-transform': 'scale(' + scale + ', ' + scale + ')',
         'transform': 'scale(' + scale + ', ' + scale + ')',
     };
-    $('.container').css(cssObj);
+    $('body').css(cssObj);
 }
 // 通过链接参数拼脸
 function initFaceFromParams(){
