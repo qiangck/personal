@@ -23,11 +23,12 @@ function resizeContainer() {
 function initFaceFromParams(){
     var figureHtml = '<img src="assets/images/lian/TYlian0.png" class="lian zIndex2" id="lian" />'
         + '<img src="assets/images/toufahou/TYtoufahou122.png" class="toufahou zIndex1" id="toufahou" />'
-        + '<img src="assets/images/toufaqian/TYtoufaqian22.png" class="toufaqian zIndex4" id="toufaqian" />'
+        + '<img src="assets/images/toufaqian/TYtoufaqian22.png" class="toufaqian zIndex5" id="toufaqian" />'
         + '<img src="assets/images/bizi/TYbizi1.png" class="bizi zIndex3" />'
         + '<img src="assets/images/meimao/TYmeimao0.png" class="meimao zIndex3" />'
         + '<img src="assets/images/tezheng/TYtezheng1.png" class="tezheng zIndex3" />'
         + '<img src="assets/images/yanjing/TYyanjing0.png" class="yanjing zIndex3" />'
+        + '<img src="assets/images/daiyanjing/TYdaiyanjing1.png" class="daiyanjing zIndex4" />'
         + '<img src="assets/images/zuiba/TYzui0.png" class="zui zIndex3">';
     document.querySelector('#gameIntro .figure').innerHTML = figureHtml;
     var pics = [
@@ -97,6 +98,7 @@ $(document).ready(function() {
         $('#gameIntro').hide();
         $('#result').hide();
         $('#gameScreen').show();
+        console.log(123)
         prepareAnimate(true, 0,  function(){
             game.replay();
         });
