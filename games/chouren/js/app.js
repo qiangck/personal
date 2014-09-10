@@ -57,6 +57,7 @@ function initFaceFromParams(){
                 if(index === pics.length) {
                     // 加载完成后，复制
                     document.querySelector('#userWrap .user .figure').innerHTML = document.querySelector('#gameIntro .figure').innerHTML;
+                    document.querySelector('#result .figure').innerHTML = document.querySelector('#gameIntro .figure').innerHTML;
                 }
                 var picTranseObj = psLib(this);//创建一个psLib对象
                 var origin = picTranseObj.clone();//克隆原始对象做为原始副本
@@ -72,6 +73,9 @@ initFaceFromParams();
 
 $(document).ready(function() {
     resizeContainer();
+
+    var bOver = false;
+    var index = 0;
     var game = new Game();
     // 初始化计时器
     var timer = new Game.Time({
@@ -79,6 +83,9 @@ $(document).ready(function() {
         minus: 5,
         countFunc: Game.View.setTimer,
         end: function() {
+            $('#gameScreen').hide();
+            $('#result .info .title .hit-count').html(index);
+            $('#result').show();
 //            console.log('end')
         }
     });
@@ -86,9 +93,18 @@ $(document).ready(function() {
     $('#play img').bind('click', function(){
         prepare();
     });
+    $('#replay img').bind('click', function(){
+        $('#gameIntro').hide();
+        $('#result').hide();
+        $('#gameScreen').show();
+        prepareAnimate(true, 0,  function(){
+            game.replay();
+        });
+    });
 
     function prepare() {
         $('#gameIntro').hide();
+        $('#result').hide();
         $('#gameScreen').show();
         prepareAnimate(true, 0,  startGame);
     }
@@ -112,9 +128,6 @@ $(document).ready(function() {
         }
     }
 
-
-    var bOver = false;
-    var index = 0;
     function startGame() {
         game.start();
         var slide = new RC.Slide({

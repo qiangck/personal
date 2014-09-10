@@ -26,7 +26,8 @@ h2, b, p{margin:0;}
 
 .container{position:relative;width:640px;height:960px;-webkit-transform-origin: 0 0;}
 .wrap{position:relative;width:640px;height:960px;background:#FFF;position:relative;}
-#gameIntro, #gameScreen{position:absolute;top:0;left:0;width:640px;height:960px;}
+#gameIntro, #gameScreen, #result{position:absolute;top:0;left:0;width:640px;height:960px;display:none;}
+#gameIntro{display:block;}
 
 
 .figure{
@@ -239,3 +240,64 @@ h2, b, p{margin:0;}
     left: 220px;
     z-index: 22;
 }
+
+
+/*结束页*/
+#result{}
+#result .info{
+    position:absolute;
+    left:170px;
+    top: 73px;
+}
+#result .info .title{
+    background:none;
+    font-size:40px;
+    line-height:80px;
+    height:80px;
+    text-align:left;
+}
+#result .info .title .name{
+    font-family:"黑体";
+    font-size:40px;
+    color:#000;
+}
+#result .info .title .hit-count{
+    color:#f40707;
+}
+#result .info .content{
+    font-size:24px;
+    line-height:36px;
+    font-family:"黑体";
+}
+#result .info .content span{
+    color:#6aaaf7;
+}
+#result .figure{
+    top: 310px;
+
+}
+#result .shenti{
+    top: 434px;
+}
+
+#result .btn-group{
+    position: absolute;
+    width: 640px;
+    left:0;
+    bottom: 45px;
+    text-align:center;
+}
+#result .btn-group a{
+    margin:0 10px;
+}
+#result .tips{
+    position:absolute;
+    width:640px;
+    left:0;
+    top:920px;
+    text-align:center;
+    font-size:24px;
+    font-family:"黑体";
+    line-height:40px;
+}
+

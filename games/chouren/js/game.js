@@ -166,7 +166,7 @@ Game.View = {
 		$('.failed').hide();
 	},
 	reset: function() {
-		$('#timer').html('01:00');
+		$('#timer').html('60<span>秒</span>');
 	}
 };
 
@@ -267,6 +267,9 @@ Game.Animate ={
             if(that.timeNow - that.timeBegin < that.timeDelay) {
                 Game.Animate.bAnimate = true;
                 $('#gameScreen .shenti img').attr('src', Game.Animate.frameObj[key]);
+                $('#userWrap').animate({
+                    top: 10 * (frame%3-1)
+                }, 10);
                 that.timeId = setTimeout(function(){
                     innerAnimate(level, sex, frame+1);
                 }, 100);
@@ -274,6 +277,7 @@ Game.Animate ={
                 that.bAnimate = false;
                 key = sex + '_' +  level + '_' + 0;
                 $('#gameScreen .shenti img').attr('src', Game.Animate.frameObj[key]);
+                $('#userWrap').css({'top': 0});
                 that.timeBegin = 0;
                 that.timeNow = 0;
             }
