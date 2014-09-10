@@ -129,7 +129,7 @@ Game.View = {
 	scoreTimeId : null,
 	setTimer: function(current, sum) {
 		var remain = sum - current;
-		$('#timer').html('00:' + (remain<10 ? ('0' + remain ): remain));
+		$('#timer').html((remain<10 ? ('0' + remain ): remain) + '<span>秒</span>');
 		$('#gameScreen .bottom .progress-wrap .progress').width(Math.floor(remain/sum*100) + '%');
 	},
 	setHitCombo: function(hitCombo) {
@@ -138,11 +138,11 @@ Game.View = {
 	setScore: function(score) {
 		// 补零方法
 	    var len = score.toString().length;
-	    while(len < 3) {
-	        score = "0" + score;
-	        len++;
-	    }
-		$('#score').html(score);
+//	    while(len < 3) {
+//	        score = "0" + score;
+//	        len++;
+//	    }
+		$('#score').html(score + '<span>次</span>');
 	},
 	/**
 	 * 得分状态，true显示成功图标，false显示X
@@ -221,6 +221,8 @@ Game.Time.prototype.doMinus = function() {
 	}
 	this.countFunc(this.current, this.sum);
 };
+
+
 
 /**
  * 资源加载器

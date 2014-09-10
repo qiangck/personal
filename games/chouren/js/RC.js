@@ -24,7 +24,7 @@ RC.Slide = function(opt){
         slideBegin: null,
         slideMove: null
     },opt);
-    var elemQuery = 'body';
+    var elemQuery = opt.elemQuery;
     this.elems = [].slice.call(document.querySelectorAll(elemQuery));
     that.startHandler = function(e){
         return that.StartHandler.apply(that, arguments);

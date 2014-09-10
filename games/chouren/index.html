@@ -22,14 +22,14 @@
                 <div class="info">受虐指数：36</div>
             </div>
             <div class="figure">
-                <img src="assets/images/lian/TYlian0.png" class="lian zIndex2" id="lian" />
-                <img src="assets/images/toufahou/TYtoufahou122.png" class="toufahou zIndex1" id="toufahou" />
-                <img src="assets/images/toufaqian/TYtoufaqian22.png" class="toufaqian zIndex4" id="toufaqian" />
-                <img src="assets/images/bizi/TYbizi1.png" class="bizi zIndex3" />
-                <img src="assets/images/meimao/TYmeimao0.png" class="meimao zIndex3" />
-                <img src="assets/images/tezheng/TYtezheng1.png" class="tezheng zIndex3" />
-                <img src="assets/images/yanjing/TYyanjing0.png" class="yanjing zIndex3" />
-                <img src="assets/images/zuiba/TYzui0.png" class="zui zIndex3">
+                <!--<img src="assets/images/lian/TYlian0.png" class="lian zIndex2" id="lian" />-->
+                <!--<img src="assets/images/toufahou/TYtoufahou122.png" class="toufahou zIndex1" id="toufahou" />-->
+                <!--<img src="assets/images/toufaqian/TYtoufaqian22.png" class="toufaqian zIndex4" id="toufaqian" />-->
+                <!--<img src="assets/images/bizi/TYbizi1.png" class="bizi zIndex3" />-->
+                <!--<img src="assets/images/meimao/TYmeimao0.png" class="meimao zIndex3" />-->
+                <!--<img src="assets/images/tezheng/TYtezheng1.png" class="tezheng zIndex3" />-->
+                <!--<img src="assets/images/yanjing/TYyanjing0.png" class="yanjing zIndex3" />-->
+                <!--<img src="assets/images/zuiba/TYzui0.png" class="zui zIndex3">-->
             </div>
             <div class="shenti zIndex2">
                 <img src="assets/images/renkaishi.png" />
@@ -55,50 +55,21 @@
                     </div>
                 </div>
             </div>
+            <div class="cloud">
+                <img src="assets/images/cloud.jpg"/>
+            </div>
+            <div id="readyBg">
+                <img src="assets/images/suduxian.png"/>
+            </div>
+            <a href="#" target="_blank" class="download-btn"><img src="assets/images/anniu0.png"/></a>
+            <div class="tips">
+                下载客户端游戏，拼出想打的人，更多打法超级过瘾
+            </div>
         </div>
         <div id="result">
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    var pics = [
-        {
-            elem: document.getElementById('lian'),
-            color: [254, 220, 182]
-        },
-        {
-            elem: document.getElementById('toufahou'),
-            color: [199, 131, 136]
-        },
-        {
-            elem: document.getElementById('toufaqian'),
-            color: [199, 131, 136]
-        }
-    ]
-
-    for(var i = 0;i < pics.length;i ++){
-        (function(i){
-            var color = pics[i].color;
-            pics[i].elem.loadOnce(function(){
-                /*
-                 防止用onload事件注册后  replace会改变img的src导致onload事件再次触发形成循环
-                 */
-                window.color = color;
-
-                var picTranseObj = psLib(this);//创建一个psLib对象
-                var origin = picTranseObj.clone();//克隆原始对象做为原始副本
-
-                var grayPic = picTranseObj.act("添加杂色");
-                grayPic.replace(this);
-
-            });
-        })(i);
-    }
-
-    setTimeout(function(){
-        document.querySelector('#userWrap .user .figure').innerHTML = document.querySelector('#gameIntro .figure').innerHTML
-    }, 5000)
-</script>
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/zepto.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/RC.js" charset="utf-8"></script>
