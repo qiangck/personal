@@ -129,8 +129,10 @@ Game.View = {
 	scoreTimeId : null,
 	setTimer: function(current, sum) {
 		var remain = sum - current;
+        if(remain == 0) {
+            return;
+        }
 		$('#timer').html((remain<10 ? ('0' + remain ): remain) + '<span>秒</span>');
-		$('#gameScreen .bottom .progress-wrap .progress').width(Math.floor(remain/sum*100) + '%');
 	},
 	setHitCombo: function(hitCombo) {
 		$('#hitCombo').html(hitCombo);
@@ -230,29 +232,29 @@ Game.Animate ={
     timeNow : 0,
     frameObj : {
         'man_1_0': 'assets/images/dongzuo/donghuaM1.png',
-            'man_1_1': 'assets/images/dongzuo/donghuaM2.png',
-            'man_1_2': 'assets/images/dongzuo/donghuaM3.png',
-            'man_2_0': 'assets/images/dongzuo/donghuaM1.png',
-            'man_2_1': 'assets/images/dongzuo/donghuaM4.png',
-            'man_2_2': 'assets/images/dongzuo/donghuaM5.png',
-            'man_3_0': 'assets/images/dongzuo/donghuaM1.png',
-            'man_3_1': 'assets/images/dongzuo/donghuaM6.png',
-            'man_3_2': 'assets/images/dongzuo/donghuaM7.png',
-            'man_4_0': 'assets/images/dongzuo/donghuaM1.png',
-            'man_4_1': 'assets/images/dongzuo/donghuaM8.png',
-            'man_4_2': 'assets/images/dongzuo/donghuaM9.png',
-            'woman_1_0': 'assets/images/dongzuo/donghuaW1.png',
-            'woman_1_1': 'assets/images/dongzuo/donghuaW2.png',
-            'woman_1_2': 'assets/images/dongzuo/donghuaW3.png',
-            'woman_2_0': 'assets/images/dongzuo/donghuaW1.png',
-            'woman_2_1': 'assets/images/dongzuo/donghuaW4.png',
-            'woman_2_2': 'assets/images/dongzuo/donghuaW5.png',
-            'woman_3_0': 'assets/images/dongzuo/donghuaW1.png',
-            'woman_3_1': 'assets/images/dongzuo/donghuaW6.png',
-            'woman_3_2': 'assets/images/dongzuo/donghuaW7.png',
-            'woman_4_0': 'assets/images/dongzuo/donghuaW1.png',
-            'woman_4_1': 'assets/images/dongzuo/donghuaW8.png',
-            'woman_4_2': 'assets/images/dongzuo/donghuaW9.png'
+        'man_1_1': 'assets/images/dongzuo/donghuaM2.png',
+        'man_1_2': 'assets/images/dongzuo/donghuaM3.png',
+        'man_2_0': 'assets/images/dongzuo/donghuaM1.png',
+        'man_2_1': 'assets/images/dongzuo/donghuaM4.png',
+        'man_2_2': 'assets/images/dongzuo/donghuaM5.png',
+        'man_3_0': 'assets/images/dongzuo/donghuaM1.png',
+        'man_3_1': 'assets/images/dongzuo/donghuaM6.png',
+        'man_3_2': 'assets/images/dongzuo/donghuaM7.png',
+        'man_4_0': 'assets/images/dongzuo/donghuaM1.png',
+        'man_4_1': 'assets/images/dongzuo/donghuaM8.png',
+        'man_4_2': 'assets/images/dongzuo/donghuaM9.png',
+        'woman_1_0': 'assets/images/dongzuo/donghuaW1.png',
+        'woman_1_1': 'assets/images/dongzuo/donghuaW2.png',
+        'woman_1_2': 'assets/images/dongzuo/donghuaW3.png',
+        'woman_2_0': 'assets/images/dongzuo/donghuaW1.png',
+        'woman_2_1': 'assets/images/dongzuo/donghuaW4.png',
+        'woman_2_2': 'assets/images/dongzuo/donghuaW5.png',
+        'woman_3_0': 'assets/images/dongzuo/donghuaW1.png',
+        'woman_3_1': 'assets/images/dongzuo/donghuaW6.png',
+        'woman_3_2': 'assets/images/dongzuo/donghuaW7.png',
+        'woman_4_0': 'assets/images/dongzuo/donghuaW1.png',
+        'woman_4_1': 'assets/images/dongzuo/donghuaW8.png',
+        'woman_4_2': 'assets/images/dongzuo/donghuaW9.png'
     },
     twitch : function(level, sex, frame){
         var that = this;

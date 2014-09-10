@@ -124,6 +124,16 @@ RC.Slide.prototype.EndHandler = function(e) {
 };
 
 RC.UTILS = {
+    UrlParam: (function(){
+        var url = location.href;
+        var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
+        var paraObj = {};
+        var i , j;
+        for (i = 0; j = paraString[i]; i++) {
+            paraObj[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length);
+        }
+        return paraObj;
+    })(),
     getUrlParam: function (paras) {
         var url = location.href;
         var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
@@ -138,5 +148,24 @@ RC.UTILS = {
         } else {
             return returnValue;
         }
+    },
+    getUrlValue: function(key) {
+        var returnValue = RC.UTIL.UrlParam[key.toLowerCase()];
+        if ( typeof (returnValue) == "undefined") {
+            return "";
+        } else {
+            return returnValue;
+        }
+    },
+    merger: function(a, b) {
+        for(var key in b) {
+            if(b.hasOwnProperty(key)) {
+                a[key] = b[key];
+            }
+        }
+    },
+    mergerNew: function(a, b){
+        var c = RC.UTILS.merger({}, a);
+        return RC.UTILS.merger(c, b);
     }
 }

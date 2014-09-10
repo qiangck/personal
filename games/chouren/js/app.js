@@ -21,15 +21,27 @@ function resizeContainer() {
 }
 // 通过链接参数拼脸
 function initFaceFromParams(){
-    var figureHtml = '<img src="assets/images/lian/TYlian0.png" class="lian zIndex2" id="lian" />'
-        + '<img src="assets/images/toufahou/TYtoufahou122.png" class="toufahou zIndex1" id="toufahou" />'
-        + '<img src="assets/images/toufaqian/TYtoufaqian22.png" class="toufaqian zIndex5" id="toufaqian" />'
-        + '<img src="assets/images/bizi/TYbizi1.png" class="bizi zIndex3" />'
-        + '<img src="assets/images/meimao/TYmeimao0.png" class="meimao zIndex3" />'
-        + '<img src="assets/images/tezheng/TYtezheng1.png" class="tezheng zIndex3" />'
-        + '<img src="assets/images/yanjing/TYyanjing0.png" class="yanjing zIndex3" />'
-        + '<img src="assets/images/daiyanjing/TYdaiyanjing1.png" class="daiyanjing zIndex4" />'
-        + '<img src="assets/images/zuiba/TYzui0.png" class="zui zIndex3">';
+    var defaultSetting = {
+        lian: 0,
+        toufahou: 122,
+        toufaqian: 22,
+        bizi: 1,
+        meimao: 0,
+        tezheng: 1,
+        yanjing: 0,
+        daiyanjing: 1,
+        zui: 0
+    };
+    RC.UTILS.merger(defaultSetting, RC.UTILS.UrlParam);
+    var figureHtml = '<img src="assets/images/lian/TYlian' + defaultSetting.lian + '.png" class="lian zIndex2" id="lian" />'
+        + '<img src="assets/images/toufahou/TYtoufahou' + defaultSetting.toufahou + '.png" class="toufahou zIndex1" id="toufahou" />'
+        + '<img src="assets/images/toufaqian/TYtoufaqian' + defaultSetting.toufaqian + '.png" class="toufaqian zIndex5" id="toufaqian" />'
+        + '<img src="assets/images/bizi/TYbizi' + defaultSetting.bizi + '.png" class="bizi zIndex3" />'
+        + '<img src="assets/images/meimao/TYmeimao' + defaultSetting.meimao + '.png" class="meimao zIndex3" />'
+        + '<img src="assets/images/tezheng/TYtezheng' + defaultSetting.tezheng + '.png" class="tezheng zIndex3" />'
+        + '<img src="assets/images/yanjing/TYyanjing' + defaultSetting.yanjing + '.png" class="yanjing zIndex3" />'
+        + '<img src="assets/images/daiyanjing/TYdaiyanjing' + defaultSetting.daiyanjing + '.png" class="daiyanjing zIndex4" />'
+        + '<img src="assets/images/zuiba/TYzui' + defaultSetting.zui + '.png" class="zui zIndex3">';
     document.querySelector('#gameIntro .figure').innerHTML = figureHtml;
     var pics = [
         {
@@ -69,9 +81,14 @@ function initFaceFromParams(){
             });
         })(i);
     }
+    var nameNodes = document.querySelectorAll('.name');
+    for(var i=0; i<nameNodes.length; i++) {
+        nameNodes[i].innerHTML = decodeURIComponent(RC.UTILS.UrlParam.username);
+    }
+    document.querySelector('#gameIntro .title .info').innerHTML = RC.UTILS.UrlParam.shounve;
+
 }
 initFaceFromParams();
-
 $(document).ready(function() {
     resizeContainer();
 
@@ -153,7 +170,7 @@ $(document).ready(function() {
                 bOver = true;
                 index ++ ;
                 Game.View.setScore(index);
-                Game.Animate.twitch(Math.ceil(Math.random()*4), 'man', 1);
+                Game.Animate.twitch(Math.ceil(Math.random()*4), RC.UTILS.UrlParam.sex, 1);
             }
         } else {
             bOver = false;
