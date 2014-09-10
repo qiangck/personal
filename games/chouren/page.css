@@ -160,8 +160,8 @@ h2, b, p{margin:0;}
     left: 158px;
 }
 #gameScreen .shenti{
-    top: 492px;
-    left: 272px;
+    top: 377px;
+    left: 0px;
 }
 #gameScreen{display:none;}
 #userWrap{
@@ -230,4 +230,12 @@ h2, b, p{margin:0;}
     font-size: 24px;
     font-family: "黑体";
     z-index: 5;
+}
+#userBody{
+    position: absolute;
+    width: 200px;
+    height: 600px;
+    top: 320px;
+    left: 220px;
+    z-index: 22;
 }

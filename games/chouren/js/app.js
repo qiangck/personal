@@ -10,7 +10,6 @@ function resizeContainer() {
     var scale = Math.min(widthScale, heightScale);
     var realWidth = 320 * scale;
     var realHeight = 480 * scale;
-    var transformOrigin = [($(window).width()-realWidth)/2, ($(window).height()-realHeight)/2, 0];
     window.scale = scale;
     var cssObj = {
         '-webkit-transform': 'scale(' + scale + ', ' + scale + ')',
@@ -20,7 +19,7 @@ function resizeContainer() {
     };
     $('.container').css(cssObj);
 }
-initFaceFromParams();
+// 通过链接参数拼脸
 function initFaceFromParams(){
     var figureHtml = '<img src="assets/images/lian/TYlian0.png" class="lian zIndex2" id="lian" />'
         + '<img src="assets/images/toufahou/TYtoufahou122.png" class="toufahou zIndex1" id="toufahou" />'
@@ -68,9 +67,9 @@ function initFaceFromParams(){
             });
         })(i);
     }
-
-
 }
+initFaceFromParams();
+
 $(document).ready(function() {
     resizeContainer();
     var game = new Game();
@@ -80,7 +79,7 @@ $(document).ready(function() {
         minus: 5,
         countFunc: Game.View.setTimer,
         end: function() {
-            console.log('end')
+//            console.log('end')
         }
     });
     game.setTimer(timer);
@@ -118,7 +117,6 @@ $(document).ready(function() {
     var index = 0;
     function startGame() {
         game.start();
-        console.log('start games')
         var slide = new RC.Slide({
             elemQuery: 'body',
             slideBegin: resolvePosition,
@@ -135,19 +133,20 @@ $(document).ready(function() {
 
     function resolvePosition(touch) {
         var element = document.elementFromPoint(touch.pageX, touch.pageY);
-        if($(element).hasClass('figure') || $(element).hasClass('shenti') || $(element).parents('.shenti').length > 0 || $(element).parents('.figure').length > 0) {
+        if($(element).attr('id') === 'userBody' || $(element).parents('#userBody').length > 0) {
             if(bOver === false) {
                 bOver = true;
                 index ++ ;
                 Game.View.setScore(index);
+                Game.Animate.twitch(Math.ceil(Math.random()*4), 'man', 1);
             }
         } else {
             bOver = false;
         }
     }
-
-    var timeId = null;
 });
+
+
 
 // 微信分享代码
 // 所有功能必须包含在 WeixinApi.ready 中进行
