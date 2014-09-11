@@ -30,9 +30,35 @@ function initFaceFromParams(){
         tezheng: 1,
         yanjing: 0,
         daiyanjing: 1,
-        zui: 0
+        zui: 0,
+        liancolorr: 255,
+        liancolorg: 255,
+        liancolorb: 255,
+        toufahoucolorr: 255,
+        toufahoucolorg: 255,
+        toufahoucolorb: 255,
+        toufaqiancolorr: 255,
+        toufaqiancolorg: 255,
+        toufaqiancolorb: 255,
+        sex: 'man'
     };
     RC.UTILS.merger(defaultSetting, RC.UTILS.UrlParam);
+
+
+    var nameNodes = document.querySelectorAll('.name');
+    for(var i=0; i<nameNodes.length; i++) {
+        nameNodes[i].innerHTML = decodeURIComponent(RC.UTILS.UrlParam.username);
+    }
+    document.querySelector('#gameIntro .title .info').innerHTML = RC.UTILS.UrlParam.shounve;
+    if(defaultSetting.sex === 'woman') {
+        $('#gameIntro .shenti img').attr('src', 'assets/images/renkaishinv.png');
+        $('#gameScreen .shenti img').attr('src', 'assets/images/dongzuo/donghuaW1.png');
+        $('#result .shenti img').attr('src', 'assets/images/renjieshunv.png');
+    } else {
+        $('#gameIntro .shenti img').attr('src', 'assets/images/renkaishi.png');
+        $('#gameScreen .shenti img').attr('src', 'assets/images/dongzuo/donghuaM1.png');
+        $('#result .shenti img').attr('src', 'assets/images/renjieshunan.png');
+    }
     var figureHtml = '<img src="assets/images/lian/TYlian' + defaultSetting.lian + '.png" class="lian zIndex2" id="lian" />'
         + '<img src="assets/images/toufahou/TYtoufahou' + defaultSetting.toufahou + '.png" class="toufahou zIndex1" id="toufahou" />'
         + '<img src="assets/images/toufaqian/TYtoufaqian' + defaultSetting.toufaqian + '.png" class="toufaqian zIndex5" id="toufaqian" />'
@@ -46,15 +72,15 @@ function initFaceFromParams(){
     var pics = [
         {
             elem: document.getElementById('lian'),
-            color: [254, 220, 182]
+            color: [defaultSetting.liancolorr, defaultSetting.liancolorg, defaultSetting.liancolorb]
         },
         {
             elem: document.getElementById('toufahou'),
-            color: [199, 131, 136]
+            color: [defaultSetting.toufahoucolorr, defaultSetting.toufahoucolorg, defaultSetting.toufahoucolorb]
         },
         {
             elem: document.getElementById('toufaqian'),
-            color: [199, 131, 136]
+            color: [defaultSetting.toufaqiancolorr, defaultSetting.toufaqiancolorg, defaultSetting.toufaqiancolorb]
         }
     ];
     var index = 0;
@@ -81,11 +107,6 @@ function initFaceFromParams(){
             });
         })(i);
     }
-    var nameNodes = document.querySelectorAll('.name');
-    for(var i=0; i<nameNodes.length; i++) {
-        nameNodes[i].innerHTML = decodeURIComponent(RC.UTILS.UrlParam.username);
-    }
-    document.querySelector('#gameIntro .title .info').innerHTML = RC.UTILS.UrlParam.shounve;
 
 }
 initFaceFromParams();

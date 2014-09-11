@@ -193,7 +193,7 @@ Game.Time.prototype.run = function() {
 	var that = this;
 	this.running = true;
 	that.timeId = setTimeout(function(){
-		if(that.current < that.sum) {
+		if(that.current < that.sum-1) {
 			that.current ++
 			that.run.call(that);
 			that.countFunc(that.current, that.sum);
@@ -227,7 +227,7 @@ Game.Time.prototype.doMinus = function() {
 Game.Animate ={
     bAnimate : false,
     timeId : null,
-    timeDelay : 500,
+    timeDelay : 300,
     timeBegin : 0,
     timeNow : 0,
     frameObj : {
