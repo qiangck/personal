@@ -263,6 +263,11 @@ Game.Animate ={
             this.bAnimate = true;
             innerAnimate(level, sex, frame);
         }
+        var paIndex = Math.floor(Math.random()*4);
+        $('#gameScreen .pa' + paIndex).addClass('shake');
+        setTimeout(function(){
+            $('#gameScreen .pa' + paIndex).removeClass('shake');
+        }, 500);
         function innerAnimate(level, sex, frame){
             that.timeNow = new Date();
             var key = sex + '_' +  level + '_' + frame%3;

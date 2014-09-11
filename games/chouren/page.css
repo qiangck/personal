@@ -1,8 +1,24 @@
 @charset "utf-8";
-@font-face {
-    font-family: "jiankatong";
-    src:url("jiankatong.TTF") format("truetype");/*non-IE*/
+/*自定义动画部分*/
+@keyframes mymove
+{
+    0%   {transform:scale(1) rotate(0deg);}
+    25%  {transform:scale(1.2) rotate(5deg);}
+    50%  {transform:scale(1.5) rotate(-5deg);}
+    75%  {transform:scale(1.2) rotate(5deg);}
+    100% {transform:scale(1) rotate(0deg);}
 }
+
+@-webkit-keyframes mymove /* Safari 和 Chrome */
+{
+    0%   {-webkit-transform:scale(1) rotate(0deg);}
+    25%  {-webkit-transform:scale(1.2) rotate(5deg);}
+    50%  {-webkit-transform:scale(1.5) rotate(-5deg);}
+    75%  {-webkit-transform:scale(1.2) rotate(5deg);}
+    100% {-webkit-transform:scale(1) rotate(0deg);}
+}
+
+
 /* CSS Document */
 html, body{height:100%;overflow:hidden;padding:0;margin:0;background-color:#fff;}
 body{
@@ -166,7 +182,7 @@ h2, b, p{margin:0;}
     left: 158px;
 }
 #gameScreen .shenti{
-    top: 377px;
+    top: 391px;
     left: 0px;
 }
 #gameScreen{display:none;}
@@ -224,7 +240,8 @@ h2, b, p{margin:0;}
     position:absolute;
     bottom: 50px;
     right: 30px;
-    z-index: 5;
+    z-index: 20;
+    -webkit-animation:mymove 1s infinite linear ;
 }
 #gameScreen .tips{
     position:absolute;
@@ -244,6 +261,37 @@ h2, b, p{margin:0;}
     top: 320px;
     left: 220px;
     z-index: 22;
+}
+#gameScreen .pa0{
+    position:absolute;
+    z-index:20;
+    top: 500px;
+    left: 85px;
+    display:none;
+}
+
+#gameScreen .pa1{
+    position:absolute;
+    z-index:20;
+    top: 524px;
+    left: 31px;
+    display:none;
+}
+
+#gameScreen .pa2{
+    position:absolute;
+    z-index:20;
+    top: 235px;
+    left: 382px;
+    display:none;
+}
+
+#gameScreen .pa3{
+    position:absolute;
+    z-index:20;
+    top: 476px;
+    left: 444px;
+    display:none;
 }
 
 
@@ -306,3 +354,27 @@ h2, b, p{margin:0;}
     line-height:40px;
 }
 
+
+
+/*------shake-----*/
+@keyframes shake
+{
+    0%   {transform:scale(1) rotate(0deg);display:block;}
+    25%  {transform:scale(1.2) rotate(5deg);display:block;}
+    50%  {transform:scale(1.5) rotate(-3deg);display:block;}
+    75%  {transform:scale(1.2) rotate(5deg);display:block;}
+    100% {transform:scale(1) rotate(0deg);display:block;}
+}
+
+@-webkit-keyframes shake /* Safari 和 Chrome */
+{
+    0%   {-webkit-transform:scale(1) rotate(0deg);display:block;}
+    25%  {-webkit-transform:scale(1.2) rotate(5deg);display:block;}
+    50%  {-webkit-transform:scale(1.5) rotate(-3deg);display:block;}
+    75%  {-webkit-transform:scale(1.2) rotate(5deg);display:block;}
+    100% {-webkit-transform:scale(1) rotate(0deg);display:block;}
+}
+#gameScreen .shake{
+    -webkit-animation:shake 1s 1 linear ;
+    display:block;
+}

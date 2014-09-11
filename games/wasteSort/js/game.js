@@ -252,7 +252,7 @@ Game.View = {
 		$('.failed').hide();
 	},
 	reset: function() {
-		$('#timer .numb').html('01:00');
+		$('#timer').html('60<span>秒</span>');
 	}
 };
 

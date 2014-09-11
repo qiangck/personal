@@ -129,14 +129,13 @@ $(document).ready(function() {
         }
     });
     game.setTimer(timer);
-    $('#play img').bind('click', function(){
+    $('#play img').bind('touchstart', function(){
         prepare();
     });
-    $('#replay img').bind('click', function(){
+    $('#replay img').bind('touchstart', function(){
         $('#gameIntro').hide();
         $('#result').hide();
         $('#gameScreen').show();
-        console.log(123)
         prepareAnimate(true, 0,  function(){
             game.replay();
         });
@@ -183,7 +182,26 @@ $(document).ready(function() {
             }
         });
     }
-
+    var lastHtiTime = 0;
+    var currHitTime = 0;
+    function getHitLevel() {
+        var hitLevel = 1;
+        if(lastHtiTime !== 0) {
+            currHitTime = new Date();
+        }
+        timeDelay = currHitTime - lastHtiTime;
+        if(timeDelay > 499) {
+            hitLevel = 1;
+        } else if (timeDelay > 300 && timeDelay < 500) {
+            hitLevel = 2;
+        } else if (timeDelay > 100 && timeDelay < 301) {
+            hitLevel = 3;
+        } else if (timeDelay < 101) {
+            hitLevel = 4;
+        }
+        lastHtiTime = new Date();
+        return hitLevel;
+    }
     function resolvePosition(touch) {
         var element = document.elementFromPoint(touch.pageX, touch.pageY);
         if($(element).attr('id') === 'userBody' || $(element).parents('#userBody').length > 0) {
@@ -191,7 +209,7 @@ $(document).ready(function() {
                 bOver = true;
                 index ++ ;
                 Game.View.setScore(index);
-                Game.Animate.twitch(Math.ceil(Math.random()*4), RC.UTILS.UrlParam.sex, 1);
+                Game.Animate.twitch(getHitLevel(), RC.UTILS.UrlParam.sex, 1);
             }
         } else {
             bOver = false;
