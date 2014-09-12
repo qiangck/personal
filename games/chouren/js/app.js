@@ -83,6 +83,7 @@ function initFaceFromParams(){
             color: [defaultSetting.toufaqiancolorr, defaultSetting.toufaqiancolorg, defaultSetting.toufaqiancolorb]
         }
     ];
+    console.log(pics);
     var index = 0;
     for(var i = 0;i < pics.length;i ++){
         (function(i){
@@ -226,7 +227,7 @@ WeixinApi.ready(function(Api){
     // 微信分享的数据
     var wxData = {
         "imgUrl":'http://182.92.186.42/personal/slide/images/tfz.jpg',
-        "link":'http://182.92.186.42/personal/games/chouren/index.html?lian=0&bizi=22&daiyanjing=28&huzi=19&meimao=43&tezheng=34&toufaqian=12&toufahou=11&zuiba=99&yanjing=41&userName=%E4%BB%BB%E8%B4%A4%E9%BD%90&shounve=135&sex=man&lianColorR=22&lianColorG=22&lianColorB=232',
+        "link":window.location.href,
         "desc":'\u5927\u5bb6\u597d\uff0c\u6211\u662frechie\uff0c\u6d4b\u8bd5\u5fae\u4fe1\u5206\u4eab\u529f\u80fd',
         "title":"\u5927\u5bb6\u597d\uff0c\u6211\u662frechie"
     };
