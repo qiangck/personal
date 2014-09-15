@@ -4,12 +4,19 @@
 function resizeContainer() {
     var widthScale = $(window).width()/640;
     var heightScale = $(window).height()/960;
-    if(heightScale < widthScale) {
-        $(document.body).addClass('bg-body');
-    }
     var scale = Math.min(widthScale, heightScale);
     var realWidth = 640 * scale;
     var realHeight = 960 * scale;
+    if(heightScale < widthScale) {
+        $(document.body).addClass('bg-body');
+        $('body').css({
+            'margin-left': ($(window).width() - realWidth) / 2
+        });
+    } else {
+        $('body').css({
+            'margin-top': ($(window).height() - realHeight) / 2
+        });
+    }
     window.scale = scale;
     var cssObj = {
         '-webkit-transform': 'scale(' + scale + ', ' + scale + ')',
