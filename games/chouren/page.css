@@ -53,71 +53,70 @@ h2, b, p{margin:0;}
     top:280px;
     left:0;
 }
-.zIndex1{
-    position:absolute;
-    z-index:5;
-}
-.zIndex2{
-    position:absolute;
-    z-index:12;
-}
-.zIndex3{
-    position:absolute;
-    z-index:13;
-}
-.zIndex4{
-    position:absolute;
-    z-index:14;
-}
-.zIndex5{
-    position:absolute;
-    z-index:15;
-}
 .lian{
+    position:absolute;
     left: 146px;
     top: 68px;
+    z-index: 10;
 }
 .toufahou{
+    position:absolute;
     left: 81px;
     top: 118px;
+    z-index: 8;
 }
 .toufaqian{
+    position:absolute;
     left: 47px;
     top: -105px;
+    z-index: 14;
 }
 .bizi{
+    position:absolute;
     left: 281px;
     top: 218px;
+    z-index: 11;
 }
 .maozi{
+    position:absolute;
     left: 13px;
     top: -40px;
+    z-index: 15;
 }
 .meimao{
+    position:absolute;
     left: 218px;
     top: 141px;
+    z-index: 13;
 }
 .tezheng{
+    position:absolute;
     left: 211px;
     top: 176px;
+    z-index: 13;
 }
 .daiyanjing{
     position:absolute;
     top: 138px;
     left: 175px;
+    z-index: 16;
 }
 .yanjing{
+    position:absolute;
     left: 224px;
     top: 185px;
+    z-index: 13;
 }
 .zui{
+    position:absolute;
     left: 258px;
     top: 286px;
+    z-index: 13;
 }
 
 .shenti{
     position:absolute;
-    z-index: 11;
+    z-index: 9;
     left: 190px;
     top: 442px;
 }
@@ -377,4 +376,45 @@ h2, b, p{margin:0;}
 #gameScreen .shake{
     /*-webkit-animation:shake 1s 1 linear ;*/
     display:block;
+}
+
+.shang{
+    position:absolute;
+    z-index: 17;
+}
+.shang1{
+    top: 255px;
+    left: 280px;
+}
+.shang2{
+    top: 177px;
+    left: 236px;
+}
+.shang3{
+    top: 100px;
+    left: 192px;
+}
+.shang4{
+    top: 75px;
+    left: 165px;
+}
+.shang5{
+    top: 62px;
+    left: 166px;
+}
+.shang6{
+    top: 69px;
+    left: 141px;
+}
+.shang7{
+    top: 50px;
+    left: 116px;
+}
+.shang8{
+    top: 23px;
+    left: 126px;
+}
+.shang9{
+    top: -64px;
+    left: 115px;
 }

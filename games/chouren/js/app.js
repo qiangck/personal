@@ -23,23 +23,24 @@ function resizeContainer() {
 function initFaceFromParams(){
     var defaultSetting = {
         lian: 0,
-        toufahou: 122,
-        toufaqian: 22,
-        bizi: 1,
+//        toufahou: 122,
+//        toufaqian: 22,
+//        bizi: 1,
         meimao: 0,
-        tezheng: 1,
+//        tezheng: 1,
         yanjing: 0,
-        daiyanjing: 1,
+//        daiyanjing: 1,
         zui: 0,
+        shang: 4,
         liancolorr: 255,
         liancolorg: 255,
         liancolorb: 255,
-        toufahoucolorr: 255,
-        toufahoucolorg: 255,
-        toufahoucolorb: 255,
-        toufaqiancolorr: 255,
-        toufaqiancolorg: 255,
-        toufaqiancolorb: 255,
+//        toufahoucolorr: 255,
+//        toufahoucolorg: 255,
+//        toufahoucolorb: 255,
+//        toufaqiancolorr: 255,
+//        toufaqiancolorg: 255,
+//        toufaqiancolorb: 255,
         sex: 'man'
     };
     RC.UTILS.merger(defaultSetting, RC.UTILS.UrlParam);
@@ -59,16 +60,8 @@ function initFaceFromParams(){
         $('#gameScreen .shenti img').attr('src', 'assets/images/dongzuo/donghuaM1.png');
         $('#result .shenti img').attr('src', 'assets/images/renjieshunan.png');
     }
-    var figureHtml = '<img src="assets/images/lian/TYlian' + defaultSetting.lian + '.png" class="lian zIndex2" id="lian" />'
-        + '<img src="assets/images/toufahou/TYtoufahou' + defaultSetting.toufahou + '.png" class="toufahou zIndex1" id="toufahou" />'
-        + '<img src="assets/images/toufaqian/TYtoufaqian' + defaultSetting.toufaqian + '.png" class="toufaqian zIndex5" id="toufaqian" />'
-        + '<img src="assets/images/bizi/TYbizi' + defaultSetting.bizi + '.png" class="bizi zIndex3" />'
-        + '<img src="assets/images/meimao/TYmeimao' + defaultSetting.meimao + '.png" class="meimao zIndex3" />'
-        + '<img src="assets/images/tezheng/TYtezheng' + defaultSetting.tezheng + '.png" class="tezheng zIndex3" />'
-        + '<img src="assets/images/yanjing/TYyanjing' + defaultSetting.yanjing + '.png" class="yanjing zIndex3" />'
-        + '<img src="assets/images/daiyanjing/TYdaiyanjing' + defaultSetting.daiyanjing + '.png" class="daiyanjing zIndex4" />'
-        + '<img src="assets/images/zuiba/TYzui' + defaultSetting.zui + '.png" class="zui zIndex3">';
-    document.querySelector('#gameIntro .figure').innerHTML = figureHtml;
+    var figureHtml = getBaseFace(defaultSetting);
+    document.querySelector('#baseFace').innerHTML = figureHtml;
     var pics = [
         {
             elem: document.getElementById('lian'),
@@ -83,33 +76,109 @@ function initFaceFromParams(){
             color: [defaultSetting.toufaqiancolorr, defaultSetting.toufaqiancolorg, defaultSetting.toufaqiancolorb]
         }
     ];
-    console.log(pics);
     var index = 0;
     for(var i = 0;i < pics.length;i ++){
         (function(i){
             var color = pics[i].color;
-            pics[i].elem.loadOnce(function(){
-                /*
-                 防止用onload事件注册后  replace会改变img的src导致onload事件再次触发形成循环
-                 */
-                window.color = color;
+            if(!pics[i].elem) {
                 index ++ ;
-                if(index === pics.length) {
-                    // 加载完成后，复制
-                    document.querySelector('#userWrap .user .figure').innerHTML = document.querySelector('#gameIntro .figure').innerHTML;
-                    document.querySelector('#result .figure').innerHTML = document.querySelector('#gameIntro .figure').innerHTML;
-                }
-                var picTranseObj = psLib(this);//创建一个psLib对象
-                var origin = picTranseObj.clone();//克隆原始对象做为原始副本
+            } else {
+                pics[i].elem.loadOnce(function(){
+                    /*
+                     防止用onload事件注册后  replace会改变img的src导致onload事件再次触发形成循环
+                     */
+                    window.color = color;
+                    var picTranseObj = psLib(this);//创建一个psLib对象
+                    var origin = picTranseObj.clone();//克隆原始对象做为原始副本
 
-                var grayPic = picTranseObj.act("添加杂色");
-                grayPic.replace(this);
-
-            });
+                    var grayPic = picTranseObj.act("添加杂色");
+                    grayPic.replace(this);
+                    index ++ ;
+                    if(index === pics.length) {
+                        // 加载完成后，复制
+                        var baseFaceHtml = document.querySelector('#baseFace').innerHTML;
+                        document.querySelector('#gameIntro .figure').innerHTML = getStartFace(defaultSetting, baseFaceHtml, defaultSetting.shang);
+                        document.querySelector('#userWrap .user .figure').innerHTML = getGameFace(defaultSetting, baseFaceHtml);
+                        document.querySelector('#result .figure').innerHTML = getStartFace(defaultSetting, baseFaceHtml, defaultSetting.shang);
+                    }
+                });
+            }
         })(i);
     }
-
 }
+
+/**
+ * 根据伤残等级获取拼脸图片
+ * @param defaultSetting
+ * @param level
+ * @returns {string}
+ */
+function getStartFace(defaultSetting, baseHtml, level) {
+    //头发 鼻子 特征 眼镜 胡子 帽子
+    var faceHtml = baseHtml;
+    switch(parseInt(level)) {
+        case 1:
+            faceHtml = faceHtml +  '<img src="assets/images/meimao/TYmeimao' + defaultSetting.meimao + '.png" class="meimao zIndex3" />'
+                    + '<img src="assets/images/yanjing/TYyanjing' + defaultSetting.yanjing + '.png" class="yanjing zIndex3" />';
+            break;
+        case 2, 4, 5, 6, 7:
+            faceHtml = faceHtml + '<img src="assets/images/meimao/TYmeimao' + defaultSetting.meimao + '.png" class="meimao zIndex3" />';
+            break;
+        case 3:
+            faceHtml = faceHtml + '<img src="assets/images/meimao/TYmeimao' + defaultSetting.meimao + '.png" class="meimao zIndex3" />'
+                + '<img src="assets/images/yanjing/TYyanjing' + defaultSetting.yanjing + '.png" class="yanjing zIndex3" />';
+            break;
+        case 8, 9:
+            break;
+        default :
+            break;
+
+    }
+//    faceHtml += '<img src="assets/images/meimao/TYmeimao' + defaultSetting.meimao + '.png" class="meimao zIndex3" />'
+//        + '<img src="assets/images/zuiba/TYzui' + defaultSetting.zui + '.png" class="zui zIndex3">'
+//        + '<img src="assets/images/yanjing/TYyanjing' + defaultSetting.yanjing + '.png" class="yanjing zIndex3" />';
+    faceHtml += '<img src="assets/images/shang/TYzhengmian0' + level + '.png" class="shang' + level +  ' shang" />';
+    if(defaultSetting.tezheng) {
+        faceHtml += '<img src="assets/images/tezheng/TYtezheng' + defaultSetting.tezheng + '.png" class="tezheng zIndex3" />';
+    }
+    if(defaultSetting.daiyanjing) {
+        faceHtml += '<img src="assets/images/daiyanjing/TYdaiyanjing' + defaultSetting.daiyanjing + '.png" class="daiyanjing zIndex4" />';
+    }
+    return faceHtml;
+}
+
+function getGameFace(defaultSetting, baseHtml) {
+    //头发 鼻子 特征 眼镜 胡子 帽子
+    var faceHtml = baseHtml;
+    faceHtml += '<img src="assets/images/meimao/TYmeimao' + defaultSetting.meimao + '.png" class="meimao zIndex3" />'
+        + '<img src="assets/images/zuiba/TYzui' + defaultSetting.zui + '.png" class="zui zIndex3">'
+        + '<img src="assets/images/yanjing/TYyanjing' + defaultSetting.yanjing + '.png" class="yanjing zIndex3" />';
+    if(defaultSetting.bizi) {
+        faceHtml += '<img src="assets/images/bizi/TYbizi' + defaultSetting.bizi + '.png" class="bizi zIndex3" />';
+    }
+    if(defaultSetting.tezheng) {
+        faceHtml += '<img src="assets/images/tezheng/TYtezheng' + defaultSetting.tezheng + '.png" class="tezheng zIndex3" />';
+    }
+    if(defaultSetting.daiyanjing) {
+        faceHtml += '<img src="assets/images/daiyanjing/TYdaiyanjing' + defaultSetting.daiyanjing + '.png" class="daiyanjing zIndex4" />';
+    }
+    // h5暂时没有帽子
+//    if(defaultSetting.maozi) {
+//        faceHtml += '<img src="assets/images/daiyanjing/TYdaiyanjing' + defaultSetting.maozi + '.png" class="daiyanjing zIndex4" />';
+//    }
+    return faceHtml;
+}
+function getBaseFace(defaultSetting) {
+    var faceHtml ='<img src="assets/images/lian/TYlian' + defaultSetting.lian + '.png" class="lian zIndex2" id="lian" />';
+    if(defaultSetting.toufahou) {
+        faceHtml += '<img src="assets/images/toufahou/TYtoufahou' + defaultSetting.toufahou + '.png" class="toufahou zIndex1" id="toufahou" />';
+    }
+    if(defaultSetting.toufaqian) {
+        faceHtml += '<img src="assets/images/toufaqian/TYtoufaqian' + defaultSetting.toufaqian + '.png" class="toufaqian zIndex5" id="toufaqian" />';
+    }
+    return faceHtml;
+}
+
 initFaceFromParams();
 $(document).ready(function() {
     resizeContainer();
@@ -126,7 +195,6 @@ $(document).ready(function() {
             $('#gameScreen').hide();
             $('#result .info .title .hit-count').html(index);
             $('#result').show();
-//            console.log('end')
         }
     });
     game.setTimer(timer);
