@@ -145,9 +145,12 @@ h2, b, p{margin:0;}
 }
 .title .info{
     font-size:40px;
-    color:#f40707;
+    color:#000;
     font-weight:normal;
     line-height:80px;
+}
+.title .info span{
+    color:#f40707;
 }
 
 #play{
@@ -298,31 +301,24 @@ h2, b, p{margin:0;}
 #result{}
 #result .info{
     position:absolute;
-    left:170px;
+    left:0px;
     top: 73px;
 }
 #result .info .title{
+    font-family:"微软雅黑";
     background:none;
-    font-size:40px;
-    line-height:80px;
-    height:80px;
-    text-align:left;
+    font-size:36px;
+    line-height:60px;
+    text-align:center;
 }
 #result .info .title .name{
-    font-family:"黑体";
-    font-size:40px;
-    color:#000;
+    font-size:36px;
+    line-height:60px;
+    font-family:"微软雅黑";
 }
-#result .info .title .hit-count{
+#result .info .title .hit-count, #result .info .title .paiming{
+    font-size:50px;
     color:#f40707;
-}
-#result .info .content{
-    font-size:24px;
-    line-height:36px;
-    font-family:"黑体";
-}
-#result .info .content span{
-    color:#6aaaf7;
 }
 #result .figure{
     top: 310px;
@@ -380,7 +376,7 @@ h2, b, p{margin:0;}
 
 .shang{
     position:absolute;
-    z-index: 17;
+    z-index: 15;
 }
 .shang1{
     top: 255px;

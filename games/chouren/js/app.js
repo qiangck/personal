@@ -31,7 +31,7 @@ function initFaceFromParams(){
         yanjing: 0,
 //        daiyanjing: 1,
         zui: 0,
-        shang: 4,
+        shang: 1,
         liancolorr: 255,
         liancolorg: 255,
         liancolorb: 255,
@@ -50,7 +50,8 @@ function initFaceFromParams(){
     for(var i=0; i<nameNodes.length; i++) {
         nameNodes[i].innerHTML = decodeURIComponent(RC.UTILS.UrlParam.username);
     }
-    document.querySelector('#gameIntro .title .info').innerHTML = RC.UTILS.UrlParam.shounve;
+    // TODO 通过获取数据来显示
+    document.querySelector('#gameIntro .title .info').innerHTML = '被<span>111</span>人打过，人品榜<span>222</span>名'
     if(defaultSetting.sex === 'woman') {
         $('#gameIntro .shenti img').attr('src', 'assets/images/renkaishinv.png');
         $('#gameScreen .shenti img').attr('src', 'assets/images/dongzuo/donghuaW1.png');
@@ -116,7 +117,14 @@ function initFaceFromParams(){
 function getStartFace(defaultSetting, baseHtml, level) {
     //头发 鼻子 特征 眼镜 胡子 帽子
     var faceHtml = baseHtml;
-    switch(parseInt(level)) {
+    if(typeof level === 'string') {
+        level = parseInt(level);
+    }
+    level = level -1;
+    if(level == 0) {
+        return getGameFace(defaultSetting, baseHtml);
+    }
+    switch(level) {
         case 1:
             faceHtml = faceHtml +  '<img src="assets/images/meimao/TYmeimao' + defaultSetting.meimao + '.png" class="meimao zIndex3" />'
                     + '<img src="assets/images/yanjing/TYyanjing' + defaultSetting.yanjing + '.png" class="yanjing zIndex3" />';
