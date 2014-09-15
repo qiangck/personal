@@ -220,6 +220,8 @@ $(document).ready(function() {
         $('#gameIntro').hide();
         $('#result').hide();
         $('#gameScreen').show();
+        $('#score').html('0<span>次</span>');
+        $('#timer').html('60<span>秒</span>');
         prepareAnimate(true, 0,  function(){
             game.replay();
         });
