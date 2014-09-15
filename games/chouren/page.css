@@ -375,6 +375,6 @@ h2, b, p{margin:0;}
     100% {-webkit-transform:scale(1) rotate(0deg);display:block;}
 }
 #gameScreen .shake{
-    -webkit-animation:shake 1s 1 linear ;
+    /*-webkit-animation:shake 1s 1 linear ;*/
     display:block;
 }
