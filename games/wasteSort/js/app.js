@@ -21,10 +21,10 @@ function resizeContainer() {
 		'transform': 'scale(' + scale + ', ' + scale + ')'
 	};
 	$('.container').css(cssObj);
-//	$('.wrap').css({
-//		top: '-' + 50/scale + '%',
-//		left: '-' + 50/scale + '%'
-//	});
+	$('.wrap').css({
+		top: '-' + 50/scale + '%',
+		left: '-' + 50/scale + '%'
+	});
 }
 window.onerror = function(e) {
 	alert(e.message || e);
