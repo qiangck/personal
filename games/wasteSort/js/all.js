@@ -1420,3 +1420,1003 @@ window.Zepto = Zepto
     })
   }
 })(Zepto);
+
+/**
+ * zepto.dragdrop.js v0.1.1 - Drag & Drop for Zepto with touch and mouse events.
+ *
+ * Copyright 2012, Michal Kuklis
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ *
+ **/
+/*if(typeof Zepto === 'undefined' || !Zepto){
+	var Zepto = jQuery;
+}*/
+(function($) {
+
+  "use strict";
+
+  var draggable; // current draggable
+
+  function Draggable(el, opts) {
+    var eventName = ($.touchable) ? "touchstart" : "mousedown";
+    var o = el.offset();
+
+    this.opts = opts || {};
+    this.ctx = this.opts.context || el;
+    this.pos = { left: o.left, top: o.top };
+
+    if (this.opts.selector) {
+      el.on(eventName, this.opts.selector, $.proxy(this.start, this));
+    }
+    else {
+      el.on(eventName, $.proxy(this.start, this));
+    }
+  }
+
+  Draggable.prototype = {
+    constructor: Draggable,
+
+    start: function (e) {
+      var offset, zIndex;
+      if (!draggable) {
+        this.curEl = $(e.currentTarget);
+        offset = this.curEl.offset();
+        this.curEl.data(offset);
+        this.setRevert(offset);
+        this.setZIndex(1);
+        this.opts.start && this.opts.start.call(this.ctx, this.curEl);
+        this.curEl.trigger('draggable:start', [e, this.curEl]);
+
+        this.setPosition(e);
+        draggable = this;
+        redraw();
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+    },
+
+    stop: function (e) {
+		console.log('stop')
+		console.log(e);
+      if (draggable) {
+		try{
+        e.el = this.curEl;
+        this.setZIndex(-1);
+        this.opts.stop && this.opts.stop.call(this.ctx, this.curEl);
+        this.curEl.trigger('draggable:end', [e, this.curEl]);
+
+        redraw();
+		}catch(e){}
+        draggable = null;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+    },
+
+    drag: function () {
+      this.curEl.css(this.pos);
+      this.opts.drag && this.opts.drag.call(this.ctx, this.curEl);
+    },
+
+    setPosition: function (e) {
+		//console.log(e);
+      // 临时解决方案
+      var touch = (e.touches.length > 0) ? e.touches[0] : e.changedTouched[0]//[0](e.targetTouches && e.targetTouches[0]) || e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+     // var touch = (e.targetTouches && e.targetTouches[0]) || e.originalEvent.touches[0] || e.originalEvent.changedTouches[0];
+      var element = document.elementFromPoint(touch.pageX, touch.pageY);
+      if(typeof this.opts.overDrop === 'function' && element && $(element).hasClass(this.opts.dropClassName)) {
+        this.opts.overDrop.call(this.ctx, this.curEl, element);
+      } else {
+        if(typeof this.opts.leaveDrop === 'function') {
+          this.opts.leaveDrop.call(this.ctx, this.curEl, $(this.opts.dropClassName));
+        }
+      }
+      var pos = $.getPos(e);
+      var h = this.curEl.height();
+      var w = this.curEl.width();
+      var offset = this.findOffset() || 2;
+      this.pos = {
+        left: (pos.x - w / offset - this.curEl.parent().offset().left)/window.scale,
+        top: (pos.y - h / offset - this.curEl.parent().offset().top )/window.scale
+      };
+      e.preventDefault();
+      e.stopPropagation();
+    },
+
+    setRevert: function (offset) {
+      if (this.opts.revert && !this.curEl.data('revert')) {
+        this.curEl.data({
+          rtop: offset.top,
+          rleft: offset.left,
+          revert: this.opts.revert });
+      }
+    },
+
+    findOffset: function () {
+      var ow = this.curEl.data('width');
+      var nw = this.curEl.width();
+
+      return  (ow > nw) ? 2 * ow / nw : 2 * nw / ow;
+    },
+
+    setZIndex: function (val) {
+      var zIndex = parseInt(this.curEl.css('z-index'), 10);
+      this.curEl.css('z-index', zIndex + val);
+    }
+  };
+
+  // helpers
+  function redraw() {
+    if (draggable) {
+      draggable.drag();
+      window.requestAnimationFrame(redraw);
+    }
+    return false;
+  }
+
+  // draggable plugin
+  $.fn.draggable = function (options) {
+    return this.each(function () {
+      var $this = $(this);
+      var data = $this.data('draggable');
+      if (!data) {
+        data = new Draggable($this, options);
+        $this.data('draggable', data);
+      }
+    });
+  }
+
+  $(function () {
+    //TODO: support unbind
+    $(document).on("mousemove touchmove mouseup touchend", function (e) {
+      if (!draggable) return;
+      switch (e.type) {
+        case "mousemove":
+        case "touchmove":
+          draggable.setPosition(e);
+          break;
+        case "mouseup":
+        case "touchend":
+          draggable.stop(e);
+          break;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+    });
+  });
+
+})(Zepto);
+
+/**
+ * zepto.dragdrop.js v0.1.1 - Drag & Drop for Zepto with touch and mouse events.
+ *
+ * Copyright 2012, Michal Kuklis
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ *
+ **/
+
+(function ($) {
+
+  "use strict";
+
+  function Droppable(el, opts) {
+    this.el = el;
+    this.opts = opts || {};
+    this.ctx = this.opts.context || this.el;
+  }
+
+  Droppable.prototype.drop = function (e, pos) {
+    var isDrop = true;
+    var dragEl = $(e.el);
+
+    if (this.opts.drop) {
+      isDrop &= this.opts.drop.call(this.ctx, e, dragEl, this.el, pos);
+    }
+
+    isDrop && this.el.trigger('droppable:drop', [e, dragEl, this.el, pos]);
+
+    // only revert if element was not dropped
+    if (!isDrop && dragEl.data('revert')) {
+      this.revert(dragEl);
+    }
+  };
+
+  Droppable.prototype.revert = function (dragEl) {
+    var left = dragEl.data('rleft');
+    var top = dragEl.data('rtop');
+    var rev = dragEl.data('revert');
+
+    if ($.isFunction(rev)) {
+      rev.call(dragEl);
+    }
+
+    dragEl.css({ left: left, top: top });
+  };
+
+
+  // helpers
+  function dropOrRevert(e) {
+    var droppable, pos;
+    var dragEl = e.el;
+
+    if (dragEl) {
+      pos = $.getPos(e);
+      droppable = findDroppable(e, pos);
+      if (droppable) {
+        droppable.drop(e, pos);
+      }
+      else if (dragEl.data('revert')){
+        Droppable.prototype.revert(dragEl);
+      }
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  function findDroppable(e, pos) {
+    var droppable, dropEl;
+    var dragEl = e.el;
+
+    dragEl.css({ display: 'none' });
+    dropEl = $.elementFromPoint(pos.x, pos.y);
+    dragEl.css({ display: 'block' });
+    return $(dropEl).data('droppable');
+  }
+
+  // droppable api
+  $.fn.droppable = function (options) {
+    return this.each(function () {
+      var $this = $(this);
+      var droppable = $this.data('droppable');
+      if (!droppable) {
+        droppable = new Droppable($this, options);
+        $this.data('droppable', droppable);
+      }
+    });
+  };
+
+  // bind mouse/touch event
+  $(function () {
+    $(document).on("mouseup touchend", dropOrRevert);
+  });
+
+})(Zepto);
+
+//     Zepto.js
+//     (c) 2010-2012 Thomas Fuchs
+//     Zepto.js may be freely distributed under the MIT license.
+
+// The following code is heavily inspired by jQuery's $.fn.data()
+
+;(function($) {
+  var data = {}, dataAttr = $.fn.data, camelize = $.zepto.camelize,
+    exp = $.expando = 'Zepto' + (+new Date())
+
+  // Get value from node:
+  // 1. first try key as given,
+  // 2. then try camelized key,
+  // 3. fall back to reading "data-*" attribute.
+  function getData(node, name) {
+    var id = node[exp], store = id && data[id]
+    if (name === undefined) return store || setData(node)
+    else {
+      if (store) {
+        if (name in store) return store[name]
+        var camelName = camelize(name)
+        if (camelName in store) return store[camelName]
+      }
+      return dataAttr.call($(node), name)
+    }
+  }
+
+  // Store value under camelized key on node
+  function setData(node, name, value) {
+    var id = node[exp] || (node[exp] = ++$.uuid),
+      store = data[id] || (data[id] = attributeData(node))
+    if (name !== undefined) store[camelize(name)] = value
+    return store
+  }
+
+  // Read all "data-*" attributes from a node
+  function attributeData(node) {
+    var store = {}
+    $.each(node.attributes, function(i, attr){
+      if (attr.name.indexOf('data-') === 0)
+        store[camelize(attr.name.replace('data-', ''))] = attr.value
+    })
+    return store
+  }
+
+  $.fn.data = function(name, value) {
+    return value === undefined ?
+      // set multiple values via object
+      $.isPlainObject(name) ?
+        this.each(function(i, node){
+          $.each(name, function(key, value){ setData(node, key, value) })
+        }) :
+        // get value from first element
+        this.length === 0 ? undefined : getData(this[0], name) :
+      // set value on all elements
+      this.each(function(){ setData(this, name, value) })
+  }
+
+  $.fn.removeData = function(names) {
+    if (typeof names == 'string') names = names.split(/\s+/)
+    return this.each(function(){
+      var id = this[exp], store = id && data[id]
+      if (store) $.each(names, function(){ delete store[camelize(this)] })
+    })
+  }
+})(Zepto);
+
+(function ($) {
+
+  "use strict";
+
+  // for testing
+  var phantom = navigator.userAgent.match(/PhantomJS/);
+
+  $.touchable = (function () {
+    // http://modernizr.github.com/Modernizr/touch.html
+    return !!('ontouchstart' in window) && !phantom
+  })();
+
+  // helpers
+  $.getPos = function (e) {
+    var pos = {}, touch;
+
+    if ($.touchable) {
+	  try {
+      touch = (e.targetTouches.length) ? e.targetTouches[0] : e.changedTouches[0];
+	  } catch(error) {
+	  	touch = (e.originalEvent.touches.length) ? e.originalEvent.touches[0] : e.originalEvent.changedTouches[0];
+	  }
+      pos = { x: touch.pageX, y: touch.pageY };
+    }
+    else {
+      pos = { x: e.pageX, y: e.pageY };
+    }
+
+    return pos;
+  }
+
+  var doc = document;
+
+  $.elementFromPoint = function (x, y) {
+    var moved = false;
+    var yo = window.pageYOffset;
+    var xo = window.pageXOffset;
+    var h = window.innerHeight;
+    var w = window.innerWidth;
+
+    if (yo > 0) {
+      moved = (!doc.elementFromPoint(0, yo + h - 1));
+    } else if (xo > 0) {
+      moved = (!doc.elementFromPoint(xo + w - 1, 0));
+    }
+
+    return (moved) ?
+      doc.elementFromPoint(x - xo, y - yo) :
+      doc.elementFromPoint(x, y);
+  }
+
+   // https://gist.github.com/997619
+  //window.requestAnimationFrame = function(a,b){while(a--&&!(b=window["oR0msR0mozR0webkitR0r".split(0)[a]+"equestAnimationFrame"]));return b||function(a){setTimeout(a,15)}}(5);
+
+})(Zepto);
+
+
+
+// 总控制
+var Game = function(options){
+	this.opts = options;
+	this._score = 0;
+	this._hitCombo = 0;
+	this._maxCombo = 0;
+	this.init();
+	// 游戏开关
+};
+
+/**
+ * initialize
+ * @return {[type]} [description]
+ */
+Game.prototype.init = function() {
+	var i=0;
+	var $parent = null;
+	for(; i<this.opts.itemSize; i++) {
+		$(this.opts.itemWrapSelector).append('<div class="rubbish-item" ></div>');
+		$parent = $(this.opts.itemContainerSelector).eq(i);
+		this.addItem($parent);
+	}
+};
+
+Game.prototype.assetLoadStatus = false;
+Game.prototype.loadImg = function(callback) {
+	var loader = new AssetLoad({
+		success: callback
+	});
+
+	this.categoryList.forEach(function(obj, index) {
+		var length = obj.size;
+		var i = 1;
+		var imgUrl;
+		for( ; i<length+1; i++) {
+			var index = i<10 ? ('0'+i) : i;
+			imgUrl = 'images/' + obj.category + index + '.png';
+			loader.preLoadImg(imgUrl);
+		}
+	});
+	var binsList = [
+		'images/recycled-close.png',
+		'images/recycled-open.png',
+		'images/harmful-close.png',
+		'images/harmful-open.png',
+		'images/other-close.png',
+		'images/other-open.png',
+		'images/kitchen-close.png',
+		'images/kitchen-open.png'
+	];
+	binsList.forEach(function(obj, index) {
+		loader.preLoadImg(obj);
+	});
+	loader.load();
+
+}
+
+Game.prototype.setScore = function(score) {
+	this._score = score;
+};
+
+Game.prototype.getScore = function() {
+	return this._score;
+};
+
+
+Game.prototype.setTimer = function(timer) {
+	this.timer = timer;
+}
+
+/**
+ * drag rubbish to bins
+ * @param  {[ElementObject]} dragEl [description]
+ * @param  {[ElementObject]} dropEl [description]
+ * @return {[type]}        [description]
+ */
+Game.prototype.dropTo = function(dragEl, dropEl) {
+	if(this.timer.running === false) {
+		return;
+	}
+	if($(dragEl).data('category') === $(dropEl).data('category')) {
+		this.goal(dragEl, dropEl);
+	} else {
+		this.failed(dragEl, dropEl);
+	}
+	this.refreshItem(dragEl.parent());
+};
+
+Game.prototype.categoryList = [
+	{
+		category: 'recycled',
+		baseUrl: 'images/recycled',
+		size: 21
+	}, {
+		category: 'harmful',
+		baseUrl: 'images/harmful',
+		size: 7
+	}, {
+		category: 'other',
+		baseUrl: 'images/other',
+		size: 1
+	}, {
+		category: 'kitchen',
+		baseUrl: 'images/kitchen',
+		size: 8
+	}];
+
+Game.prototype.refreshItem = function($parent) {
+	this.removeItem($parent);
+	this.addItem($parent);
+};
+Game.prototype.removeItem = function($parent) {
+	$parent[0].removeChild($parent.find('img')[0]);
+};
+
+Game.prototype.addItem = function($parent) {
+	var cateList = this.categoryList;
+	var index = Math.floor(Math.random()*cateList.length);
+	var imgIndex = Math.ceil(Math.random()*cateList[index].size);
+	var imgHtml = '';
+	if(imgIndex<10) {
+		imgIndex =  '0'+imgIndex;
+	}
+	imgHtml = '<img class="itemAnimation" src="images/' + cateList[index].category + imgIndex + '.png" data-category="' + cateList[index].category + '" >';
+ 	$parent.append(imgHtml);
+};
+/**
+ * 成功得分
+ * @return {[type]} [description]
+ */
+Game.prototype.goal = function(dragEl, dropEl) {
+	if(this._hitCombo > this._maxCombo) {
+		this._maxCombo = this._hitCombo;
+	}
+	this.setScore(this._score + this._hitCombo + 1);
+	this._hitCombo ++;
+	Game.View.setScore(this._score);
+	Game.View.setHitCombo(this._hitCombo);
+	Game.View.changeStatus(dropEl, true);
+};
+
+/**
+ * 失败
+ * @return {[type]} [description]
+ */
+Game.prototype.failed = function(dragEl, dropEl) {
+	this._hitCombo = 0;
+	this.timer.doMinus();
+	Game.View.setHitCombo(this._hitCombo);
+	Game.View.changeStatus(dropEl, false);
+};
+
+/**
+ * start the game
+ * @return {[type]} [description]
+ */
+Game.prototype.start = function() {
+	var that = this;
+	if(this.timer.running === true) {
+		console && console.log('游戏正在进行，请勿作弊.')
+		return ;
+	}
+	if(!that.assetLoadStatus) {
+		$('#gameIntro .content').css('visibility', 'hidden');
+		$('#prograss').show();
+		this.loadImg(function(){
+			that.assetLoadStatus = true;
+			console.log(123);
+			go();
+		});
+	} else {
+		console.log('no load');
+		go();
+	}
+	function go(){
+		if(that.timer != null) {
+			$('#gameIntro').hide();
+			$('#gameScreen').show();
+			that.timer.run();
+		}
+	}
+};
+
+Game.prototype.reset = function() {
+	this._score = 0;
+	this._hitCombo = 0;
+	this._maxCombo = 0;
+	Game.View.setScore(this._score);
+	Game.View.setHitCombo(this._hitCombo);
+};
+
+Game.prototype.replay = function() {
+	console && console.log('重启游戏.');
+	try{
+		this.reset();
+		this.timer.reset();
+		this.start();
+	} catch(e) {
+		console.log(e.stack)
+	}
+};
+
+Game.Utils = Game.Utils || {};
+
+Game.prototype.stop = function() {
+	this.timer.running = false;
+};
+/**
+ * 视图控制
+ * @type {Object}
+ */
+Game.View = {
+	scoreTimeId : null,
+	setTimer: function(current, sum) {
+		var remain = sum - current;
+		$('#timer .numb').html('00:' + (remain<10 ? ('0' + remain ): remain));
+		$('#gameScreen .bottom .progress-wrap .progress').width(Math.floor(remain/sum*100) + '%');
+	},
+	setHitCombo: function(hitCombo) {
+		$('#hitCombo').html(hitCombo);
+	},
+	setScore: function(score) {
+		// 补零方法
+	    var len = score.toString().length;
+	    while(len < 3) {
+	        score = "0" + score;
+	        len++;
+	    }
+		$('#score').html(score);
+	},
+	/**
+	 * 得分状态，true显示成功图标，false显示X
+	 * @param  {[type]} bScored [description]
+	 * @return {[type]}         [description]
+	 */
+	changeStatus: function(target, bScored) {
+		// console.log(target);
+		var $parent = $(target).parent();
+		var childSelector = bScored ? '.scored' : '.failed';
+		$parent.find(childSelector).show();
+		if(Game.View.scoreTimeId !== null) {
+			clearTimeout(Game.View.scoreTimeId);
+		}
+		Game.View.scoreTimeId = setTimeout(function() {
+			Game.View.hideStatus();
+		}, 1000);
+	},
+	hideStatus: function() {
+		$('.scored').hide();
+		$('.failed').hide();
+	},
+	reset: function() {
+		$('#timer').html('60<span>秒</span>');
+	}
+};
+
+
+// 计时器
+Game.Time = function(opt) {
+	this.init(opt);
+};
+
+Game.Time.prototype.init = function(opt) {
+	this.sum = opt.sum || 60;
+	this.add = opt.add;
+	this.minus = opt.minus;
+	this.countFunc = opt.countFunc;
+	this.end = opt.end;
+	this.timeId = null;
+	this.running = false;
+	this.current = 0;
+};
+
+Game.Time.prototype.run = function() {
+	var that = this;
+	this.running = true;
+	that.timeId = setTimeout(function(){
+		if(that.current < that.sum) {
+			that.current ++
+			that.run.call(that);
+			that.countFunc(that.current, that.sum);
+		} else {
+			that.running = false;
+			console && console.log('game over');
+			if(typeof that.end === 'function') {
+				that.end.call(that);
+			}
+		}
+	}, 1000)
+};
+Game.Time.prototype.stop = function() {
+	clearTimeout(this.timeId);
+};	
+
+Game.Time.prototype.reset = function() {
+	this.running = false;
+	clearTimeout(this.timeId);
+	this.current = 0;
+	Game.View.reset();
+};
+Game.Time.prototype.doMinus = function() {
+	this.current += this.minus;
+	if(this.current > this.sum) {
+		this.current = this.sum;
+	}
+	this.countFunc(this.current, this.sum);
+};
+
+/**
+ * 资源加载器
+ * @return {[type]} [description]
+ */
+var AssetLoad = function(conf){
+	this.conf = conf;
+	this.urlList = [];
+	this.sum = 0;
+	this.current = 0;
+};
+AssetLoad.prototype.preLoadImg = function(imgUrl) {
+	if(this.urlList.indexOf(imgUrl) < 0) {
+		this.urlList.push(imgUrl);
+	}
+};	
+AssetLoad.prototype.load = function() {
+	var that = this;
+	that.current = 0;
+	that.urlList.forEach(function(imgUrl, index) {
+		that.loadImage(imgUrl);
+	});
+};
+AssetLoad.prototype.loadImage = function(imgUrl) {
+	var that = this;
+	var image = new Image();
+	image.onload = function(){
+		that.showPrograss();
+	};
+	image.onerror = function(){
+		that.showPrograss();
+	};
+	image.src = imgUrl;
+};
+AssetLoad.prototype.showPrograss = function() {
+	this.current ++;
+	var prograss = this.current / this.urlList.length * 100;
+	var prograssElem = document.querySelector('#prograss span');
+	//console.log(prograssElem);
+	
+	$('.prograss-wrap div').css('width', (prograss|0) + '%');
+	prograssElem.innerHTML = (prograss|0) + '%';
+	// prograssElem.innerHTML = prograss; 
+	//console.log('prograss: ' + (prograss|0));
+	if(this.current == this.urlList.length) {
+		this.success();
+	}
+};	
+AssetLoad.prototype.success = function() {
+	if(typeof this.conf.success === 'function') {
+		this.conf.success();
+	}
+};
+
+/*addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); 
+function hideURLbar(){ 
+		window.scrollTo(0,1); 
+} */
+function resizeContainer() {
+	var widthScale = $(window).width()/480;
+	var heightScale = $(window).height()/320;
+	if(heightScale < widthScale) {
+		$(document.body).addClass('bg-body');
+	}
+	var scale = Math.min(widthScale, heightScale);
+	var realWidth = 480 * scale;
+	var realHeight = 320 * scale;
+	var transformOrigin = [($(window).width()-realWidth)/2, ($(window).height()-realHeight)/2, 0];
+	window.scale = scale;
+	var cssObj = {
+		'-webkit-transform': 'scale(' + scale + ', ' + scale + ')',
+		'-ms-transform': 'scale(' + scale + ', ' + scale + ')',
+		'-o-transform': 'scale(' + scale + ', ' + scale + ')',
+		'transform': 'scale(' + scale + ', ' + scale + ')'
+	};
+	$('.container').css(cssObj);
+//	$('.wrap').css({
+//		top: '-' + 50/scale + '%',
+//		left: '-' + 50/scale + '%'
+//	});
+}
+window.onerror = function(e) {
+	alert(e.message || e);
+};
+function scroll(wrapSelector, box1Selector, box2Selector) {
+	var speed=50;
+	$(box2Selector)[0].innerHTML=$(box1Selector)[0].innerHTML;
+	function roll(){
+		if($(box2Selector)[0].offsetTop-$(wrapSelector)[0].scrollTop<0)  {  //当滚动到第二部分的顶部位置时
+			$(wrapSelector)[0].scrollTop-=$(box1Selector)[0].offsetHeight; //重置至第一部分顶部位置,相当于$$('box').scrollTop=0;
+		}
+		else{
+			$(wrapSelector)[0].scrollTop++ ;
+		}
+	}
+	var start=setInterval(roll,speed);
+}
+
+
+
+
+$(document).ready(function() {
+	resizeContainer();
+	$('#gameIntro').append('<div id="prograss"><div class="prograss-wrap"><div><img src="images/prograss-bar.png"></div></div>正在加载资源……<span></span></div>');
+  $(window).bind('orientationchange',function(e){
+		resizeContainer();
+  });
+  var scoreTipMap = [{
+    level: 1,
+    limit: 1500,
+    msg: '恭喜你成为垃圾分类大师，有没有一点小激动呢~多，中奖机会越大！<a href="http://env.people.com.cn/n/2014/0509/c383717-24997751.html">抽奖规则</a><br>神秘奖品正等着你，分数越高，挑战次数越'
+  }, {
+    level: 2,
+    limit: 600,
+    msg: '恭喜你成为垃圾分类高级学徒，加油向大师迈进吧~<a href="http://env.people.com.cn/n/2014/0509/c383717-24997751.html">抽奖规则</a><br>神秘奖品正等着你，分数越高，挑战次数越多，中奖机会越大！'
+  }, {
+    level: 3,
+    limit: 200,
+    msg: '恭喜你成为垃圾分类中级学徒，加油继续挑战吧~<a href="http://env.people.com.cn/n/2014/0509/c383717-24997751.html">抽奖规则</a><br>神秘奖品正等着你，分数越高，挑战次数越多，中奖机会越大！'
+  }, {
+    level: 4,
+    limit: 50,
+    msg: '恭喜你成为垃圾分类初级学徒，继续加油吧~<a href="http://env.people.com.cn/n/2014/0509/c383717-24997751.html">抽奖规则</a><br>神秘奖品正等着你，分数越高，挑战次数越多，中奖机会越大！'
+  }, {
+    level: 5,
+    limit: -1,
+    msg: '很遗憾，你的分数有点低啊，还要继续努力哦~<a href="http://env.people.com.cn/n/2014/0509/c383717-24997751.html">抽奖规则</a><br>神秘奖品正等着你，分数越高，挑战次数越多，中奖机会越大！'
+  }];
+  function endGame() {
+    var score = game.getScore();
+    var scoreTipMsg = '';
+    for(var i=0; i<scoreTipMap.length; i++) {
+      if(score > scoreTipMap[i].limit) {
+        scoreTipMsg = scoreTipMap[i].msg;
+        break;
+      }
+    }
+    $('#result .result-wrap .content h2 b').html(score + '分');
+    $('#result .content p').html(scoreTipMsg);
+    $('#result').show();
+	$('#gameIntro .content').css({'visibility': 'hidden'});
+	$('#gameIntro').show();
+	$('#gameScreen').hide();
+  }
+  function getRankHtmlFromXml(xmlList) {
+	  var rankList = [];
+    for(var i=0; i<xmlList.length; i++) {
+    	var phone = xmlList[i].phone;
+    	var score = xmlList[i].score;
+    	// console.log(phone)
+    	// console.log(score);
+    	rankList.push('<div class="list-wrap"><div class="serial">' + (i+1) + '</div><div class="phone">' + phone + '</div><div class="score">' + score + '</div></div>');
+    }
+    return rankList.join('');
+  }
+  // 获取周排行
+  $.ajax({
+  	url:'http://fz.people.com.cn/laji/topweekjason.php',
+  	type: 'get',
+	dataType:"jsonp",
+  	success: function(data) {
+		if(typeof data === 'string'){
+			data = JSON.parse(data);
+		}
+  		var weekListHtml = getRankHtmlFromXml(data);
+	    $('#gameIntro .content .weekRank .list-container').html(weekListHtml);
+  		scroll('.weekRank .list-wrap', '.weekRank .list-wrap .week-list1', '.weekRank .list-wrap .week-list2');
+  	},
+  	error: function() {
+  		console.log('error')
+  	}
+  })
+  // 获取总排行
+  $.ajax({
+  	url:'http://fz.people.com.cn/laji/topalljason.php',
+  	type: 'get',
+	dataType:"jsonp",
+  	success: function(data) {
+		if(typeof data === 'string'){
+			data = JSON.parse(data);
+		}
+  		var totalListHtml = getRankHtmlFromXml(data);
+	    $('.totalRank .list-container').html(totalListHtml);
+  		scroll('.totalRank .list-wrap', '.totalRank .list-wrap .week-list1', '.totalRank .list-wrap .week-list2');
+  	},
+  	error: function() {
+  		console.log('error')
+  	}
+  })
+
+  $('#play img').bind('touchend', function() {
+  	//$('#gameIntro').hide();
+//  	$('#gameScreen').show();
+  	game.start();
+  });
+  $('#play img').bind('click', function() {
+  /*	$('#gameIntro').hide();
+  	$('#gameScreen').show();*/
+  	game.start();
+  })
+
+
+	// 初始化游戏
+  var gameOptions = {
+  	itemSize: 16,
+  	itemWrapSelector: '.rubbish-wrap',
+  	itemContainerSelector: '.rubbish-item'
+  };
+  var game = new Game(gameOptions);
+  // 初始化计时器
+	var timer = new Game.Time({
+		add:1, 
+		minus: 5,
+		countFunc: Game.View.setTimer,
+    end: function() {
+      endGame();
+    }
+	});
+	game.setTimer(timer);
+	// 游戏开始
+	// game.start();
+
+	// TODO
+	// 拖拽事件绑定，临时解决方案，后续可以集成到游戏控制中
+  try{
+  var canDrop = false;
+  $('#gameScreen').draggable({
+  	selector: '.rubbish-item img',
+	  start: function (dragEl) {
+			Game.View.hideStatus();
+			$(dragEl).removeClass('itemAnimation');
+			canDrop = false;
+	  },
+	  stop: function (dragEl) {
+	  	$(dragEl).animate({
+	  		left:0,
+	  		top:0
+	  	}, 200);
+		canDrop = true;
+	  },
+	  dropClassName: 'bin',
+	  overDrop: function(dragEl, targetEl) {
+	  	if(!$(targetEl).parent().hasClass('active')) {
+	  		$(targetEl).parent().addClass('active');
+	  	}
+		canDrop = true;
+	  },
+	  leaveDrop: function(){
+	  	$('.bins .active').removeClass('active');
+		canDrop = false;
+	  }
+	});
+	$('#gameScreen .bins .bin').droppable({
+    drop: function (e, dragEl, dropEl) {
+		if(canDrop){
+			game.dropTo(dragEl, dropEl);
+			setTimeout(function() {
+				$('.bins .active').removeClass('active');
+			}, 100);
+		}
+      return true;
+    }
+  });
+  } catch(e){console.log(e);}
+	var bSubmit = false;
+  $('#replay').bind('touchend', function() {
+	bSubmit = false;
+    $('#result').hide();
+	$('#gameIntro').hide();
+	$('#gameScreen').show();
+    if(game) {
+      game.replay();
+    }
+  });
+
+  $('#submit').bind('touchend', function() {
+    if($('#name').val() == ''|| $('#tel').val() == '') {
+      alert("请填写您的信息.");
+      return;
+    }
+	if(bSubmit === true) {
+		alert('请勿重复提交');
+		return;
+	}
+	bSubmit = true;
+    $.ajax({
+      type: 'post',
+      url:'http://fz.people.com.cn/laji/postjason.php?score=' + game.getScore() + '&name=' + $('#name').val() + '&phone=' + $('#tel').val(),
+		dataType:"jsonp",
+      success: function() {
+		  //alert('提交成功.');
+      },
+      error: function() {
+		  //alert('提交成功.');
+      }
+    });
+	alert('提交成功.');
+	
+  });
+  
+}); 
+

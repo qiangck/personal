@@ -16,8 +16,8 @@ h2, b, p{margin:0;}
 .fl{float:left;}
 .fr{float:right;}
 
-.container{top:50%;left:50%;position:relative;transform-origin:center center;width:480px;height:320px;}
-.wrap{top:-50%;left:-50%;position:relative;width:480px;height:320px;background:url(images/bg.jpg) center no-repeat;position:relative;}
+.container{position:relative;transform-origin: 0 0;width:480px;height:320px;}
+.wrap{position:relative;width:480px;height:320px;background:url(images/bg.jpg) center no-repeat;position:relative;}
 #gameIntro, #gameScreen{position:absolute;top:0;left:0;width:480px;height:320px;}
 #gameIntro {display:block;}
 #gameScreen{display:none;}

@@ -8,7 +8,7 @@
 /*if(typeof Zepto === 'undefined' || !Zepto){
 	var Zepto = jQuery;
 }*/
-(function ($) {
+(function($) {
 
   "use strict";
 
