@@ -1,0 +1,93 @@
+@charset "utf-8";
+@keyframes mymove{0%{transform:scale(1) rotate(0deg)}
+25%{transform:scale(1.2) rotate(5deg)}
+50%{transform:scale(1.5) rotate(-5deg)}
+75%{transform:scale(1.2) rotate(5deg)}
+100%{transform:scale(1) rotate(0deg)}}
+@-webkit-keyframes mymove{0%{-webkit-transform:scale(1) rotate(0deg)}
+25%{-webkit-transform:scale(1.2) rotate(5deg)}
+50%{-webkit-transform:scale(1.5) rotate(-5deg)}
+75%{-webkit-transform:scale(1.2) rotate(5deg)}
+100%{-webkit-transform:scale(1) rotate(0deg)}}
+body,html{height:100%;overflow:hidden;padding:0;margin:0;background-color:#fff}
+body{margin:0;padding:0;width:640px;height:960px;-webkit-transform-origin:0 0;-webkit-transform:scale(0.5,.5)}
+li,ol,ul{list-style:none}
+em,i{font-style:normal}
+b,h2,p{margin:0}
+.clearfix:after,.clearfix:before{content:"";display:table}
+.clearfix:after{clear:both;overflow:hidden}
+.clearfix{zoom:1}
+.fl{float:left}
+.fr{float:right}
+.container{position:relative;width:640px;height:960px;-webkit-transform-origin:0 0}
+.wrap{width:640px;height:960px;background:#FFF;position:relative}
+#gameIntro,#gameScreen,#result{position:absolute;top:0;left:0;width:640px;height:960px;display:none}
+#gameIntro{display:block}
+.figure{position:absolute;width:640px;height:600px;top:280px;left:0}
+.lian{position:absolute;left:146px;top:68px;z-index:10}
+.toufahou{position:absolute;left:81px;top:118px;z-index:8}
+.toufaqian{position:absolute;left:47px;top:-105px;z-index:14}
+.bizi{position:absolute;left:281px;top:218px;z-index:11}
+.maozi{position:absolute;left:13px;top:-40px;z-index:15}
+.meimao{position:absolute;left:218px;top:141px;z-index:13}
+.tezheng{position:absolute;left:211px;top:176px;z-index:13}
+.daiyanjing{position:absolute;top:138px;left:175px;z-index:16}
+.yanjing{position:absolute;left:224px;top:185px;z-index:13}
+.zui{position:absolute;left:258px;top:286px;z-index:13}
+.shenti{position:absolute;z-index:9;left:190px;top:442px}
+.title{background:url(assets/images/title-bg.jpg) center no-repeat;width:640px;height:223px;text-align:center;margin-top:40px;font-family:"黑体"}
+.title .touxian{font-size:36px;color:#000;font-weight:400;line-height:68px}
+.title .name{font-size:60px;color:#000;font-weight:700;line-height:60px}
+.title .info{font-size:40px;color:#000;font-weight:400;line-height:80px}
+.title .info span{color:#f40707}
+#play{position:absolute;bottom:35px;left:190px}
+.tips{position:absolute;left:6px;top:388px;z-index:20}
+.copyright{width:640px;position:absolute;left:0;bottom:0;text-align:center;font-size:24px;color:#000}
+#gameScreen .figure{-webkit-transform:scale(0.4);top:184px;z-index:6}
+#gameScreen .gebo{position:absolute;top:10px;z-index:5;left:158px}
+#gameScreen .shenti{top:391px;left:0}
+#gameScreen{display:none}
+#userWrap{width:640px;height:400px;position:relative;margin:0 auto}
+#timer{position:absolute;top:0;left:25px;font-size:72px;line-height:100px;color:#f40707;font-family:"黑体";z-index:5}
+#timer span{font-size:30px;color:#f40707;font-family:"黑体"}
+#score{position:absolute;right:25px;top:0;font-size:100px;line-height:120px;color:#0787f4;font-family:"黑体";z-index:5}
+#score span{font-size:30px;color:#0787f4;font-family:"黑体"}
+#gameScreen .cloud{position:absolute;top:380px;left:0;z-index:3}
+#readyBg{position:absolute;top:0;left:0;z-index:2}
+#gameScreen .download-btn{position:absolute;bottom:50px;right:30px;z-index:20;-webkit-animation:mymove 1s infinite linear}
+#gameScreen .tips{position:absolute;top:910px;left:0;height:30px;width:640px;text-align:center;font-size:24px;font-family:"黑体";z-index:5}
+#userBody{position:absolute;width:200px;height:600px;top:320px;left:220px;z-index:22}
+#gameScreen .pa0{position:absolute;z-index:20;top:500px;left:85px;display:none}
+#gameScreen .pa1{position:absolute;z-index:20;top:524px;left:31px;display:none}
+#gameScreen .pa2{position:absolute;z-index:20;top:235px;left:382px;display:none}
+#gameScreen .pa3{position:absolute;z-index:20;top:476px;left:444px;display:none}
+#result .info{position:absolute;left:0;top:73px}
+#result .info .title{font-family:"微软雅黑";background:0 0;font-size:36px;line-height:60px;text-align:center}
+#result .info .title .name{font-size:36px;line-height:60px;font-family:"微软雅黑"}
+#result .info .title .hit-count,#result .info .title .paiming{font-size:50px;color:#f40707}
+#result .figure{top:310px}
+#result .shenti{top:434px}
+#result .btn-group{position:absolute;width:640px;left:0;bottom:45px;text-align:center}
+#result .btn-group a{margin:0 10px}
+#result .tips{position:absolute;width:640px;left:0;top:920px;text-align:center;font-size:24px;font-family:"黑体";line-height:40px}
+@keyframes shake{0%{transform:scale(1) rotate(0deg);display:block}
+25%{transform:scale(1.2) rotate(5deg);display:block}
+50%{transform:scale(1.5) rotate(-3deg);display:block}
+75%{transform:scale(1.2) rotate(5deg);display:block}
+100%{transform:scale(1) rotate(0deg);display:block}}
+@-webkit-keyframes shake{0%{-webkit-transform:scale(1) rotate(0deg);display:block}
+25%{-webkit-transform:scale(1.2) rotate(5deg);display:block}
+50%{-webkit-transform:scale(1.5) rotate(-3deg);display:block}
+75%{-webkit-transform:scale(1.2) rotate(5deg);display:block}
+100%{-webkit-transform:scale(1) rotate(0deg);display:block}}
+#gameScreen .shake{display:block}
+.shang{position:absolute;z-index:15}
+.shang1{top:255px;left:280px}
+.shang2{top:177px;left:236px}
+.shang3{top:100px;left:192px}
+.shang4{top:75px;left:165px}
+.shang5{top:62px;left:166px}
+.shang6{top:69px;left:141px}
+.shang7{top:50px;left:116px}
+.shang8{top:23px;left:126px}
+.shang9{top:-64px;left:115px}
