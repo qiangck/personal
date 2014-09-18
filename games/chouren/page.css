@@ -17,6 +17,24 @@
     75%  {-webkit-transform:scale(1.2) rotate(5deg);}
     100% {-webkit-transform:scale(1) rotate(0deg);}
 }
+/*下载按钮动画*/
+@keyframes btnAnimate
+{
+    0%   {transform:scale(1) rotate(0deg);}
+    25%  {transform:scale(1.1) rotate(5deg);}
+    50%  {transform:scale(1.2) rotate(-5deg);}
+    75%  {transform:scale(1.1) rotate(5deg);}
+    100% {transform:scale(1) rotate(0deg);}
+}
+
+@-webkit-keyframes btnAnimate /* Safari 和 Chrome */
+{
+    0%   {-webkit-transform:scale(1) rotate(0deg);}
+    25%  {-webkit-transform:scale(1.1) rotate(5deg);}
+    50%  {-webkit-transform:scale(1.2) rotate(-5deg);}
+    75%  {-webkit-transform:scale(1.1) rotate(5deg);}
+    100% {-webkit-transform:scale(1) rotate(0deg);}
+}
 
 
 /* CSS Document */
@@ -296,8 +314,72 @@ h2, b, p{margin:0;}
     display:none;
 }
 
+#gameScreen .btn-group{
+    position: absolute;
+    width: 640px;
+    left:0;
+    bottom: 45px;
+    text-align:right;
+    z-index:20;
+}
+#gameScreen .btn-group a{
+    margin:0 10px;
+    -webkit-animation:btnAnimate 1s infinite linear ;
+}
 
-/*结束页*/
+#gameScreen .countdown{
+    position:absolute;
+    top:400px;
+    left: 0;
+    z-index:20;
+    text-align:center;
+    width:640px;
+    font-size:180px;
+    color:#f40707;
+}
+@keyframes fontAnimate1
+{
+    0%   {transform:scale(1.9);}
+    20%  {transform:scale(1.6);}
+    40%  {transform:scale(1.3);}
+    60%  {transform:scale(1);}
+    100% {transform:scale(1);}
+}
+
+@-webkit-keyframes fontAnimate1 /* Safari 和 Chrome */
+{
+    0%   {-webkit-transform:scale(1.8);-webkit-text-shadow: 1px 1px 1px #000;}
+    20%  {-webkit-transform:scale(1.6);-webkit-text-shadow: 1px 1px 1px #333;}
+    40%  {-webkit-transform:scale(1.3);-webkit-text-shadow: 1px 1px 1px #666;}
+    60%  {-webkit-transform:scale(1);-webkit-text-shadow: 1px 1px 1px #999;}
+    100% {-webkit-transform:scale(1);-webkit-text-shadow: 1px 1px 1px #ddd;}
+}
+/*下载按钮动画*/
+@keyframes fontAnimate2
+{
+    0%   {transform:scale(1) ;}
+    25%  {transform:scale(1.1) ;}
+    50%  {transform:scale(1.2) ;}
+    75%  {transform:scale(1.1);}
+    100% {transform:scale(1) ;}
+}
+
+@-webkit-keyframes fontAnimate2 /* Safari 和 Chrome */
+{
+    0%   {-webkit-transform:scale(1);}
+    25%  {-webkit-transform:scale(1.1);}
+    50%  {-webkit-transform:scale(1.2) ;}
+    75%  {-webkit-transform:scale(1.1) ;}
+    100% {-webkit-transform:scale(1) ;}
+}
+#gameScreen .hit-count-run{
+    -webkit-animation: fontAnimate2 0.05s 1 linear;
+}
+#gameScreen .countdown-run{
+    -webkit-animation: fontAnimate1 1s infinite linear;
+}
+
+/*-------------------结束页-------------------*/
 #result{}
 #result .info{
     position:absolute;
@@ -335,8 +417,11 @@ h2, b, p{margin:0;}
     bottom: 45px;
     text-align:center;
 }
-#result .btn-group a{
-    margin:0 10px;
+#result .btn-group a {
+    margin: 0 10px;
+}
+#result .btn-group a:nth-child(1), #result .btn-group a:nth-child(2){
+    -webkit-animation:btnAnimate 1s infinite linear ;
 }
 #result .tips{
     position:absolute;

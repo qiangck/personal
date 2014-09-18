@@ -222,7 +222,9 @@ $(document).ready(function() {
         $('#gameScreen').show();
         $('#score').html('0<span>次</span>');
         $('#timer').html('60<span>秒</span>');
+        $('#gameScreen .countdown').addClass('countdown-run')
         prepareAnimate(true, 0,  function(){
+            $('#gameScreen .countdown').removeClass('countdown-run').hide();
             game.replay();
         });
     });
@@ -231,6 +233,7 @@ $(document).ready(function() {
         $('#gameIntro').hide();
         $('#result').hide();
         $('#gameScreen').show();
+        $('#gameScreen .countdown').addClass('countdown-run')
         prepareAnimate(true, 0,  startGame);
     }
 
@@ -243,6 +246,9 @@ $(document).ready(function() {
             }
             return;
         }
+        if(timeDelay%1000 === 0) {
+            $('#gameScreen .countdown').html(3 -timeDelay/1000);
+        }
         setTimeout(function(){
             prepareAnimate(!bShow, timeDelay + timeOut, callback);
         }, timeOut);
@@ -254,6 +260,7 @@ $(document).ready(function() {
     }
 
     function startGame() {
+        $('#gameScreen .countdown').removeClass('countdown-run').hide();
         game.start();
         var slide = new RC.Slide({
             elemQuery: 'body',
