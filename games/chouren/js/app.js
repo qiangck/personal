@@ -331,9 +331,6 @@ $(document).ready(function() {
     }
 
     function playAudio(sex) {
-//        if(document.querySelector('#audio')) {
-//            return;
-//        }
         var audio = document.createElement('audio');
         audio.src= "assets/audio/" + sex + '/' + Math.round(Math.random()) + '.mp3';
         audio.id = 'audio';
@@ -358,7 +355,7 @@ $(document).ready(function() {
             $('#gameScreen .pa' + paIndex).hide();
         },200);
         showWhip(dir);
-        playAudio(sex);
+//        playAudio(sex);
     }
     // 啪啪文字出现坐标范围
     var paPosition = {
