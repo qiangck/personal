@@ -51,6 +51,7 @@ RC.Slide.prototype.cancel = function() {
     });
 };
 
+
 /**
  * touch start事件监听
  * @param e
@@ -167,5 +168,8 @@ RC.UTILS = {
     mergerNew: function(a, b){
         var c = RC.UTILS.merger({}, a);
         return RC.UTILS.merger(c, b);
+    },
+    removeTouchHandler: function(selector, type, handler) {
+        document.querySelector(selector).removeEventListener(type, handler, false);
     }
 }

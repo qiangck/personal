@@ -36,7 +36,7 @@ gulp.task('css', function() {
 
 // 合并，压缩文件
 gulp.task('scripts', function() {
-    gulp.src(['js/main.js', 'js/zepto.js', 'js/RC.js', 'js/game.js', 'js/WeixinApi.js', 'js/app.js'])
+    gulp.src(['js/zepto.js', 'js/RC.js', 'js/game.js', 'js/WeixinApi.js', 'js/app.js'])
         .pipe(concat('all.js'))
         .pipe(gulp.dest('./dist/js'))
         .pipe(rename('all.min.js'))

@@ -206,11 +206,31 @@ h2, b, p{margin:0;}
     left: 0px;
 }
 #gameScreen{display:none;}
+
+/*---------------游戏中身体浮动动画--------------------*/
+@keyframes floatbody
+{
+    0%   {top:0px;}
+    25%  {top:-10px;}
+    50%  {top:-15px;}
+    75%  {top:-10px;}
+    100% {top:0px;}
+}
+
+@-webkit-keyframes floatbody /* Safari 和 Chrome */
+{
+    0%   {top:0px;}
+    25%  {top:-10px;}
+    50%  {top:-15px;}
+    75%  {top:-10px;}
+    100% {top:0px;}
+}
 #userWrap{
     width:640px;
     height:400px;
     position:relative;
     margin:0 auto;
+    -webkit-animation: floatbody 2s infinite linear;
 }
 #userWrap .user{
 }
@@ -337,6 +357,7 @@ h2, b, p{margin:0;}
     font-size:180px;
     color:#f40707;
 }
+/*-----------倒计时数字动画---------------*/
 @keyframes fontAnimate1
 {
     0%   {transform:scale(1.9);}
@@ -354,7 +375,7 @@ h2, b, p{margin:0;}
     60%  {-webkit-transform:scale(1);-webkit-text-shadow: 1px 1px 1px #999;}
     100% {-webkit-transform:scale(1);-webkit-text-shadow: 1px 1px 1px #ddd;}
 }
-/*下载按钮动画*/
+/*击打次数动画*/
 @keyframes fontAnimate2
 {
     0%   {transform:scale(1) ;}
@@ -372,13 +393,58 @@ h2, b, p{margin:0;}
     75%  {-webkit-transform:scale(1.1) ;}
     100% {-webkit-transform:scale(1) ;}
 }
-#gameScreen .hit-count-run{
-    -webkit-animation: fontAnimate2 0.05s 1 linear;
+#gameScreen .hit-count-anim{
+    -webkit-animation: fontAnimate2 0.1s 1 linear;
 }
 #gameScreen .countdown-run{
     -webkit-animation: fontAnimate1 1s infinite linear;
 }
 
+/*----------------鞭子动画----------------*/
+
+@keyframes leftAnimate
+{
+    0%   {background:url("assets/images/bianzi/left0.png");}
+    33%   {background:url("assets/images/bianzi/left1.png");}
+    66%   {background:url("assets/images/bianzi/left2.png");}
+}
+@-webkit-keyframes leftAnimate /* Safari 和 Chrome */
+{
+    0%   {background:url("assets/images/bianzi/left0.png");}
+    33%   {background:url("assets/images/bianzi/left1.png");}
+    66%   {background:url("assets/images/bianzi/left2.png");}
+}
+@keyframes rightAnimate
+{
+    0%   {background:url("assets/images/bianzi/right0.png");}
+    33%   {background:url("assets/images/bianzi/right1.png");}
+    66%   {background:url("assets/images/bianzi/right2.png");}
+}
+@-webkit-keyframes rightAnimate /* Safari 和 Chrome */
+{
+    0%   {background:url("assets/images/bianzi/right0.png");}
+    33%   {background:url("assets/images/bianzi/right1.png");}
+    66%   {background:url("assets/images/bianzi/right2.png");}
+}
+.bianzi{
+    position:absolute;
+    z-index:22;
+    display:none;
+    width:610px;
+    height:416px;
+    left:10px;
+    bottom:20px;
+}
+.bianzi.left{
+    display:block;
+    -webkit-animation: leftAnimate 0.5s 1 linear;
+}
+.bianzi.right{
+    display:block;
+    -webkit-animation: rightAnimate 0.5s 1 linear;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------结束页-------------------*/
 #result{}
 #result .info{
@@ -420,7 +486,7 @@ h2, b, p{margin:0;}
 #result .btn-group a {
     margin: 0 10px;
 }
-#result .btn-group a:nth-child(1), #result .btn-group a:nth-child(2){
+#result .btn-group a:nth-child(3), #result .btn-group a:nth-child(2){
     -webkit-animation:btnAnimate 1s infinite linear ;
 }
 #result .tips{

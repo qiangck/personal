@@ -144,7 +144,10 @@ Game.View = {
 //	        score = "0" + score;
 //	        len++;
 //	    }
-		$('#score').html(score + '<span>次</span>');
+		$('#score').html(score + '<span>次</span>').addClass('hit-count-anim');
+        setTimeout(function(){
+            $('#score').removeClass('hit-count-anim');
+        }, 100)
 	},
 	/**
 	 * 得分状态，true显示成功图标，false显示X
@@ -199,6 +202,7 @@ Game.Time.prototype.run = function() {
 			that.countFunc(that.current, that.sum);
 		} else {
 			that.running = false;
+            // 结束时，移除事件监听绑定
 			console && console.log('game over');
 			if(typeof that.end === 'function') {
 				that.end.call(that);
@@ -257,11 +261,6 @@ Game.Animate ={
             this.bAnimate = true;
             innerAnimate(level, sex, frame);
         }
-        var paIndex = Math.floor(Math.random()*4);
-        $('#gameScreen .pa' + paIndex).addClass('shake');
-        setTimeout(function(){
-            $('#gameScreen .pa' + paIndex).removeClass('shake');
-        }, 500);
         function innerAnimate(level, sex, frame){
             that.timeNow = new Date();
             //var key = sex + '_' +  level + '_' + frame%3;
@@ -269,9 +268,9 @@ Game.Animate ={
             if(that.timeNow - that.timeBegin < that.timeDelay) {
                 Game.Animate.bAnimate = true;
                 $('#gameScreen .shenti img').attr('src', Game.Animate.frameObj[key]);
-                $('#userWrap').animate({
-                    top: 10 * (frame%3-1)
-                }, 10);
+//                $('#userWrap').animate({
+//                    top: 10 * (frame%3-1)
+//                }, 10);
                 that.timeId = setTimeout(function(){
                     innerAnimate(level, sex, frame+1);
                 }, 100);
@@ -279,7 +278,7 @@ Game.Animate ={
                 that.bAnimate = false;
                 key = sex + '_' + 0;
                 $('#gameScreen .shenti img').attr('src', Game.Animate.frameObj[key]);
-                $('#userWrap').css({'top': 0});
+//                $('#userWrap').css({'top': 0});
                 that.timeBegin = 0;
                 that.timeNow = 0;
             }

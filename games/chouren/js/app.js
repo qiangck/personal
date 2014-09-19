@@ -199,7 +199,8 @@ $(document).ready(function() {
     resizeContainer();
 
     var bOver = false;
-    var index = 0;
+    var hitCount = 0;
+    var gameEnd = true;
     var game = new Game();
     // 初始化计时器
     var timer = new Game.Time({
@@ -208,8 +209,9 @@ $(document).ready(function() {
         countFunc: Game.View.setTimer,
         end: function() {
             $('#gameScreen').hide();
-            $('#result .info .title .hit-count').html(index);
+            $('#result .info .title .hit-count').html(hitCount);
             $('#result').show();
+            gameEnd = true;
         }
     });
     game.setTimer(timer);
@@ -222,10 +224,25 @@ $(document).ready(function() {
         $('#gameScreen').show();
         $('#score').html('0<span>次</span>');
         $('#timer').html('60<span>秒</span>');
-        $('#gameScreen .countdown').addClass('countdown-run')
+        $('#gameScreen .countdown').addClass('countdown-run').show();
+        hitCount = 0;
         prepareAnimate(true, 0,  function(){
             $('#gameScreen .countdown').removeClass('countdown-run').hide();
             game.replay();
+            gameEnd = false;
+            var slide = new RC.Slide({
+                elemQuery: 'body',
+                slideBegin: resolvePosition,
+                slideMove: resolvePosition,
+                slideEnd: function(touch){
+                    try{
+                        bOver = false;
+                        return gameEnd;
+                    } catch(e) {
+                        alert('end error: ' + e.message);
+                    }
+                }
+            });
         });
     });
 
@@ -260,6 +277,7 @@ $(document).ready(function() {
     }
 
     function startGame() {
+        gameEnd = false;
         $('#gameScreen .countdown').removeClass('countdown-run').hide();
         game.start();
         var slide = new RC.Slide({
@@ -269,6 +287,7 @@ $(document).ready(function() {
             slideEnd: function(touch){
                 try{
                     bOver = false;
+                    return gameEnd;
                 } catch(e) {
                     alert('end error: ' + e.message);
                 }
@@ -299,13 +318,77 @@ $(document).ready(function() {
         var element = document.elementFromPoint(touch.pageX, touch.pageY);
         if($(element).attr('id') === 'userBody' || $(element).parents('#userBody').length > 0) {
             if(bOver === false) {
+                var dir = (touch.pageX < $(window).width()/2) ? 'left' : 'right'
                 bOver = true;
-                index ++ ;
-                Game.View.setScore(index);
+                hitCount ++ ;
+                Game.View.setScore(hitCount);
                 Game.Animate.twitch(getHitLevel(), RC.UTILS.UrlParam.sex, 1);
+                resolveBeat(RC.UTILS.UrlParam.sex, dir);
             }
         } else {
             bOver = false;
+        }
+    }
+
+    function playAudio(sex) {
+//        if(document.querySelector('#audio')) {
+//            return;
+//        }
+        var audio = document.createElement('audio');
+        audio.src= "assets/audio/" + sex + '/' + Math.round(Math.random()) + '.mp3';
+        audio.id = 'audio';
+        audio.autoplay = true;
+        document.body.appendChild(audio);
+        setTimeout(function() {
+            document.body.removeChild(audio);
+        }, 500);
+    }
+
+    function showWhip(dir) {
+        $('.bianzi').addClass(dir);
+        setTimeout(function() {
+            $('.bianzi').removeClass(dir);
+        }, 500);
+    }
+
+    function resolveBeat(sex, dir) {
+        var paIndex = Math.floor(Math.random()*3);
+        $('#gameScreen .pa' + paIndex).css(getPaPostion(dir)).show();
+        setTimeout(function() {
+            $('#gameScreen .pa' + paIndex).hide();
+        },200);
+        showWhip(dir);
+        playAudio(sex);
+    }
+    // 啪啪文字出现坐标范围
+    var paPosition = {
+        left:{
+            max:{
+                x:120,
+                y:700
+            },
+            min:{
+                x:0,
+                y: 300
+            }
+        }, right:{
+            max:{
+                x: 500,
+                y: 700
+            },
+            min:{
+                x: 360,
+                y: 300
+            }
+        }
+    };
+    function getPaPostion(dir) {
+        var dirObj = paPosition[dir];
+        var left = Math.random() * (dirObj.max.x - dirObj.min.x) + dirObj.min.x;
+        var top = Math.random() * (dirObj.max.y - dirObj.min.y) + dirObj.min.y;
+        return {
+            left: left,
+            top: top
         }
     }
 });
