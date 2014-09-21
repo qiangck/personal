@@ -368,8 +368,8 @@ $(document).ready(function() {
             $('#gameScreen .pa' + paIndex).hide();
         },200);
         showWhip(dir);
-//        playAudio(sex);
-    }
+        playAudio(sex);
+    }5
     // 啪啪文字出现坐标范围
     var paPosition = {
         left:{
