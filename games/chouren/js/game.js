@@ -264,7 +264,7 @@ Game.Time.prototype.doMinus = function() {
 Game.Animate ={
     bAnimate : false,
     timeId : null,
-    timeDelay : 300,
+    timeDelay : 400,
     timeBegin : 0,
     timeNow : 0,
     frameObj : {
@@ -287,25 +287,29 @@ Game.Animate ={
         'woman_7': 'assets/images/dongzuo/donghuaW8.png',
         'woman_8': 'assets/images/dongzuo/donghuaW9.png'
     },
-    twitch : function(level, sex, frame){
+    twitch : function(level, sex, frame, dir){
         var that = this;
         if(Game.Animate.bAnimate === false) {
             this.timeBegin = new Date();
             this.bAnimate = true;
-            innerAnimate(level, sex, frame);
+            innerAnimate(level, sex, frame, dir);
         }
-        function innerAnimate(level, sex, frame){
+        function innerAnimate(level, sex, frame, dir, index){
             that.timeNow = new Date();
             //var key = sex + '_' +  level + '_' + frame%3;
             var key = sex + '_' + Math.ceil(Math.random() * 8);
-            if(that.timeNow - that.timeBegin < that.timeDelay) {
+            if(that.timeNow - that.timeBegin < that.timeDelay && (typeof index === 'undefined' || index < 10)) {
                 Game.Animate.bAnimate = true;
-                $('#gameScreen .shenti img').attr('src', Game.Animate.frameObj[key]);
+//                $('#gameScreen .shenti img').attr('src', Game.Animate.frameObj[key]);
+                if(typeof index === 'undefined') {
+                    index = (dir === 'right') ? 1 : 2;
+                }
+                $('#gameScreen .shenti img').attr('src', Game.Animate.frameObj[sex + '_' + index]);
 //                $('#userWrap').animate({
 //                    top: 10 * (frame%3-1)
 //                }, 10);
                 that.timeId = setTimeout(function(){
-                    innerAnimate(level, sex, frame+1);
+                    innerAnimate(level, sex, frame+1, dir,  index + 2);
                 }, 100);
             } else {
                 that.bAnimate = false;
@@ -362,7 +366,7 @@ AssetLoad.prototype.showPrograss = function() {
 //	$('.prograss-wrap div').css('width', (prograss|0) + '%');
 //	prograssElem.innerHTML = (prograss|0) + '%';
 	// prograssElem.innerHTML = prograss; 
-	console.log('prograss: ' + (prograss|0));
+//	console.log('prograss: ' + (prograss|0));
 
 	if(this.current == this.urlList.length) {
 		this.success();

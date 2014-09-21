@@ -322,7 +322,7 @@ $(document).ready(function() {
                 bOver = true;
                 hitCount ++ ;
                 Game.View.setScore(hitCount);
-                Game.Animate.twitch(getHitLevel(), RC.UTILS.UrlParam.sex, 1);
+                Game.Animate.twitch(getHitLevel(), RC.UTILS.UrlParam.sex, 1, dir);
                 resolveBeat(RC.UTILS.UrlParam.sex, dir);
             }
         } else {
@@ -332,16 +332,21 @@ $(document).ready(function() {
 
     /**
      * 播放声音
+     * TODO 测试发现播放完后，无法设置currentTime来完成重播的效果，具体参考http://stefan321.iteye.com/blog/1574068
+     * TODO 这里采取播放完重新加载的办法来处理该问题，但是会造成性能问题，每次都会重新发请求，耗费流量
      * @param sex
      */
     function playAudio(sex) {
-//        var audio = document.createElement('audio');
-//        audio.src= "assets/audio/" + sex + '/' + Math.round(Math.random()) + '.mp3';
-//        audio.id = 'audio';
-//        audio.autoplay = true;
         var audio = document.getElementById('sound-' + sex + Math.round(Math.random()));
-        audio.load();
-        audio.play();
+        if(audio.paused) {
+            audio.play();
+            setTimeout(function(){
+                if(audio.currentTime > 200) {
+                    audio.pause();
+                    audio.load();
+                }
+            }, 300)
+        }
 //        document.body.appendChild(audio);
 //        setTimeout(function() {M
 //            document.body.removeChild(audio);
@@ -352,11 +357,15 @@ $(document).ready(function() {
      * 根据方向显示鞭子动画
      * @param dir
      */
+    var whipTimeId = null;
     function showWhip(dir) {
-        $('.bianzi').addClass(dir);
-        setTimeout(function() {
-            $('.bianzi').removeClass(dir);
-        }, 500);
+        if(whipTimeId === null) {
+            $('.bianzi').show().addClass(dir);
+            whipTimeId = setTimeout(function() {
+                $('.bianzi').hide().removeClass(dir);
+                whipTimeId = null;
+            }, 500);
+        }
     }
 
     /**
