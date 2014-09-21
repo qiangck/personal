@@ -18,11 +18,38 @@ Game.prototype.init = function() {
 
 Game.prototype.assetLoadStatus = false;
 Game.prototype.loadImg = function(callback) {
-	var loader = new AssetLoad({
-		success: callback
-	});
-    loader.preLoadImg('images/3.jpg');
-	loader.load();
+    var loader = new AssetLoad({
+        success: callback
+    });
+    var imgList = [
+        'assets/images/pa0.png',
+        'assets/images/pa1.png',
+        'assets/images/pa2.png',
+        'assets/images/pa3.png',
+        'assets/images/pa4.png',
+        'assets/images/dongzuo/donghuaM1.png',
+        'assets/images/dongzuo/donghuaM2.png',
+        'assets/images/dongzuo/donghuaM3.png',
+        'assets/images/dongzuo/donghuaM4.png',
+        'assets/images/dongzuo/donghuaM5.png',
+        'assets/images/dongzuo/donghuaM6.png',
+        'assets/images/dongzuo/donghuaM7.png',
+        'assets/images/dongzuo/donghuaM8.png',
+        'assets/images/dongzuo/donghuaM9.png',
+        'assets/images/dongzuo/donghuaW1.png',
+        'assets/images/dongzuo/donghuaW2.png',
+        'assets/images/dongzuo/donghuaW3.png',
+        'assets/images/dongzuo/donghuaW4.png',
+        'assets/images/dongzuo/donghuaW5.png',
+        'assets/images/dongzuo/donghuaW6.png',
+        'assets/images/dongzuo/donghuaW7.png',
+        'assets/images/dongzuo/donghuaW8.png',
+        'assets/images/dongzuo/donghuaW9.png'
+    ];
+    imgList.forEach(function(obj, index) {
+        loader.preLoadImg(obj);
+    });
+    loader.load();
 
 }
 
@@ -313,20 +340,20 @@ AssetLoad.prototype.loadImage = function(imgUrl) {
 	var that = this;
 	var image = new Image();
 	image.onload = function(){
-		that.showPrograss();
+		that.showPrograss.apply(that, arguments);
 	};
 	image.onerror = function(){
-		that.showPrograss();
+        that.showPrograss.apply(that, arguments);
 	};
 	image.src = imgUrl;
 };
 AssetLoad.prototype.showPrograss = function() {
 	this.current ++;
 	var prograss = this.current / this.urlList.length * 100;
-	var prograssElem = document.querySelector('#prograss span');
+//	var prograssElem = document.querySelector('#prograss span');
 	//console.log(prograssElem);
 	
-	$('.prograss-wrap div').css('width', (prograss|0) + '%');
+//	$('.prograss-wrap div').css('width', (prograss|0) + '%');
 //	prograssElem.innerHTML = (prograss|0) + '%';
 	// prograssElem.innerHTML = prograss; 
 	console.log('prograss: ' + (prograss|0));

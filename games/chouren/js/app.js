@@ -330,6 +330,10 @@ $(document).ready(function() {
         }
     }
 
+    /**
+     * 播放声音
+     * @param sex
+     */
     function playAudio(sex) {
         var audio = document.createElement('audio');
         audio.src= "assets/audio/" + sex + '/' + Math.round(Math.random()) + '.mp3';
@@ -341,6 +345,10 @@ $(document).ready(function() {
         }, 500);
     }
 
+    /**
+     * 根据方向显示鞭子动画
+     * @param dir
+     */
     function showWhip(dir) {
         $('.bianzi').addClass(dir);
         setTimeout(function() {
@@ -348,6 +356,11 @@ $(document).ready(function() {
         }, 500);
     }
 
+    /**
+     * 根据性别和抽打方向处理打击事件
+     * @param sex
+     * @param dir
+     */
     function resolveBeat(sex, dir) {
         var paIndex = Math.floor(Math.random()*3);
         $('#gameScreen .pa' + paIndex).css(getPaPostion(dir)).show();
