@@ -335,14 +335,17 @@ $(document).ready(function() {
      * @param sex
      */
     function playAudio(sex) {
-        var audio = document.createElement('audio');
-        audio.src= "assets/audio/" + sex + '/' + Math.round(Math.random()) + '.mp3';
-        audio.id = 'audio';
-        audio.autoplay = true;
-        document.body.appendChild(audio);
-        setTimeout(function() {
-            document.body.removeChild(audio);
-        }, 500);
+//        var audio = document.createElement('audio');
+//        audio.src= "assets/audio/" + sex + '/' + Math.round(Math.random()) + '.mp3';
+//        audio.id = 'audio';
+//        audio.autoplay = true;
+        var audio = document.getElementById('sound-' + sex + Math.round(Math.random()));
+        audio.load();
+        audio.play();
+//        document.body.appendChild(audio);
+//        setTimeout(function() {M
+//            document.body.removeChild(audio);
+//        }, 500);
     }
 
     /**
@@ -369,7 +372,7 @@ $(document).ready(function() {
         },200);
         showWhip(dir);
         playAudio(sex);
-    }5
+    }
     // 啪啪文字出现坐标范围
     var paPosition = {
         left:{
