@@ -194,6 +194,17 @@ function getBaseFace(defaultSetting) {
     return faceHtml;
 }
 
+function initAudio() {
+    createjs.Sound.alternateExtensions = ["mp3"];
+    createjs.Sound.registerSound("assets/audio/man/0.mp3", "man0");
+    createjs.Sound.registerSound("assets/audio/man/1.mp3", "man1");
+    createjs.Sound.registerSound("assets/audio/woman/0.mp3", "woman0");
+    createjs.Sound.registerSound("assets/audio/woman/1.mp3", "woman1");
+
+    //createjs.Sound.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
+}
+initAudio();
+
 initFaceFromParams();
 $(document).ready(function() {
     resizeContainer();
@@ -334,19 +345,21 @@ $(document).ready(function() {
      * 播放声音
      * TODO 测试发现播放完后，无法设置currentTime来完成重播的效果，具体参考http://stefan321.iteye.com/blog/1574068
      * TODO 这里采取播放完重新加载的办法来处理该问题，但是会造成性能问题，每次都会重新发请求，耗费流量
+     * TODO 使用sound.js来完成该功能
      * @param sex
      */
     function playAudio(sex) {
-        var audio = document.getElementById('sound-' + sex + Math.round(Math.random()));
-        if(audio.paused) {
-            audio.play();
-            setTimeout(function(){
-                if(audio.currentTime > 200) {
-                    audio.pause();
-                    audio.load();
-                }
-            }, 300)
-        }
+        createjs.Sound.play(sex + Math.round(Math.random()))
+//        var audio = document.getElementById('sound-' + sex + Math.round(Math.random()));
+//        if(audio.paused) {
+//            audio.play();
+//            setTimeout(function(){
+//                if(audio.currentTime > 200) {
+//                    audio.pause();
+//                    audio.load();
+//                }
+//            }, 300)
+//        }
 //        document.body.appendChild(audio);
 //        setTimeout(function() {M
 //            document.body.removeChild(audio);

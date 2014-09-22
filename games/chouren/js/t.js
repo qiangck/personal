@@ -1,0 +1,1 @@
+var appUrl = 'dist/js/all.min.js?_t=201409221349';
