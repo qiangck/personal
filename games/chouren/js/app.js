@@ -354,32 +354,22 @@ $(document).ready(function() {
      */
     function playAudio(sex) {
         createjs.Sound.play(sex + Math.round(Math.random()))
-//        var audio = document.getElementById('sound-' + sex + Math.round(Math.random()));
-//        if(audio.paused) {
-//            audio.play();
-//            setTimeout(function(){
-//                if(audio.currentTime > 200) {
-//                    audio.pause();
-//                    audio.load();
-//                }
-//            }, 300)
-//        }
-//        document.body.appendChild(audio);
-//        setTimeout(function() {M
-//            document.body.removeChild(audio);
-//        }, 500);
     }
 
     /**
      * 根据方向显示鞭子动画
      * @param dir
      */
-    var whipTimeId = null;
+    var isWhipShow = false;
     function showWhip(dir) {
-        $('.bianzi').show();
-        animFunc(dir, 0, 3, function(){
-            $('.bianzi').hide();
-        });
+        if(isWhipShow === false) {
+            isWhipShow = true;
+            $('.bianzi').show();
+            animFunc(dir, 0, 3, function(){
+                $('.bianzi').hide();
+                isWhipShow = false;
+            });
+        }
 //        if(whipTimeId === null) {
 //            $('.bianzi').show().addClass(dir);
 //            whipTimeId = setTimeout(function() {
@@ -402,7 +392,7 @@ $(document).ready(function() {
         var that = this;
         setTimeout(function(){
             animFunc( dir, level + 1, maxLevel, callback);
-        }, 100);
+        }, 120);
     }
     /**
      * 根据性别和抽打方向处理打击事件

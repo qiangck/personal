@@ -1,2 +1,2 @@
-var t = 201409231702;
-var appUrl = 'dist/js/all.min.js?_t=' + t;
+var t = Date.parse(new Date());
+var appUrl = 'dist/js/all.js?_t=' + t;

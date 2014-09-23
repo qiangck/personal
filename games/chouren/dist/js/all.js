@@ -1860,7 +1860,7 @@ Game.Time.prototype.doMinus = function() {
 Game.Animate ={
     bAnimate : false,
     timeId : null,
-    timeDelay : 400,
+    timeDelay : 500,
     timeBegin : 0,
     timeNow : 0,
     frameObj : {
@@ -1893,7 +1893,6 @@ Game.Animate ={
         function innerAnimate(level, sex, frame, dir, index){
             that.timeNow = new Date();
             //var key = sex + '_' +  level + '_' + frame%3;
-            var key = sex + '_' + Math.ceil(Math.random() * 8);
             if(that.timeNow - that.timeBegin < that.timeDelay && (typeof index === 'undefined' || index < 10)) {
                 Game.Animate.bAnimate = true;
 //                $('#gameScreen .shenti img').attr('src', Game.Animate.frameObj[key]);
@@ -1906,7 +1905,7 @@ Game.Animate ={
 //                }, 10);
                 that.timeId = setTimeout(function(){
                     innerAnimate(level, sex, frame+1, dir,  index + 2);
-                }, 100);
+                }, 150);
             } else {
                 that.bAnimate = false;
                 key = sex + '_' + 0;
@@ -1929,6 +1928,7 @@ var AssetLoad = function(conf){
 	this.urlList = [];
 	this.sum = 0;
 	this.current = 0;
+    this.errorList = [];
 };
 AssetLoad.prototype.preLoadImg = function(imgUrl) {
 	if(this.urlList.indexOf(imgUrl) < 0) {
@@ -1948,12 +1948,13 @@ AssetLoad.prototype.loadImage = function(imgUrl) {
 	image.onload = function(){
 		that.showPrograss.apply(that, arguments);
 	};
-	image.onerror = function(){
+	image.onerror = function(e){
+        that.errorList.push(e.message || e);
         that.showPrograss.apply(that, arguments);
 	};
 	image.src = imgUrl;
 };
-AssetLoad.prototype.showPrograss = function() {
+AssetLoad.prototype.showPrograss = function(event) {
 	this.current ++;
 	var prograss = this.current / this.urlList.length * 100;
 	var prograssElem = document.querySelector('#progress span');
@@ -1967,6 +1968,9 @@ AssetLoad.prototype.showPrograss = function() {
 
 	if(this.current == this.urlList.length) {
         $('#progress').hide();
+        if(this.errorList.length > 0) {
+            alert(this.errorList.join('\r\n'));
+        }
 		this.success();
 	}
 };	
@@ -2711,32 +2715,22 @@ $(document).ready(function() {
      */
     function playAudio(sex) {
         createjs.Sound.play(sex + Math.round(Math.random()))
-//        var audio = document.getElementById('sound-' + sex + Math.round(Math.random()));
-//        if(audio.paused) {
-//            audio.play();
-//            setTimeout(function(){
-//                if(audio.currentTime > 200) {
-//                    audio.pause();
-//                    audio.load();
-//                }
-//            }, 300)
-//        }
-//        document.body.appendChild(audio);
-//        setTimeout(function() {M
-//            document.body.removeChild(audio);
-//        }, 500);
     }
 
     /**
      * 根据方向显示鞭子动画
      * @param dir
      */
-    var whipTimeId = null;
+    var isWhipShow = false;
     function showWhip(dir) {
-        $('.bianzi').show();
-        animFunc(dir, 0, 3, function(){
-            $('.bianzi').hide();
-        });
+        if(isWhipShow === false) {
+            isWhipShow = true;
+            $('.bianzi').show();
+            animFunc(dir, 0, 3, function(){
+                $('.bianzi').hide();
+                isWhipShow = false;
+            });
+        }
 //        if(whipTimeId === null) {
 //            $('.bianzi').show().addClass(dir);
 //            whipTimeId = setTimeout(function() {
@@ -2759,7 +2753,7 @@ $(document).ready(function() {
         var that = this;
         setTimeout(function(){
             animFunc( dir, level + 1, maxLevel, callback);
-        }, 100);
+        }, 150);
     }
     /**
      * 根据性别和抽打方向处理打击事件

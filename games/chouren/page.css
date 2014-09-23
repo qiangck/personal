@@ -437,11 +437,11 @@ h2, b, p{margin:0;}
 }
 .bianzi.left{
     display:block;
-    -webkit-animation: leftAnimate 0.5s 1 linear;
+    -webkit-animation: leftAnimate 0.5s step(1, end) linear;
 }
 .bianzi.right{
     display:block;
-    -webkit-animation: rightAnimate 0.5s 1 linear;
+    -webkit-animation: rightAnimate 0.5s steps(1, end) linear;
 }
 #progress{
     width: 640px;

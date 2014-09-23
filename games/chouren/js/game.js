@@ -262,7 +262,7 @@ Game.Time.prototype.doMinus = function() {
 Game.Animate ={
     bAnimate : false,
     timeId : null,
-    timeDelay : 400,
+    timeDelay : 500,
     timeBegin : 0,
     timeNow : 0,
     frameObj : {
@@ -295,7 +295,6 @@ Game.Animate ={
         function innerAnimate(level, sex, frame, dir, index){
             that.timeNow = new Date();
             //var key = sex + '_' +  level + '_' + frame%3;
-            var key = sex + '_' + Math.ceil(Math.random() * 8);
             if(that.timeNow - that.timeBegin < that.timeDelay && (typeof index === 'undefined' || index < 10)) {
                 Game.Animate.bAnimate = true;
 //                $('#gameScreen .shenti img').attr('src', Game.Animate.frameObj[key]);
@@ -308,7 +307,7 @@ Game.Animate ={
 //                }, 10);
                 that.timeId = setTimeout(function(){
                     innerAnimate(level, sex, frame+1, dir,  index + 2);
-                }, 100);
+                }, 120);
             } else {
                 that.bAnimate = false;
                 key = sex + '_' + 0;
@@ -331,6 +330,7 @@ var AssetLoad = function(conf){
 	this.urlList = [];
 	this.sum = 0;
 	this.current = 0;
+    this.errorList = [];
 };
 AssetLoad.prototype.preLoadImg = function(imgUrl) {
 	if(this.urlList.indexOf(imgUrl) < 0) {
@@ -350,22 +350,17 @@ AssetLoad.prototype.loadImage = function(imgUrl) {
 	image.onload = function(){
 		that.showPrograss.apply(that, arguments);
 	};
-	image.onerror = function(){
+	image.onerror = function(e){
+        that.errorList.push(e.message || e);
         that.showPrograss.apply(that, arguments);
 	};
 	image.src = imgUrl;
 };
-AssetLoad.prototype.showPrograss = function() {
+AssetLoad.prototype.showPrograss = function(event) {
 	this.current ++;
 	var prograss = this.current / this.urlList.length * 100;
 	var prograssElem = document.querySelector('#progress span');
     prograssElem.innerHTML = (prograss|0) + '%';
-	//console.log(prograssElem);
-	
-//	$('.prograss-wrap div').css('width', (prograss|0) + '%');
-//	prograssElem.innerHTML = (prograss|0) + '%';
-	// rorograssElem.innerHTML = prograss;
-	console.log('prograss: ' + (prograss|0));
 
 	if(this.current == this.urlList.length) {
         $('#progress').hide();
