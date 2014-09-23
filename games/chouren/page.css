@@ -443,7 +443,7 @@ h2, b, p{margin:0;}
     display:block;
     -webkit-animation: rightAnimate 0.5s 1 linear;
 }
-#prograss{
+#progress{
     width: 640px;
     height: 960px;
     background: #fff;
