@@ -227,7 +227,8 @@ $(document).ready(function() {
     });
     game.setTimer(timer);
     $('#play img').bind('touchstart', function(){
-        prepare();
+        loadAssets(prepare)
+//        prepare();
     });
     $('#replay img').bind('touchstart', function(){
         $('#gameIntro').hide();
@@ -287,10 +288,8 @@ $(document).ready(function() {
         }
     }
 
-    function startGame() {
-        gameEnd = false;
-        $('#gameScreen .countdown').removeClass('countdown-run').hide();
-        game.start();
+
+    function initSlide() {
         var slide = new RC.Slide({
             elemQuery: 'body',
             slideBegin: resolvePosition,
@@ -304,6 +303,11 @@ $(document).ready(function() {
                 }
             }
         });
+    }
+    function startGame() {
+        gameEnd = false;
+        $('#gameScreen .countdown').removeClass('countdown-run').hide();
+        game.start(initSlide);
     }
     var lastHtiTime = 0;
     var currHitTime = 0;
@@ -425,6 +429,51 @@ $(document).ready(function() {
             left: left,
             top: top
         }
+    }
+
+    /**
+     * 预加载资源
+     * @param callback
+     */
+    function loadAssets(callback) {
+        var loader = new AssetLoad({
+            success: callback
+        });
+        var imgList = [
+            'assets/images/pa0.png',
+            'assets/images/pa1.png',
+            'assets/images/pa2.png',
+            'assets/images/pa3.png',
+            'assets/images/pa4.png',
+            'assets/images/bianzi/left0.png',
+            'assets/images/bianzi/left1.png',
+            'assets/images/bianzi/left2.png',
+            'assets/images/bianzi/right0.png',
+            'assets/images/bianzi/right1.png',
+            'assets/images/bianzi/right2.png',
+            'assets/images/dongzuo/donghuaM1.png',
+            'assets/images/dongzuo/donghuaM2.png',
+            'assets/images/dongzuo/donghuaM3.png',
+            'assets/images/dongzuo/donghuaM4.png',
+            'assets/images/dongzuo/donghuaM5.png',
+            'assets/images/dongzuo/donghuaM6.png',
+            'assets/images/dongzuo/donghuaM7.png',
+            'assets/images/dongzuo/donghuaM8.png',
+            'assets/images/dongzuo/donghuaM9.png',
+            'assets/images/dongzuo/donghuaW1.png',
+            'assets/images/dongzuo/donghuaW2.png',
+            'assets/images/dongzuo/donghuaW3.png',
+            'assets/images/dongzuo/donghuaW4.png',
+            'assets/images/dongzuo/donghuaW5.png',
+            'assets/images/dongzuo/donghuaW6.png',
+            'assets/images/dongzuo/donghuaW7.png',
+            'assets/images/dongzuo/donghuaW8.png',
+            'assets/images/dongzuo/donghuaW9.png'
+        ];
+        imgList.forEach(function(obj, index) {
+            loader.preLoadImg(obj);
+        });
+        loader.load();
     }
 });
 

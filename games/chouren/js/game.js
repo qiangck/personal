@@ -16,7 +16,7 @@ var Game = function(options){
 Game.prototype.init = function() {
 };
 
-Game.prototype.assetLoadStatus = false;
+Game.prototype.assetLoadStatus = true;
 Game.prototype.loadImg = function(callback) {
     var loader = new AssetLoad({
         success: callback
@@ -104,7 +104,7 @@ Game.prototype.goal = function(dragEl, dropEl) {
  * start the game
  * @return {[type]} [description]
  */
-Game.prototype.start = function() {
+Game.prototype.start = function(callback) {
 	var that = this;
 	if(this.timer.running === true) {
 		console && console.log('游戏正在进行，请勿作弊.')
@@ -127,6 +127,9 @@ Game.prototype.start = function() {
 			$('#gameIntro').hide();
 			$('#gameScreen').show();
 			that.timer.run();
+            if(typeof callback == 'function') {
+                callback();
+            }
 		}
 	}
 };
@@ -360,15 +363,17 @@ AssetLoad.prototype.loadImage = function(imgUrl) {
 AssetLoad.prototype.showPrograss = function() {
 	this.current ++;
 	var prograss = this.current / this.urlList.length * 100;
-//	var prograssElem = document.querySelector('#prograss span');
+	var prograssElem = document.querySelector('#progress span');
+    prograssElem.innerHTML = (prograss|0) + '%';
 	//console.log(prograssElem);
 	
 //	$('.prograss-wrap div').css('width', (prograss|0) + '%');
 //	prograssElem.innerHTML = (prograss|0) + '%';
 	// prograssElem.innerHTML = prograss; 
-//	console.log('prograss: ' + (prograss|0));
+	console.log('prograss: ' + (prograss|0));
 
 	if(this.current == this.urlList.length) {
+        $('#progress').hide();
 		this.success();
 	}
 };	

@@ -1614,7 +1614,7 @@ var Game = function(options){
 Game.prototype.init = function() {
 };
 
-Game.prototype.assetLoadStatus = false;
+Game.prototype.assetLoadStatus = true;
 Game.prototype.loadImg = function(callback) {
     var loader = new AssetLoad({
         success: callback
@@ -1702,7 +1702,7 @@ Game.prototype.goal = function(dragEl, dropEl) {
  * start the game
  * @return {[type]} [description]
  */
-Game.prototype.start = function() {
+Game.prototype.start = function(callback) {
 	var that = this;
 	if(this.timer.running === true) {
 		console && console.log('游戏正在进行，请勿作弊.')
@@ -1725,6 +1725,9 @@ Game.prototype.start = function() {
 			$('#gameIntro').hide();
 			$('#gameScreen').show();
 			that.timer.run();
+            if(typeof callback == 'function') {
+                callback();
+            }
 		}
 	}
 };
@@ -1958,15 +1961,17 @@ AssetLoad.prototype.loadImage = function(imgUrl) {
 AssetLoad.prototype.showPrograss = function() {
 	this.current ++;
 	var prograss = this.current / this.urlList.length * 100;
-//	var prograssElem = document.querySelector('#prograss span');
+	var prograssElem = document.querySelector('#progress span');
+    prograssElem.innerHTML = (prograss|0) + '%';
 	//console.log(prograssElem);
 	
 //	$('.prograss-wrap div').css('width', (prograss|0) + '%');
 //	prograssElem.innerHTML = (prograss|0) + '%';
 	// prograssElem.innerHTML = prograss; 
-//	console.log('prograss: ' + (prograss|0));
+	console.log('prograss: ' + (prograss|0));
 
 	if(this.current == this.urlList.length) {
+        $('#progress').hide();
 		this.success();
 	}
 };	
@@ -2584,7 +2589,8 @@ $(document).ready(function() {
     });
     game.setTimer(timer);
     $('#play img').bind('touchstart', function(){
-        prepare();
+        loadAssets(prepare)
+//        prepare();
     });
     $('#replay img').bind('touchstart', function(){
         $('#gameIntro').hide();
@@ -2644,10 +2650,8 @@ $(document).ready(function() {
         }
     }
 
-    function startGame() {
-        gameEnd = false;
-        $('#gameScreen .countdown').removeClass('countdown-run').hide();
-        game.start();
+
+    function initSlide() {
         var slide = new RC.Slide({
             elemQuery: 'body',
             slideBegin: resolvePosition,
@@ -2661,6 +2665,11 @@ $(document).ready(function() {
                 }
             }
         });
+    }
+    function startGame() {
+        gameEnd = false;
+        $('#gameScreen .countdown').removeClass('countdown-run').hide();
+        game.start(initSlide);
     }
     var lastHtiTime = 0;
     var currHitTime = 0;
@@ -2782,6 +2791,51 @@ $(document).ready(function() {
             left: left,
             top: top
         }
+    }
+
+    /**
+     * 预加载资源
+     * @param callback
+     */
+    function loadAssets(callback) {
+        var loader = new AssetLoad({
+            success: callback
+        });
+        var imgList = [
+            'assets/images/pa0.png',
+            'assets/images/pa1.png',
+            'assets/images/pa2.png',
+            'assets/images/pa3.png',
+            'assets/images/pa4.png',
+            'assets/images/bianzi/left0.png',
+            'assets/images/bianzi/left1.png',
+            'assets/images/bianzi/left2.png',
+            'assets/images/bianzi/right0.png',
+            'assets/images/bianzi/right1.png',
+            'assets/images/bianzi/right2.png',
+            'assets/images/dongzuo/donghuaM1.png',
+            'assets/images/dongzuo/donghuaM2.png',
+            'assets/images/dongzuo/donghuaM3.png',
+            'assets/images/dongzuo/donghuaM4.png',
+            'assets/images/dongzuo/donghuaM5.png',
+            'assets/images/dongzuo/donghuaM6.png',
+            'assets/images/dongzuo/donghuaM7.png',
+            'assets/images/dongzuo/donghuaM8.png',
+            'assets/images/dongzuo/donghuaM9.png',
+            'assets/images/dongzuo/donghuaW1.png',
+            'assets/images/dongzuo/donghuaW2.png',
+            'assets/images/dongzuo/donghuaW3.png',
+            'assets/images/dongzuo/donghuaW4.png',
+            'assets/images/dongzuo/donghuaW5.png',
+            'assets/images/dongzuo/donghuaW6.png',
+            'assets/images/dongzuo/donghuaW7.png',
+            'assets/images/dongzuo/donghuaW8.png',
+            'assets/images/dongzuo/donghuaW9.png'
+        ];
+        imgList.forEach(function(obj, index) {
+            loader.preLoadImg(obj);
+        });
+        loader.load();
     }
 });
 

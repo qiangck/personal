@@ -443,6 +443,16 @@ h2, b, p{margin:0;}
     display:block;
     -webkit-animation: rightAnimate 0.5s 1 linear;
 }
+#prograss{
+    width: 640px;
+    height: 960px;
+    background: #fff;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    z-index: 99;
+    display:none;
+}
 
 /*--------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------结束页-------------------*/
