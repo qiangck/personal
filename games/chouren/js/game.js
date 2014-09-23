@@ -369,7 +369,7 @@ AssetLoad.prototype.showPrograss = function() {
 	
 //	$('.prograss-wrap div').css('width', (prograss|0) + '%');
 //	prograssElem.innerHTML = (prograss|0) + '%';
-	// prograssElem.innerHTML = prograss; 
+	// rorograssElem.innerHTML = prograss;
 	console.log('prograss: ' + (prograss|0));
 
 	if(this.current == this.urlList.length) {

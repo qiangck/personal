@@ -436,6 +436,8 @@ $(document).ready(function() {
      * @param callback
      */
     function loadAssets(callback) {
+        $('#gameIntro').hide();
+        $('#gameScreen').show();
         var loader = new AssetLoad({
             success: callback
         });
