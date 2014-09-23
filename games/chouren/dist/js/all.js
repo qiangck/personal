@@ -1860,7 +1860,7 @@ Game.Time.prototype.doMinus = function() {
 Game.Animate ={
     bAnimate : false,
     timeId : null,
-    timeDelay : 500,
+    timeDelay : 400,
     timeBegin : 0,
     timeNow : 0,
     frameObj : {
@@ -1905,7 +1905,7 @@ Game.Animate ={
 //                }, 10);
                 that.timeId = setTimeout(function(){
                     innerAnimate(level, sex, frame+1, dir,  index + 2);
-                }, 150);
+                }, 100);
             } else {
                 that.bAnimate = false;
                 key = sex + '_' + 0;
@@ -1959,18 +1959,9 @@ AssetLoad.prototype.showPrograss = function(event) {
 	var prograss = this.current / this.urlList.length * 100;
 	var prograssElem = document.querySelector('#progress span');
     prograssElem.innerHTML = (prograss|0) + '%';
-	//console.log(prograssElem);
-	
-//	$('.prograss-wrap div').css('width', (prograss|0) + '%');
-//	prograssElem.innerHTML = (prograss|0) + '%';
-	// rorograssElem.innerHTML = prograss;
-	console.log('prograss: ' + (prograss|0));
 
 	if(this.current == this.urlList.length) {
         $('#progress').hide();
-        if(this.errorList.length > 0) {
-            alert(this.errorList.join('\r\n'));
-        }
 		this.success();
 	}
 };	
@@ -2753,7 +2744,7 @@ $(document).ready(function() {
         var that = this;
         setTimeout(function(){
             animFunc( dir, level + 1, maxLevel, callback);
-        }, 150);
+        }, 100);
     }
     /**
      * 根据性别和抽打方向处理打击事件

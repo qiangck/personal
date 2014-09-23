@@ -262,7 +262,7 @@ Game.Time.prototype.doMinus = function() {
 Game.Animate ={
     bAnimate : false,
     timeId : null,
-    timeDelay : 500,
+    timeDelay : 400,
     timeBegin : 0,
     timeNow : 0,
     frameObj : {
@@ -307,7 +307,7 @@ Game.Animate ={
 //                }, 10);
                 that.timeId = setTimeout(function(){
                     innerAnimate(level, sex, frame+1, dir,  index + 2);
-                }, 120);
+                }, 100);
             } else {
                 that.bAnimate = false;
                 key = sex + '_' + 0;

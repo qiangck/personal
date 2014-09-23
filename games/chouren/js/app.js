@@ -392,7 +392,7 @@ $(document).ready(function() {
         var that = this;
         setTimeout(function(){
             animFunc( dir, level + 1, maxLevel, callback);
-        }, 120);
+        }, 100);
     }
     /**
      * 根据性别和抽打方向处理打击事件
