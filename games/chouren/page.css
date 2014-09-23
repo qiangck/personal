@@ -574,3 +574,18 @@ h2, b, p{margin:0;}
     top: -64px;
     left: 115px;
 }
+
+/* css 图片预加载*/
+.loadCssImg{
+    width: 0px;
+    height:0px;
+    z-index:0;
+    display:inline;
+    font-size:0;
+    background-image:url("assets/images/bianzi/left0.png");
+    background-image:url("assets/images/bianzi/left1.png");
+    background-image:url("assets/images/bianzi/left2.png");
+    background-image:url("assets/images/bianzi/right0.png");
+    background-image:url("assets/images/bianzi/right1.png");
+    background-image:url("assets/images/bianzi/right2.png");
+}

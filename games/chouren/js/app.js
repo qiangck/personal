@@ -376,15 +376,34 @@ $(document).ready(function() {
      */
     var whipTimeId = null;
     function showWhip(dir) {
-        if(whipTimeId === null) {
-            $('.bianzi').show().addClass(dir);
-            whipTimeId = setTimeout(function() {
-                $('.bianzi').hide().removeClass(dir);
-                whipTimeId = null;
-            }, 500);
-        }
+        $('.bianzi').show();
+        animFunc(dir, 0, 3, function(){
+            $('.bianzi').hide();
+        });
+//        if(whipTimeId === null) {
+//            $('.bianzi').show().addClass(dir);
+//            whipTimeId = setTimeout(function() {
+//                $('.bianzi').hide().removeClass(dir);
+//                whipTimeId = null;
+//            }, 500);
+//        }
     }
 
+    function animFunc(dir, level, maxLevel, callback) {
+        if(typeof level !== 'number') {
+            console.log('reset')
+            level = 0;
+        }
+        if(level >= maxLevel) {
+            callback();
+            return;
+        }
+        $('.bianzi img').attr('src', 'assets/images/bianzi/' + dir + level + '.png');
+        var that = this;
+        setTimeout(function(){
+            animFunc( dir, level + 1, maxLevel, callback);
+        }, 100);
+    }
     /**
      * 根据性别和抽打方向处理打击事件
      * @param sex
@@ -446,7 +465,6 @@ $(document).ready(function() {
             'assets/images/pa1.png',
             'assets/images/pa2.png',
             'assets/images/pa3.png',
-            'assets/images/pa4.png',
             'assets/images/bianzi/left0.png',
             'assets/images/bianzi/left1.png',
             'assets/images/bianzi/left2.png',
