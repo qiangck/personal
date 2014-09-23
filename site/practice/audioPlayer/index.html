@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="audioWrap"></div>
+<!--<audio id="audio1" preload="preload" controls loop="loop" autoplay="false">-->
+    <!--<source src="assets/horse.ogg" type="audio/ogg">-->
+    <!--&lt;!&ndash;<source src="assets/music.mp3" type="audio/mpeg">&ndash;&gt;-->
+    <!--Your browser does not support the audio element.-->
+<!--</audio>-->
+<div id="ctrl">
+    <span class="play">播放</span>&nbsp;&nbsp;
+    <span class="pause">暂停</span>&nbsp;&nbsp;
+    <span class="replay">重播</span>&nbsp;&nbsp;
+    <span class="progress"></span>
+</div>
+<script>
+    var tag = document.createElement("audio");
+    tag.autoplay = false;
+    tag.preload = "none";
+    tag.loop = false;
+    tag.src = 'assets/Game-Break.mp3';
+    //LM: Firefox fails when this the preload="none" for other tags, but it needs to be "none" to ensure PreloadJS works.
+    tag.addEventListener('loadeddata', function() {
+        console.log('loadeddata');
+        console.log(tag.readyState)
+        tag.currentTime =150000 * 0.001;
+        tag.play();
+    })
+//    tag.src = 'assets/Game-Break.mp3';
+    setTimeout(function(){
+        tag.preload = 'auto';
+        tag.load();
+    }, 2000)
+
+    document.querySelector('#ctrl .play').addEventListener('click', function() {
+        console.log(tag)
+        tag.play();
+    }, false);
+    document.querySelector('#ctrl .pause').addEventListener('click', function() {
+        tag.pause();
+    }, false);
+    document.querySelector('#ctrl .replay').addEventListener('click', function() {
+        tag.currentTime = 0;
+        tag.play();
+    }, false);
+</script>
+</body>
+</html>
