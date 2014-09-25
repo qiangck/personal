@@ -19,8 +19,10 @@ define('RC/Class/Widget', ['./RC'], function(){
     /**
      * 绑定事件函数
      * TODO 判断类型改用Object.prototype.toString.call()，封装到RC的Util中
+     * TODO 增加EventUtil类，封装底层事件
      * @param type
      * @param handler
+     * @param useCapture
      */
     Widget.prototype.on = function(type, handler, useCapture){
         if(typeof type !== 'string') {
@@ -37,6 +39,10 @@ define('RC/Class/Widget', ['./RC'], function(){
             this.handlerMap[type].push(handler);
         }
     };
+    /**
+     * 触发当前对象绑定的事件监听函数
+     * @param type
+     */
     Widget.prototype.fire = function(type){
         if(typeof type !== 'string') {
             throw new TypeError('Widget.fire: type shoul be String');
@@ -50,6 +56,6 @@ define('RC/Class/Widget', ['./RC'], function(){
         }
     };
     Widget.prototype.off = function(type, handler) {
-        
+
     }
 });

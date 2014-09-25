@@ -11,6 +11,7 @@ define(['../core/RC', '../util/MathUtil', '../util/ElemUtil', 'Game'], function 
         slideBegin: function(touch){
             try{
                 startPoint = touch;
+                game.clear();
                 game.drawArrow(0, 1, startPoint.pageX, startPoint.pageY);
             } catch(e) {
                 alert('begin error: ' + e.message);
@@ -24,7 +25,8 @@ define(['../core/RC', '../util/MathUtil', '../util/ElemUtil', 'Game'], function 
                 var length = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
                 var angle =  360 - MathUtil.getAngleDirect(startPoint, endPoint);
                 game.drawArrow(angle, length, startPoint.pageX, startPoint.pageY);
-                showInfo2(angle, length);
+//                game.drawTrack(endPoint.pageX, endPoint.pageY, 2);
+                showInfo2(360-angle, length);
             } catch(e) {
                 alert('move error: ' + e.message);
             }
