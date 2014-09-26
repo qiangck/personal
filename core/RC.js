@@ -13,6 +13,7 @@ define(function (){
         for(var key in b) {
             if(!a[key] && b.hasOwnProperty(key)) {
                 a[key] = b[key]
+                
             }
         }
         return a;
