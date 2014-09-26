@@ -7,7 +7,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     var endPoint = null;
     // 记录上次缓存的位置
     var lastPoint = null;
-    var showTrack = true;
+    var showTrack = false;
     init();
     document.getElementById('showArrow').addEventListener('touchstart', function(){
         document.getElementById('curType').innerHTML = '显示方向';
