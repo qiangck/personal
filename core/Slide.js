@@ -1,4 +1,4 @@
-define('RC/Slide', ['RC', 'RC/EventUtil'], function(RC, EventUtil){
+define( ['./RC', './EventUtil'], function(RC, EventUtil){
     RC.Slide = function(opt){
         var that = this;
         that.isSlide = false;
@@ -24,20 +24,20 @@ define('RC/Slide', ['RC', 'RC/EventUtil'], function(RC, EventUtil){
         this.addHandlers();
     };
     RC.Slide.prototype.addHandlers = function(){
-        vat that = this;
+        var that = this;
         that.elems.forEach(function(obj, index) {
-            EventUtil.addEventListener(obj, EventUtil.TOUCH_START, that.startHandler);
-            EventUtil.addEventListener(obj, EventUtil.TOUCH_MOVE, that.moveHandler);
-            EventUtil.addEventListener(obj, EventUtil.TOUCH_END, that.endHandler);
+            obj.addEventListener(EventUtil.TYPE.TOUCH_START, that.startHandler);
+            obj.addEventListener(EventUtil.TYPE.TOUCH_MOVE, that.moveHandler);
+            obj.addEventListener(EventUtil.TYPE.TOUCH_END, that.endHandler);
         });
     };
 
     RC.Slide.prototype.removeHandlers = function() {
         var that = this;
         this.elems.forEach(function(obj, index){
-            EventUtil.removeEventListener(obj, EventUtil.TOUCH_START, that.startHandler, false);
-            EventUtil.removeEventListener(obj, EventUtil.TOUCH_MOVE, that.moveHandler, false);
-            EventUtil.removeEventListener(obj, EventUtil.TOUCH_END, that.endHandler, false);
+            obj.removeEventListener(EventUtil.TYPE.TOUCH_START, that.startHandler, false);
+            obj.removeEventListener(EventUtil.TYPE.TOUCH_MOVE, that.moveHandler, false);
+            obj.removeEventListener(EventUtil.TYPE.TOUCH_END, that.endHandler, false);
         });
     };
 

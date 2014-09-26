@@ -3,7 +3,7 @@
 body{ padding:0; margin:0;  font:normal 12px/190% "宋体"; color:#333;text-align:center; background:#ededed;}
 h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,button,input,textarea,th,td{margin:0;padding:0;}
 h1,h2,h3{font-family: "微软雅黑";}
-div{margin:0 auto;text-align:left;font:normal 12px/190% "宋体";}
+div{margin:0 auto;text-align:left;font:normal 12px/190% "宋体";text-align:center;}
 li,p{text-align:left;font:normal 12px/190% "宋体";}
 a:link,a:visited{color:#333; text-decoration:none;}
 a:hover{color:#333; text-decoration:underline;}
@@ -29,7 +29,9 @@ em,i{ font-style:normal;}
     height:150px;
     background-color:red;
 }
-.info{display:inline-block}
+.info{
+    display:inline-block;
+}
 
 .arrow{
     position:absolute;
@@ -45,4 +47,29 @@ em,i{ font-style:normal;}
     position:absolute;
     top:0;
     left:0;
+    z-index:1;
+}
+
+.btn{
+    display:inline-block;
+    background-color:#000;
+    color:#fff;
+    width: 100px;
+    line-height:30px;
+    height:30px;
+    font-size:16px;
+    font-weight:bold;
+    text-align:center;
+    text-decoration:none;
+    position:absolute;
+    left:10px;
+    -webkit-box-shadow: 0 0 15px #252222;
+    cursor:pointer;
+    z-index:3;
+}
+#showArrow{
+    top: 10px;
+}
+#showTrack{
+    top: 50px;
 }

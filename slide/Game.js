@@ -59,10 +59,12 @@ define( function() {
         this.ctx.restore();
     };
 
-    Game.prototype.drawTrack = function(x, y , r) {
+    Game.prototype.drawTrack = function(sx, sy, ex, ey , r) {
         this.draw();
-        Game.CanvasHelper.fillCircle(this.ctx, x, y, r, '#c00');
+        console.log(arguments)
+        Game.CanvasHelper.drawTrack(this.ctx, r, sx, sy, ex, ey, '#c00');
     }
+
 
     Game.prototype.resize = function() {
         this.canvasElem.width = window.outerWidth;
@@ -86,6 +88,15 @@ define( function() {
             ctx.arc(pointX, pointY, r, 0, 2 * Math.PI, true);
             ctx.closePath();
             ctx.fill();
+        },
+        drawTrack: function(ctx, r, sx, sy, ex, ey, color){
+            console.log(arguments)
+            ctx.beginPath();
+            ctx.lineWidth = '' + r;
+            ctx.strokeStyle = color; // Green path
+            ctx.moveTo(sx, sy);
+            ctx.lineTo(ex, ey);
+            ctx.stroke(); // Draw it
         }
     }
     return Game;
