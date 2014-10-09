@@ -22,7 +22,7 @@ function resizeContainer() {
         '-webkit-transform': 'scale(' + scale + ', ' + scale + ')',
         '-ms-transform': 'scale(' + scale + ', ' + scale + ')',
         '-o-transform': 'scale(' + scale + ', ' + scale + ')',
-        'transform': 'scale(' + scale + ', ' + scale + ')',
+        'transform': 'scale(' + scale + ', ' + scale + ')'
     };
     $('body').css(cssObj);
 }
@@ -58,7 +58,18 @@ function initFaceFromParams(){
         nameNodes[i].innerHTML = decodeURIComponent(RC.UTILS.UrlParam.username);
     }
     // TODO 通过获取数据来显示
-    document.querySelector('#gameIntro .title .info').innerHTML = '被<span>111</span>人打过，人品榜<span>222</span>名'
+    var infoHtml = document.querySelector('#gameIntro .title .info').innerHTML;
+    infoHtml = infoHtml.replace(/{{[^{{]*}}/ig, function(name,index, str){
+        name = name.replace(/{|}/ig, '');
+        if(this[name]) {
+            return this[name];
+        } else {
+            return Math.floor(Math.random() * 1000 - 100);
+        }
+    });
+
+    document.querySelector('#gameIntro .title .info').innerHTML = infoHtml;
+    //'被<span>{{hit_num}}</span>人打过，人品榜<span>{{ren_num}}</span>名'
     if(defaultSetting.sex === 'woman') {
         $('#gameIntro .shenti img').attr('src', 'assets/images/renkaishinv.png');
         $('#gameScreen .shenti img').attr('src', 'assets/images/dongzuo/donghuaW1.png');
@@ -217,6 +228,7 @@ $(document).ready(function() {
     var timer = new Game.Time({
         add:1,
         minus: 5,
+        sum: gameTime,
         countFunc: Game.View.setTimer,
         end: function() {
             $('#gameScreen').hide();
@@ -235,7 +247,7 @@ $(document).ready(function() {
         $('#result').hide();
         $('#gameScreen').show();
         $('#score').html('0<span>次</span>');
-        $('#timer').html('60<span>秒</span>');
+        $('#timer').html(gameTime + '<span>秒</span>');
         $('#gameScreen .countdown').addClass('countdown-run').show();
         hitCount = 0;
         prepareAnimate(true, 0,  function(){

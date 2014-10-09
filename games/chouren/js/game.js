@@ -202,7 +202,7 @@ Game.View = {
 		$('.failed').hide();
 	},
 	reset: function() {
-		$('#timer').html('60<span>秒</span>');
+		$('#timer').html(gameTime + '<span>秒</span>');
 	}
 };
 
@@ -213,7 +213,7 @@ Game.Time = function(opt) {
 };
 
 Game.Time.prototype.init = function(opt) {
-	this.sum = opt.sum || 60;
+	this.sum = opt.sum || 30;
 	this.add = opt.add;
 	this.minus = opt.minus;
 	this.countFunc = opt.countFunc;
