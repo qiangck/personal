@@ -26,6 +26,50 @@ function resizeContainer() {
     };
     $('body').css(cssObj);
 }
+
+/**
+ * 预加载资源
+ * @param callback
+ */
+function loadAssets(callback) {
+    var loader = new AssetLoad({
+        success: callback
+    });
+    var imgList = [
+        'assets/images/pa0.png',
+        'assets/images/pa1.png',
+        'assets/images/pa2.png',
+        'assets/images/pa3.png',
+        'assets/images/bianzi/left0.png',
+        'assets/images/bianzi/left1.png',
+        'assets/images/bianzi/left2.png',
+        'assets/images/bianzi/right0.png',
+        'assets/images/bianzi/right1.png',
+        'assets/images/bianzi/right2.png',
+        'assets/images/dongzuo/donghuaM1.png',
+        'assets/images/dongzuo/donghuaM2.png',
+        'assets/images/dongzuo/donghuaM3.png',
+        'assets/images/dongzuo/donghuaM4.png',
+        'assets/images/dongzuo/donghuaM5.png',
+        'assets/images/dongzuo/donghuaM6.png',
+        'assets/images/dongzuo/donghuaM7.png',
+        'assets/images/dongzuo/donghuaM8.png',
+        'assets/images/dongzuo/donghuaM9.png',
+        'assets/images/dongzuo/donghuaW1.png',
+        'assets/images/dongzuo/donghuaW2.png',
+        'assets/images/dongzuo/donghuaW3.png',
+        'assets/images/dongzuo/donghuaW4.png',
+        'assets/images/dongzuo/donghuaW5.png',
+        'assets/images/dongzuo/donghuaW6.png',
+        'assets/images/dongzuo/donghuaW7.png',
+        'assets/images/dongzuo/donghuaW8.png',
+        'assets/images/dongzuo/donghuaW9.png'
+    ];
+    imgList.forEach(function(obj, index) {
+        loader.preLoadImg(obj);
+    });
+    loader.load();
+}
 // 通过链接参数拼脸
 function initFaceFromParams(){
     var defaultSetting = {
@@ -57,18 +101,36 @@ function initFaceFromParams(){
     for(var i=0; i<nameNodes.length; i++) {
         nameNodes[i].innerHTML = decodeURIComponent(RC.UTILS.UrlParam.username);
     }
-    // TODO 通过获取数据来显示
-    var infoHtml = document.querySelector('#gameIntro .title .info').innerHTML;
-    infoHtml = infoHtml.replace(/{{[^{{]*}}/ig, function(name,index, str){
-        name = name.replace(/{|}/ig, '');
-        if(this[name]) {
-            return this[name];
-        } else {
-            return Math.floor(Math.random() * 1000 - 100);
+    /**
+     * TODO 通过获取数据来显示
+     */
+    $.ajax({
+        url: '/chouren/' + defaultSetting.uid,
+        type: 'get',
+        success: function(data){
+            if(typeof data === 'string') {
+                data = JSON.parse(data);
+            }
+            showInfo(data);
+        },
+        error: function(){
+            showInfo({});
         }
     });
+    // 显示提示信息
+    function showInfo(data) {
+        var infoHtml = document.querySelector('#gameIntro .title .info').innerHTML;
+        infoHtml = infoHtml.replace(/{{[^{{]*}}/ig, function(name,index, str){
+            name = name.replace(/{|}/ig, '');
+            if(data[name]) {
+                return data[name];
+            } else {
+                return Math.floor(Math.random() * 1000 - 100);
+            }
+        });
+        document.querySelector('#gameIntro .title .info').innerHTML = infoHtml;
+    }
 
-    document.querySelector('#gameIntro .title .info').innerHTML = infoHtml;
     //'被<span>{{hit_num}}</span>人打过，人品榜<span>{{ren_num}}</span>名'
     if(defaultSetting.sex === 'woman') {
         $('#gameIntro .shenti img').attr('src', 'assets/images/renkaishinv.png');
@@ -96,6 +158,9 @@ function initFaceFromParams(){
         }
     ];
     var index = 0;
+    loadAssets(function(){
+        hideLoading('#gameIntro');
+    });
     for(var i = 0;i < pics.length;i ++){
         (function(i){
             var color = pics[i].color;
@@ -214,9 +279,21 @@ function initAudio() {
 
     //createjs.Sound.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
 }
-initAudio();
 
+function showLoading(percentStr){
+    $('#loading').show();
+    $('#percent').html(percentStr + '%');
+}
+
+function hideLoading(selector) {
+    $('#loading').hide();
+    $('#percent').html('');
+    $(selector).show();
+}
+
+initAudio();
 initFaceFromParams();
+
 $(document).ready(function() {
     resizeContainer();
 
@@ -231,6 +308,20 @@ $(document).ready(function() {
         sum: gameTime,
         countFunc: Game.View.setTimer,
         end: function() {
+            $.ajax({
+                url: '/chouren/' + RC.UTILS.UrlParam.uid + '/' + hitCount,
+                type: 'get',
+                success: function(data){
+                    if(typeof data === 'string') {
+                        data = JSON.parse(data);
+                    }
+                    $('#result .info .title .paiming').html(data.ren_num);
+                },
+                error: function(){
+                    var curRenNum = $('#gameIntro .info span').eq(0).html();
+                    $('#result .info .title .paiming').html(parseInt(curRenNum) + 1)
+                }
+            });
             $('#gameScreen').hide();
             $('#result .info .title .hit-count').html(hitCount);
             $('#result').show();
@@ -239,8 +330,8 @@ $(document).ready(function() {
     });
     game.setTimer(timer);
     $('#play img').bind('touchstart', function(){
-        loadAssets(prepare)
-//        prepare();
+//        loadAssets(prepare)
+        prepare();
     });
     $('#replay img').bind('touchstart', function(){
         $('#gameIntro').hide();
@@ -382,13 +473,6 @@ $(document).ready(function() {
                 isWhipShow = false;
             });
         }
-//        if(whipTimeId === null) {
-//            $('.bianzi').show().addClass(dir);
-//            whipTimeId = setTimeout(function() {
-//                $('.bianzi').hide().removeClass(dir);
-//                whipTimeId = null;
-//            }, 500);
-//        }
     }
 
     function animFunc(dir, level, maxLevel, callback) {
@@ -450,52 +534,6 @@ $(document).ready(function() {
             left: left,
             top: top
         }
-    }
-
-    /**
-     * 预加载资源
-     * @param callback
-     */
-    function loadAssets(callback) {
-        $('#gameIntro').hide();
-        $('#gameScreen').show();
-        var loader = new AssetLoad({
-            success: callback
-        });
-        var imgList = [
-            'assets/images/pa0.png',
-            'assets/images/pa1.png',
-            'assets/images/pa2.png',
-            'assets/images/pa3.png',
-            'assets/images/bianzi/left0.png',
-            'assets/images/bianzi/left1.png',
-            'assets/images/bianzi/left2.png',
-            'assets/images/bianzi/right0.png',
-            'assets/images/bianzi/right1.png',
-            'assets/images/bianzi/right2.png',
-            'assets/images/dongzuo/donghuaM1.png',
-            'assets/images/dongzuo/donghuaM2.png',
-            'assets/images/dongzuo/donghuaM3.png',
-            'assets/images/dongzuo/donghuaM4.png',
-            'assets/images/dongzuo/donghuaM5.png',
-            'assets/images/dongzuo/donghuaM6.png',
-            'assets/images/dongzuo/donghuaM7.png',
-            'assets/images/dongzuo/donghuaM8.png',
-            'assets/images/dongzuo/donghuaM9.png',
-            'assets/images/dongzuo/donghuaW1.png',
-            'assets/images/dongzuo/donghuaW2.png',
-            'assets/images/dongzuo/donghuaW3.png',
-            'assets/images/dongzuo/donghuaW4.png',
-            'assets/images/dongzuo/donghuaW5.png',
-            'assets/images/dongzuo/donghuaW6.png',
-            'assets/images/dongzuo/donghuaW7.png',
-            'assets/images/dongzuo/donghuaW8.png',
-            'assets/images/dongzuo/donghuaW9.png'
-        ];
-        imgList.forEach(function(obj, index) {
-            loader.preLoadImg(obj);
-        });
-        loader.load();
     }
 });
 

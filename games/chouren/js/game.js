@@ -359,7 +359,7 @@ AssetLoad.prototype.loadImage = function(imgUrl) {
 AssetLoad.prototype.showPrograss = function(event) {
 	this.current ++;
 	var prograss = this.current / this.urlList.length * 100;
-	var prograssElem = document.querySelector('#progress span');
+	var prograssElem = document.querySelector('#percent');
     prograssElem.innerHTML = (prograss|0) + '%';
 
 	if(this.current == this.urlList.length) {

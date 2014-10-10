@@ -61,7 +61,8 @@ h2, b, p{margin:0;}
 .container{position:relative;width:640px;height:960px;-webkit-transform-origin: 0 0;}
 .wrap{position:relative;width:640px;height:960px;background:#FFF;position:relative;}
 #gameIntro, #gameScreen, #result{position:absolute;top:0;left:0;width:640px;height:960px;display:none;}
-#gameIntro{display:block;}
+#loading{display:block;text-align:center;margin-top:400px;}
+#percent{font-size:40px;margin-top:10px;}
 
 
 .figure{
