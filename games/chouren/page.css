@@ -510,6 +510,12 @@ h2, b, p{margin:0;}
     line-height:40px;
 }
 
+#result .share{
+    position:absolute;
+    right:0px;
+    top:0px;
+}
+
 
 
 /*------shake-----*/

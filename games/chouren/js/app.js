@@ -544,12 +544,12 @@ $(document).ready(function() {
 WeixinApi.ready(function(Api){
 
     // 微信分享的数据
-    var wxData = {
-        "imgUrl":'http://182.92.186.42/personal/slide/images/tfz.jpg',
-        "link":window.location.href,
-        "desc":'\u5927\u5bb6\u597d\uff0c\u6211\u662frechie\uff0c\u6d4b\u8bd5\u5fae\u4fe1\u5206\u4eab\u529f\u80fd',
-        "title":"\u5927\u5bb6\u597d\uff0c\u6211\u662frechie"
-    };
+//    var wxData = {
+//        "imgUrl":'http://182.92.186.42/personal/slide/images/tfz.jpg',
+//        "link":window.location.href,
+//        "desc":'\u5927\u5bb6\u597d\uff0c\u6211\u662frechie\uff0c\u6d4b\u8bd5\u5fae\u4fe1\u5206\u4eab\u529f\u80fd',
+//        "title":"\u5927\u5bb6\u597d\uff0c\u6211\u662frechie"
+//    };
 
     // 分享的回调
     var wxCallbacks = {
