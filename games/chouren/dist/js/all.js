@@ -2457,8 +2457,10 @@ function initFaceFromParams(){
      * TODO 通过获取数据来显示
      */
     $.ajax({
-        url: '/chouren/' + defaultSetting.uid,
+        url: 'http://sns.ismiler.cn/chouren/' + defaultSetting.uid,
         type: 'get',
+        dataType: 'jsonp',
+        jsonp: 'jsonp',
         success: function(data){
             if(typeof data === 'string') {
                 data = JSON.parse(data);
@@ -2661,8 +2663,10 @@ $(document).ready(function() {
         countFunc: Game.View.setTimer,
         end: function() {
             $.ajax({
-                url: '/chouren/' + RC.UTILS.UrlParam.uid + '/' + hitCount,
+                url: 'http://sns.ismiler.cn/chouren2/' + RC.UTILS.UrlParam.uid + '/' + hitCount,
                 type: 'get',
+                dataType: 'jsonp',
+                jsonp: 'jsonp',
                 success: function(data){
                     if(typeof data === 'string') {
                         data = JSON.parse(data);
