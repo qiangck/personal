@@ -134,7 +134,7 @@ function initFaceFromParams(){
     }
 
     //'被<span>{{hit_num}}</span>人打过，人品榜<span>{{ren_num}}</span>名'
-    if(defaultSetting.sex === 'woman') {
+    if(defaultSetting.sex === 'women') {
         $('#gameIntro .shenti img').attr('src', 'assets/images/renkaishinv.png');
         $('#gameScreen .shenti img').attr('src', 'assets/images/dongzuo/donghuaW1.png');
         $('#result .shenti img').attr('src', 'assets/images/renjieshunv.png');
@@ -276,8 +276,8 @@ function initAudio() {
     createjs.Sound.alternateExtensions = ["mp3"];
     createjs.Sound.registerSound("assets/audio/man/0.mp3", "man0");
     createjs.Sound.registerSound("assets/audio/man/1.mp3", "man1");
-    createjs.Sound.registerSound("assets/audio/woman/0.mp3", "woman0");
-    createjs.Sound.registerSound("assets/audio/woman/1.mp3", "woman1");
+    createjs.Sound.registerSound("assets/audio/women/0.mp3", "women0");
+    createjs.Sound.registerSound("assets/audio/women/1.mp3", "women1");
 
     //createjs.Sound.addEventListener("fileload", createjs.proxy(this.loadHandler, this));
 }

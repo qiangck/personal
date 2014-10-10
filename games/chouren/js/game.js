@@ -275,15 +275,15 @@ Game.Animate ={
         'man_6': 'assets/images/dongzuo/donghuaM7.png',
         'man_7': 'assets/images/dongzuo/donghuaM8.png',
         'man_8': 'assets/images/dongzuo/donghuaM9.png',
-        'woman_0': 'assets/images/dongzuo/donghuaW1.png',
-        'woman_1': 'assets/images/dongzuo/donghuaW2.png',
-        'woman_2': 'assets/images/dongzuo/donghuaW3.png',
-        'woman_3': 'assets/images/dongzuo/donghuaW4.png',
-        'woman_4': 'assets/images/dongzuo/donghuaW5.png',
-        'woman_5': 'assets/images/dongzuo/donghuaW6.png',
-        'woman_6': 'assets/images/dongzuo/donghuaW7.png',
-        'woman_7': 'assets/images/dongzuo/donghuaW8.png',
-        'woman_8': 'assets/images/dongzuo/donghuaW9.png'
+        'women_0': 'assets/images/dongzuo/donghuaW1.png',
+        'women_1': 'assets/images/dongzuo/donghuaW2.png',
+        'women_2': 'assets/images/dongzuo/donghuaW3.png',
+        'women_3': 'assets/images/dongzuo/donghuaW4.png',
+        'women_4': 'assets/images/dongzuo/donghuaW5.png',
+        'women_5': 'assets/images/dongzuo/donghuaW6.png',
+        'women_6': 'assets/images/dongzuo/donghuaW7.png',
+        'women_7': 'assets/images/dongzuo/donghuaW8.png',
+        'women_8': 'assets/images/dongzuo/donghuaW9.png'
     },
     twitch : function(level, sex, frame, dir){
         var that = this;
