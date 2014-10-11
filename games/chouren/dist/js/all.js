@@ -2434,7 +2434,7 @@ function initFaceFromParams(){
         yanjing: 0,
 //        daiyanjing: 1,
         zui: 0,
-        shang: 1,
+        shounve: 1,
         liancolorr: 255,
         liancolorg: 255,
         liancolorb: 255,
@@ -2533,9 +2533,9 @@ function initFaceFromParams(){
                         hideLoading('#gameIntro');
                         // 加载完成后，复制
                         var baseFaceHtml = document.querySelector('#baseFace').innerHTML;
-                        document.querySelector('#gameIntro .figure').innerHTML = getStartFace(defaultSetting, baseFaceHtml, defaultSetting.shang);
+                        document.querySelector('#gameIntro .figure').innerHTML = getStartFace(defaultSetting, baseFaceHtml, defaultSetting.shounve);
                         document.querySelector('#userWrap .user .figure').innerHTML = getGameFace(defaultSetting, baseFaceHtml);
-                        document.querySelector('#result .figure').innerHTML = getStartFace(defaultSetting, baseFaceHtml, defaultSetting.shang);
+                        document.querySelector('#result .figure').innerHTML = getStartFace(defaultSetting, baseFaceHtml, defaultSetting.shounve);
                     }
                 });
             }
