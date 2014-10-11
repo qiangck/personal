@@ -160,9 +160,6 @@ function initFaceFromParams(){
         }
     ];
     var index = 0;
-    loadAssets(function(){
-        hideLoading('#gameIntro');
-    });
     for(var i = 0;i < pics.length;i ++){
         (function(i){
             var color = pics[i].color;
@@ -181,6 +178,7 @@ function initFaceFromParams(){
                     grayPic.replace(this);
                     index ++ ;
                     if(index === pics.length) {
+                        hideLoading('#gameIntro');
                         // 加载完成后，复制
                         var baseFaceHtml = document.querySelector('#baseFace').innerHTML;
                         document.querySelector('#gameIntro .figure').innerHTML = getStartFace(defaultSetting, baseFaceHtml, defaultSetting.shang);
@@ -191,6 +189,11 @@ function initFaceFromParams(){
             }
         })(i);
     }
+    loadAssets(function(){
+        if(index === pics.length) {
+            hideLoading('#gameIntro');
+        }
+    });
 }
 
 /**
@@ -237,6 +240,9 @@ function getStartFace(defaultSetting, baseHtml, level) {
     if(defaultSetting.daiyanjing) {
         faceHtml += '<img src="assets/images/daiyanjing/TYdaiyanjing' + defaultSetting.daiyanjing + '.png" class="daiyanjing zIndex4" />';
     }
+    if(defaultSetting.huzi) {
+        faceHtml += '<img src="assets/images/huzi/TYhuzi' + defaultSetting.huzi + '.png" class="huzi zIndex3" />';
+    }
     return faceHtml;
 }
 
@@ -254,6 +260,9 @@ function getGameFace(defaultSetting, baseHtml) {
     }
     if(defaultSetting.daiyanjing) {
         faceHtml += '<img src="assets/images/daiyanjing/TYdaiyanjing' + defaultSetting.daiyanjing + '.png" class="daiyanjing zIndex4" />';
+    }
+    if(defaultSetting.huzi) {
+        faceHtml += '<img src="assets/images/huzi/TYhuzi' + defaultSetting.huzi + '.png" class="huzi zIndex3" />';
     }
     // h5暂时没有帽子
 //    if(defaultSetting.maozi) {

@@ -139,6 +139,12 @@ h2, b, p{margin:0;}
     left: 190px;
     top: 442px;
 }
+.huzi{
+    position: absolute;
+    z-index: 16;
+    left: 192px;
+    top: 222px;
+}
 
 
 .title{
