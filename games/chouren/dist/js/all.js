@@ -2451,7 +2451,11 @@ function initFaceFromParams(){
 
     var nameNodes = document.querySelectorAll('.name');
     for(var i=0; i<nameNodes.length; i++) {
-        nameNodes[i].innerHTML = decodeURIComponent(RC.UTILS.UrlParam.username);
+        try {
+            nameNodes[i].innerHTML = decodeURIComponent(RC.UTILS.UrlParam.username);
+        } catch(e) {
+            nameNodes[i].innerHTML = RC.UTILS.UrlParam.username;
+        }
     }
     /**
      * TODO 通过获取数据来显示
