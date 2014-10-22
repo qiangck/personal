@@ -2,19 +2,24 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>人民日报新大楼</title>
     <link rel="stylesheet" href="page.css"/>
     <meta name="viewport" content="width=device-width,height=device-height,minimum-scale=1.0,maximum-scale=1.0,target-densitydpi=device-dpi"/>
 </head>
 <body>
-    <div id="curType">显示方向</div>
-    <div class="info"></div>
-    <div class="arrow"></div>
-    <div id="showArrow" class="btn">显示方向</div>
-    <div id="showTrack" class="btn">显示轨迹</div>
+    <!--<div id="curType">显示方向</div>-->
+    <!--<div class="info"></div>-->
+    <!--<div class="arrow"></div>-->
+    <!--<div id="showArrow" class="btn">显示方向</div>-->
+    <!--<div id="showTrack" class="btn">显示轨迹</div>-->
+    <!--<div id="changeRadius">更改大小</div>-->
+    <!--<div id="changeColor">更改颜色</div>-->
     <div id="return" class="btn">上一步</div>
     <div id="replay" class="btn">重新画</div>
-    <canvas id="gameScreen"></canvas>
+    <div id="upload" class="btn">上传作品</div>
+    <div id="viewlist">围观作品</div>
+    <canvas id="gameScreen" width="400" height="400"></canvas>
+    <script type="application/javascript" src="zepto.js" ></script>
     <script type="application/javascript" src="require.js" ></script>
     <script>
         require.config({

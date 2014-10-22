@@ -7,19 +7,19 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     var endPoint = null;
     // 记录上次缓存的位置
     var lastPoint = null;
-    var showTrack = false;
+    var showTrack = true;
     var canvasElem = document.getElementById('gameScreen');
     var ctx = canvasElem.getContext('2d');
     window.ctx = ctx;
     init();
-    document.getElementById('showArrow').addEventListener('touchstart', function(){
-        document.getElementById('curType').innerHTML = '显示方向';
-        showTrack = false;
-    }, false);
-    document.getElementById('showTrack').addEventListener('touchstart', function(){
-        document.getElementById('curType').innerHTML = '显示轨迹';
-        showTrack = true;
-    }, false);
+//    document.getContext('showArrow').addEventListener('touchstart', function(){
+//        document.getElementById('curType').innerHTML = '显示方向';
+//        showTrack = false;
+//    }, false);
+//    document.getElementById('showTrack').addEventListener('touchstart', function(){
+//        document.getElementById('curType').innerHTML = '显示轨迹';
+//        showTrack = true;
+//    }, false);
     document.getElementById('return').addEventListener('touchstart', function(){
         if(game) {
             game.undo()
@@ -77,8 +77,8 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
 
     function init() {
         try{
-            canvasElem.width = window.outerWidth;
-            canvasElem.height = window.outerHeight;
+//            canvasElem.width = window.outerWidth;
+//            canvasElem.height = window.outerHeight;
             game = new Game('gameScreen');
         } catch(e) {
             alert('init error: ' + e.message);
@@ -95,4 +95,29 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
             ElemUtil.query('.info').innerHTML = ('当前角度: ' + angle + '<br>当前距离:' + length);
         }
     }
+
+    // 绑定上传事件
+    $('#upload').bind('click', function() {
+        var dataUrl = canvasElem.toDataURL('images/png');
+        var imageData = encodeURIComponent(dataUrl);
+        var imageData = dataUrl;
+        console.log(imageData)
+        $.ajax({
+            type: 'post',
+            url: 'http://192.168.1.101:3000',
+            dataType: 'json',
+            data: {
+                imageData: imageData
+            },
+            success:  function(data) {
+                if(data.status === 'success') {
+                    console.log(data.path);
+                }
+                console.log(arguments);
+            },
+            error: function () {
+                console.error(arguments);
+            }
+        })
+    });
 });

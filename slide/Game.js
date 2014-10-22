@@ -12,7 +12,7 @@ define( function() {
         this.init();
     };
     Game.prototype.init = function() {
-        this.resize();
+//        this.resize();
         this.draw();
     };
     Game.prototype.clear = function(){
@@ -30,7 +30,8 @@ define( function() {
             nowWidth = this.ctx.width;
             nowHeigh = this.ctx.width / imgScale;
         }
-//        this.ctx.fillRect(0, 0, this.ctx.width, this.ctx.height);
+        ctx.fillStyle = '#fff';
+        this.ctx.fillRect(0, 0, this.canvasElem.width, this.canvasElem.height);
         if(!bgImg) {
             bgImg = new Image();
             bgImg.src = 'images/tfz.jpg';
@@ -61,7 +62,7 @@ define( function() {
     };
 
     Game.prototype.drawTrack = function(sx, sy, ex, ey , r) {
-        //this.draw();
+//        this.draw();
         Game.CanvasHelper.drawTrack(this.ctx, r, sx, sy, ex, ey, '#c00');
     }
 
