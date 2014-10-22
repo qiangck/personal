@@ -82,3 +82,39 @@ em,i{ font-style:normal;}
 #upload{
     top:0px;
 }
+
+
+/*切换半径样式*/
+#changeRadius{
+    top:200px;
+    width:200px;
+}
+#changeRadius div{
+    display: inline-block;
+}
+#changeRadius .radius4{
+    margin-bottom:2px;
+    width:4px;
+    height:4px;
+    border-radius: 4px;
+    border:1px solid #fff;
+    background-color:#000;
+}
+#changeRadius .radius6{
+    margin-bottom:1px;
+    width:6px;
+    height:6px;
+    border-radius: 6px;
+    border:1px solid #fff;
+    background-color:#000;
+}
+#changeRadius .radius8{
+    width:8px;
+    height:8px;
+    border-radius: 8px;
+    border:1px solid #fff;
+    background-color:#000;
+}
+#changeRadius div.active{
+    background-color:#fff;
+}

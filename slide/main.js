@@ -8,6 +8,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     // 记录上次缓存的位置
     var lastPoint = null;
     var showTrack = true;
+    var radius = 4;
     var canvasElem = document.getElementById('gameScreen');
     var ctx = canvasElem.getContext('2d');
     window.ctx = ctx;
@@ -36,7 +37,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
         slideBegin: function(touch){
             try{
                 lastPoint = startPoint = touch;
-                game.record(touch, true);
+                game.record(touch, true, radius);
                 //game.clear();
                 //game.drawArrow(0, 1, startPoint.pageX, startPoint.pageY);
             } catch(e) {
@@ -51,7 +52,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
                 var length = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2));
                 var angle =  360 - MathUtil.getAngleDirect(startPoint, endPoint);
                 if(showTrack === true) {
-                    game.drawTrack(lastPoint.pageX, lastPoint.pageY, endPoint.pageX, endPoint.pageY, 2);
+                    game.drawTrack(lastPoint.pageX, lastPoint.pageY, endPoint.pageX, endPoint.pageY, radius);
                 } else {
                     game.drawArrow(angle, length, startPoint.pageX, startPoint.pageY);
                 }
@@ -119,5 +120,22 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
                 console.error(arguments);
             }
         })
+    });
+
+    /**
+     * 修改触点半径
+     */
+    $('#changeRadius').bind('click', function() {
+        var currentIndex = $('#changeRadius .active').index();
+        $('#changeRadius .active').removeClass('active');
+        var next = (currentIndex+1)%($('#changeRadius>div').length)
+        radius = $('#changeRadius>div').eq(next).addClass('active').data('radius');
+        if(typeof radius === 'string') {
+            try{
+                radius = parseInt(radius);
+            } catch(e) {
+                radius = 4;
+            }
+        }
     });
 });

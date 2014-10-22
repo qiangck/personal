@@ -64,8 +64,7 @@ define( function() {
     Game.prototype.drawTrack = function(sx, sy, ex, ey , r) {
 //        this.draw();
         Game.CanvasHelper.drawTrack(this.ctx, r, sx, sy, ex, ey, '#c00');
-    }
-
+    };
 
     Game.prototype.resize = function() {
         this.canvasElem.width = window.outerWidth;
@@ -73,11 +72,11 @@ define( function() {
         this.ctx.width = window.outerWidth;
         this.ctx.height = window.outerHeight;
     }
-    Game.prototype.record = function(point, bNew) {
+    Game.prototype.record = function(point, bNew, radius) {
         if(bNew) {
             rectRecords[rectRecords.length] = {
                 color: '#c00',
-                radius: 2,
+                radius: radius,
                 pointList: []
             };
         }
@@ -131,14 +130,16 @@ define( function() {
             ctx.fill();
         },
         drawTrack: function(ctx, r, sx, sy, ex, ey, color){
-            ctx.save();
+            //Create a rounded corner when the two lines meet
+            ctx.lineJoin = "round";
+            //Draw a line with rounded end caps
+            ctx.lineCap = "round";
             ctx.beginPath();
             ctx.lineWidth = '' + r;
             ctx.strokeStyle = color; // Green path
             ctx.moveTo(sx, sy);
             ctx.lineTo(ex, ey);
             ctx.stroke(); // Draw it
-            ctx.restore();
         }
     }
     return Game;
