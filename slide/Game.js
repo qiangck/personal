@@ -5,6 +5,7 @@ define( function() {
     var bgImg ;
     var arrowImg = new Image();
     arrowImg.src = 'images/arrow.png';
+    var rectRecords = [];
     var Game = function(id){
         this.canvasElem = document.getElementById('gameScreen');
         this.ctx = this.canvasElem.getContext('2d');
@@ -60,8 +61,7 @@ define( function() {
     };
 
     Game.prototype.drawTrack = function(sx, sy, ex, ey , r) {
-        this.draw();
-        console.log(arguments)
+        //this.draw();
         Game.CanvasHelper.drawTrack(this.ctx, r, sx, sy, ex, ey, '#c00');
     }
 
@@ -71,6 +71,46 @@ define( function() {
         this.canvasElem.height = window.outerHeight;
         this.ctx.width = window.outerWidth;
         this.ctx.height = window.outerHeight;
+    }
+    Game.prototype.record = function(point, bNew) {
+        if(bNew) {
+            rectRecords[rectRecords.length] = {
+                color: '#c00',
+                radius: 2,
+                pointList: []
+            };
+        }
+        if(!!point) {
+            rectRecords[rectRecords.length-1].pointList.push(point);
+        }
+    };
+    Game.prototype.clearRecord = function() {
+        rectRecords = [];
+    };
+    /**
+     * 撤销功能
+     */
+    Game.prototype.undo = function() {
+        this.clear();
+        this.draw();
+        var index = 0;
+        rectRecords.pop();
+        while(index<rectRecords.length) {
+            this.reDraw(rectRecords[index])
+            index ++;
+        }
+    };
+    Game.prototype.reDraw = function(record) {
+        var r = record.radius;
+        var color = record.color;
+        var i = 1;
+        var pointList = record.pointList;
+        while(i<pointList.length) {
+            var sPoint = pointList[i-1];
+            var ePoint = pointList[i];
+            Game.CanvasHelper.drawTrack(this.ctx, r, sPoint.pageX, sPoint.pageY, ePoint.pageX, ePoint.pageY, color);
+            i++;
+        }
     }
 
     Game.CanvasHelper = {
@@ -90,13 +130,14 @@ define( function() {
             ctx.fill();
         },
         drawTrack: function(ctx, r, sx, sy, ex, ey, color){
-            console.log(arguments)
+            ctx.save();
             ctx.beginPath();
             ctx.lineWidth = '' + r;
             ctx.strokeStyle = color; // Green path
             ctx.moveTo(sx, sy);
             ctx.lineTo(ex, ey);
             ctx.stroke(); // Draw it
+            ctx.restore();
         }
     }
     return Game;

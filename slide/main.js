@@ -8,6 +8,9 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     // 记录上次缓存的位置
     var lastPoint = null;
     var showTrack = false;
+    var canvasElem = document.getElementById('gameScreen');
+    var ctx = canvasElem.getContext('2d');
+    window.ctx = ctx;
     init();
     document.getElementById('showArrow').addEventListener('touchstart', function(){
         document.getElementById('curType').innerHTML = '显示方向';
@@ -17,15 +20,27 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
         document.getElementById('curType').innerHTML = '显示轨迹';
         showTrack = true;
     }, false);
+    document.getElementById('return').addEventListener('touchstart', function(){
+        if(game) {
+            game.undo()
+        }
+    });
+    document.getElementById('replay').addEventListener('touchstart', function(){
+        if(game) {
+            game.clear();
+            game.clearRecord();
+        }
+    });
     var slide = new Slide({
-        elemQuery: 'body',
+        elemQuery: '#gameScreen',
         slideBegin: function(touch){
             try{
                 lastPoint = startPoint = touch;
-                game.clear();
-                game.drawArrow(0, 1, startPoint.pageX, startPoint.pageY);
+                game.record(touch, true);
+                //game.clear();
+                //game.drawArrow(0, 1, startPoint.pageX, startPoint.pageY);
             } catch(e) {
-                alert('begin error: ' + e.message);
+                console.log('begin error: ' + e.message);
             }
         },
         slideMove: function(touch) {
@@ -40,28 +55,28 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
                 } else {
                     game.drawArrow(angle, length, startPoint.pageX, startPoint.pageY);
                 }
-                showInfo2(360-angle, length);
+                game.record(touch);
+                //showInfo2(360-angle, length);
             } catch(e) {
-                alert('move error: ' + e.message);
+                console.log('move error: ' + e.message);
             }
             lastPoint = touch;
         },
         slideEnd: function(touch){
             try{
                 startPoint = lastPoint = endPoint = null;
-                game.drawArrow(0, 0, 0, 0);
+                //game.drawArrow(0, 0, 0, 0);
+                game.record();
                 // 返回true 取消事件监听
                 // return true;
             } catch(e) {
-                alert('end error: ' + e.message);
+                console.log('end error: ' + e.message);
             }
         }
     });
 
     function init() {
         try{
-            var canvasElem = document.getElementById('gameScreen');
-            var ctx = canvasElem.getContext('2d');
             canvasElem.width = window.outerWidth;
             canvasElem.height = window.outerHeight;
             game = new Game('gameScreen');

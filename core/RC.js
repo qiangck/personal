@@ -11,7 +11,7 @@ define(function (){
     };
     RC.merge = function(a, b) {
         for(var key in b) {
-            if(!a[key] && b.hasOwnProperty(key)) {
+            if(b.hasOwnProperty(key)) {
                 a[key] = b[key]
                 
             }

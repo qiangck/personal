@@ -10,8 +10,7 @@ define( ['./RC', './EventUtil'], function(RC, EventUtil){
             slideBegin: null,
             slideMove: null
         },opt);
-        var elemQuery = 'body';
-        this.elems = [].slice.call(document.querySelectorAll(elemQuery));
+        this.elems = [].slice.call(document.querySelectorAll(that.opt.elemQuery));
         that.startHandler = function(e){
             return that.StartHandler.apply(that, arguments);
         }
