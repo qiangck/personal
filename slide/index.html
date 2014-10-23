@@ -14,39 +14,50 @@
     <!--<div id="showTrack" class="btn">显示轨迹</div>-->
     <!--<div id="changeRadius">更改大小</div>-->
     <!--<div id="changeColor">更改颜色</div>-->
-    <div class="top clearfix">
-        <div class="left">
-            人民网<br>
-            现已经收录了<span id="worksCount">123</span>个作品
+    <div id="drawWrap">
+        <div class="top clearfix">
+            <div class="left" id="worksCount">
+            </div>
+            <div class="right">
+                <div id="viewlist" class="btn">围观作品</div>
+            </div>
         </div>
-        <div class="right">
-            <div id="viewlist" class="btn">围观作品</div>
+        <canvas id="gameScreen" width="400" height="400"></canvas>
+        <div class="btn-group">
+            <div id="changeRadius" class="btn">
+                更改大小
+                <div class="radius4 active" data-radius="4"></div>
+                <div class="radius6" data-radius="6"></div>
+                <div class="radius8" data-radius="8"></div>
+            </div>
+            <div id="return" class="btn">上一步</div>
+            <div id="replay" class="btn">重新画</div>\
+            <div>
+                <div id="upload" class="btn">上传作品</div>
+            </div>
+        </div>
+        <div class="update-name">
+            <div class="opacity"></div>
+            <div class="inner">
+                请留下您的大名！<br>
+                <input type="text"/>
+                <a class="btn" id="uploadWork">确定</a>
+            </div>
+            <div class="result">
+            </div>
+        </div>
+        <div class="dialog"></div>
+    </div>
+    <div id="workList" class="clearfix">
+        <ul></ul>
+        <div class="viewMyWork">
+            <div class="opacity"></div>
+            <div class="work"></div>
         </div>
     </div>
-    <canvas id="gameScreen" width="400" height="400"></canvas>
-    <div class="btn-group">
-        <div id="changeRadius" class="btn">
-            更改大小
-            <div class="radius4 active" data-radius="4"></div>
-            <div class="radius6" data-radius="6"></div>
-            <div class="radius8" data-radius="8"></div>
-        </div>
-        <div id="return" class="btn">上一步</div>
-        <div id="replay" class="btn">重新画</div>\
-        <div>
-            <div id="upload" class="btn">上传作品</div>
-        </div>
-    </div>
-    <div class="update-name">
-        <div class="opacity"></div>
-        <div class="inner">
-            请留下您的大名！<br>
-            <input type="text"/>
-            <a class="btn" id="uploadWork">确定</a>
-        </div>
-    </div>
-    <div class="dialog"></div>
     <script type="application/javascript" src="zepto.js" ></script>
+    <script type="application/javascript" src="zepto.cookie.js" ></script>
+    <script type="application/javascript" src="WeixinApi.js" ></script>
     <script type="application/javascript" src="require.js" ></script>
     <script>
         require.config({

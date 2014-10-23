@@ -8,7 +8,7 @@ var connection = dbService.connection;
 
 /* GET home page. */
 router.post('/work', function(req, res) {
-   //res.writeHead(200, { 'Content-Type': 'application/json;charset=UTF-8' });
+   res.writeHead(200, { 'Content-Type': 'application/json;charset=UTF-8' });
     var responseJson = {};
     var data = req.body.imageData.replace(/^data:image\/\w+;base64,/, "");
     var name = req.body.name;
@@ -23,7 +23,6 @@ router.post('/work', function(req, res) {
         res.end();
         return;
     }
-    console.log('dbService');
 
     var queryStr = SqlHelper.createWork(name, praise, connection);
     dbService.query(queryStr, function(error, value) {

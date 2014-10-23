@@ -11,6 +11,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     var radius = 4;
     var canvasElem = document.getElementById('gameScreen');
     var ctx = canvasElem.getContext('2d');
+    var workId = 0;
     window.ctx = ctx;
     init();
 //    document.getContext('showArrow').addEventListener('touchstart', function(){
@@ -78,6 +79,17 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
 
     function init() {
         try{
+            $.ajax({
+                type: 'get',
+                url: 'http://192.168.1.101:3000/work/count',
+                dataType: 'json',
+                success: function(data) {
+                    $('#worksCount').html('人民网<br>现已经收录了' + data.num + '个作品');
+                },
+                error: function() {
+
+                }
+            });
 //            canvasElem.width = window.outerWidth;
 //            canvasElem.height = window.outerHeight;
             game = new Game('gameScreen');
@@ -100,6 +112,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     // 绑定上传事件
     $('#upload').bind('click', function() {
        $('.update-name').show();
+        $('.update-name input').val('');
     });
     $('#uploadWork').bind('click', function() {
         var name = $('.update-name input').val();
@@ -123,7 +136,9 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
                 if(data.status === 'success') {
                     console.log(data.path);
                 }
-                console.log(arguments);
+                $('.update-name .result').html('你的作品编号: ' + data.id + '<br>点击查看').show();
+                $('.update-name .inner').hide();
+                workId = data.id;
             },
             error: function () {
                 console.error(arguments);
@@ -132,6 +147,8 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     });
     $('.update-name .opacity').bind('click', function() {
         $('.update-name').hide();
+        $('.update-name .result').hide();
+        $('.update-name .inner').show();
     })
 
 
@@ -150,5 +167,90 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
                 radius = 4;
             }
         }
+    });
+    $('.update-name .result').on('click', function(){
+        $('#workList .viewMyWork').show();
+        $('#workList .viewMyWork .work').html('<img src="http://localhost:3000/images/' + workId + '.png">');
+        getWorks();
+    });
+
+    function getWorks() {
+        $.ajax({
+            url: 'http://192.168.1.101:3000/work',
+            type: 'get',
+            dataType: 'json',
+            success: function(data) {
+                renderWorks(data.works);
+            },
+            error: function() {
+
+            }
+        });
+        $('#workList').show();
+        $('#drawWrap').hide();
+    }
+    $('#viewlist').bind('click', getWorks);
+    $('#workList .viewMyWork').bind('click', function() {
+        $('#workList .viewMyWork').hide();
+    })
+    function renderWorks(works) {
+        var htmlStr = '';
+        works.forEach(function(obj, index) {
+            htmlStr += '<li><img src="http://localhost:3000/images/' + obj.id + '.png"><br>' + obj.name + '</li>'
+        });
+        $('#workList ul').html(htmlStr);
+    }
+
+    //微信分享功能
+
+// 微信分享代码
+// 所有功能必须包含在 WeixinApi.ready 中进行
+        WeixinApi.ready(function(Api){
+
+            // 微信分享的数据
+            var wxData = {
+                "imgUrl": $('#workList .viewMyWork .work img').attr('src'),
+                "link":window.location.href,
+                "desc":'人民日报新大楼',
+                "title":"人民日报新大楼"
+            };
+
+        // 分享的回调
+        var wxCallbacks = {
+            // 分享操作开始之前
+            ready:function () {
+//            $('.weixinState').html('ready');
+                // 你可以在这里对分享的数据进行重组
+            },
+            // 分享被用户自动取消
+            cancel:function (resp) {
+//            $('.weixinState').html('cancel');
+                // 你可以在你的页面上给用户一个小Tip，为什么要取消呢？
+            },
+            // 分享失败了
+            fail:function (resp) {
+//            $('.weixinState').html('fail');
+                // 分享失败了，是不是可以告诉用户：不要紧，可能是网络问题，一会儿再试试？
+            },
+            // 分享成功
+            confirm:function (resp) {
+//            $('.weixinState').html('confirm');
+                // 分享成功了，我们是不是可以做一些分享统计呢？
+            },
+            // 整个分享过程结束
+            all:function (resp) {
+                // $('.weixinState').html('end');
+                // 如果你做的是一个鼓励用户进行分享的产品，在这里是不是可以给用户一些反馈了？
+            }
+        };
+
+        // 用户点开右上角popup菜单后，点击分享给好友，会执行下面这个代码
+        Api.shareToFriend(wxData, wxCallbacks);
+
+        // 点击分享到朋友圈，会执行下面这个代码
+        Api.shareToTimeline(wxData, wxCallbacks);
+
+        // 点击分享到腾讯微博，会执行下面这个代码
+        Api.shareToWeibo(wxData, wxCallbacks);
     });
 });

@@ -171,7 +171,64 @@ em,i{ font-style:normal;}
     line-height:30px;
     margin-top:5px;
 }
-.update-name .btn:hover{
-    color:#fff;
-    text-decoration:none;
+.update-name .btn:hover {
+    color: #fff;
+    text-decoration: none;
+}
+.update-name .result{
+    display:none;
+    padding-top:5px;
+    position:relative;
+    z-index:222;
+    margin:40% auto 0;
+    background-color:#fff;
+    width:200px;
+    height:95px;
+}
+
+#workList{
+
+}
+#workList ul{
+
+}
+#workList ul li{
+    width: 32%;
+    float:left;
+    height:auto;
+    margin-top: 10px;
+    margin-left:3px;
+    text-align: center;
+}
+#workList ul li img{
+    width:100%;
+    height: auto;
+}
+
+#workList .viewMyWork{
+    display: none;
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:23;
+}
+#workList .viewMyWork .opacity{
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    position:absolute;
+    z-index:231;
+    background-color:#000;
+    opacity: 0.7;
+}
+#workList .viewMyWork .work{
+    position:relative;
+    z-index:232;
+    text-align:center;
+}
+#workList .viewMyWork .work img{
+    width: 85%;
 }
