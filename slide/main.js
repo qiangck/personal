@@ -99,6 +99,14 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
 
     // 绑定上传事件
     $('#upload').bind('click', function() {
+       $('.update-name').show();
+    });
+    $('#uploadWork').bind('click', function() {
+        var name = $('.update-name input').val();
+        if(name == '') {
+            alert('名字不能为空');
+            return;
+        }
         var dataUrl = canvasElem.toDataURL('images/png');
         var imageData = encodeURIComponent(dataUrl);
         var imageData = dataUrl;
@@ -108,7 +116,8 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
             url: 'http://192.168.1.101:3000',
             dataType: 'json',
             data: {
-                imageData: imageData
+                imageData: imageData,
+                name: name
             },
             success:  function(data) {
                 if(data.status === 'success') {
@@ -121,6 +130,10 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
             }
         })
     });
+    $('.update-name .opacity').bind('click', function() {
+        $('.update-name').hide();
+    })
+
 
     /**
      * 修改触点半径

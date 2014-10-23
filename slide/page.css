@@ -42,10 +42,18 @@ em,i{ font-style:normal;}
     -webkit-transform-origin:left  center;
 
 }
+.top{
 
+}
+.top .left{
+    float:left;
+}
+.top .right{
+    float:right;
+}
 #gameScreen{
     position:absolute;
-    top:0;
+    top:50px;
     left:0;
     z-index:1;
 }
@@ -54,40 +62,24 @@ em,i{ font-style:normal;}
     display:inline-block;
     background-color:#000;
     color:#fff;
-    width: 100px;
-    line-height:30px;
-    height:30px;
+    width: 75px;
+    line-height:40px;
+    height:40px;
     font-size:16px;
     font-weight:bold;
     text-align:center;
     text-decoration:none;
-    position:absolute;
+    /*position:absolute;*/
     left:10px;
-    -webkit-box-shadow: 0 0 15px #252222;
+    /*-webkit-box-shadow: 0 0 15px #252222;*/
     cursor:pointer;
     z-index:3;
-}
-#showArrow{
-    top: 10px;
-}
-#showTrack{
-    top: 50px;
-}
-#return{
-    top:100px;
-}
-#replay{
-    top:150px;
-}
-#upload{
-    top:0px;
 }
 
 
 /*切换半径样式*/
 #changeRadius{
-    top:200px;
-    width:200px;
+    width: 120px;
 }
 #changeRadius div{
     display: inline-block;
@@ -117,4 +109,69 @@ em,i{ font-style:normal;}
 }
 #changeRadius div.active{
     background-color:#fff;
+}
+
+.btn-group{
+    position:absolute;
+    bottom:0px;
+    height:90px;
+    width: 100%;
+    text-align:center;
+}
+.btn-group .btn{
+    position:relative;
+    border-radius:5px;
+    border:1px solid #fff;
+    margin-top: 2px;
+}
+
+#viewlist{
+    margin-top:5px;
+    margin-right:10px;
+    border-radius:5px;
+    border:1px solid #fff;
+}
+
+.update-name{
+    display:none;
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    top:0px;
+    left:0px;
+    z-index:22;
+}
+.update-name .opacity{
+    position:absolute;
+    width: 100%;
+    height:100%;
+    top: 0;
+    left:0;
+    z-index:221;
+    background: #000;
+    opacity: 0.7;
+}
+.update-name .inner{
+    padding-top:5px;
+    position:relative;
+    z-index:222;
+    margin:40% auto 0;
+    background-color:#fff;
+    width:200px;
+    height:95px;
+}
+.update-name input{
+    height:20px;
+    margin-top:5px;
+}
+.update-name .btn{
+    border-radius:5px;
+    border:1px solid #fff;
+    height:30px;
+    line-height:30px;
+    margin-top:5px;
+}
+.update-name .btn:hover{
+    color:#fff;
+    text-decoration:none;
 }

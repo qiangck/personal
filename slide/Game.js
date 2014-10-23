@@ -12,11 +12,11 @@ define( function() {
         this.init();
     };
     Game.prototype.init = function() {
-//        this.resize();
+        this.resize();
         this.draw();
     };
     Game.prototype.clear = function(){
-      this.ctx.clearRect(0, 0, this.canvasElem.width, this.canvasElem.height);
+        this.draw();
     };
     Game.prototype.draw = function () {
         var that = this;
@@ -30,7 +30,7 @@ define( function() {
             nowWidth = this.ctx.width;
             nowHeigh = this.ctx.width / imgScale;
         }
-        ctx.fillStyle = '#fff';
+        this.ctx.fillStyle = '#fff';
         this.ctx.fillRect(0, 0, this.canvasElem.width, this.canvasElem.height);
         if(!bgImg) {
             bgImg = new Image();
@@ -68,9 +68,9 @@ define( function() {
 
     Game.prototype.resize = function() {
         this.canvasElem.width = window.outerWidth;
-        this.canvasElem.height = window.outerHeight;
+        this.canvasElem.height = window.outerHeight-150;
         this.ctx.width = window.outerWidth;
-        this.ctx.height = window.outerHeight;
+        this.ctx.height = window.outerHeight-150;
     }
     Game.prototype.record = function(point, bNew, radius) {
         if(bNew) {
@@ -137,6 +137,8 @@ define( function() {
             ctx.beginPath();
             ctx.lineWidth = '' + r;
             ctx.strokeStyle = color; // Green path
+            sy = sy - 50;
+            ey = ey - 50;
             ctx.moveTo(sx, sy);
             ctx.lineTo(ex, ey);
             ctx.stroke(); // Draw it
