@@ -1,0 +1,9 @@
+create database canvas_server
+CREATE TABLE `canvas_server`.`works` (
+  `id` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+ALTER TABLE `canvas_server`.`works`
+ADD COLUMN `praise` INT NULL DEFAULT 0 AFTER `name`;
+ALTER TABLE `canvas_server`.`works`
+CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;

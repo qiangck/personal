@@ -113,7 +113,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
         console.log(imageData)
         $.ajax({
             type: 'post',
-            url: 'http://192.168.1.101:3000',
+            url: 'http://192.168.1.101:3000/work',
             dataType: 'json',
             data: {
                 imageData: imageData,
