@@ -81,7 +81,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
         try{
             $.ajax({
                 type: 'get',
-                url: 'http://192.168.1.101:3000/work/count',
+                url: 'http://182.92.186.42:3000/work/count',
                 dataType: 'json',
                 success: function(data) {
                     $('#worksCount').html('人民网<br>现已经收录了' + data.num + '个作品');
@@ -126,7 +126,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
         console.log(imageData)
         $.ajax({
             type: 'post',
-            url: 'http://192.168.1.101:3000/work',
+            url: 'http://182.92.186.42:3000/work',
             dataType: 'json',
             data: {
                 imageData: imageData,
@@ -170,13 +170,13 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     });
     $('.update-name .result').on('click', function(){
         $('#workList .viewMyWork').show();
-        $('#workList .viewMyWork .work').html('<img src="http://localhost:3000/images/' + workId + '.png">');
+        $('#workList .viewMyWork .work').html('<img src="http://182.92.186.42:3000/images/' + workId + '.png">');
         getWorks();
     });
 
     function getWorks() {
         $.ajax({
-            url: 'http://192.168.1.101:3000/work',
+            url: 'http://182.92.186.42:3000/work',
             type: 'get',
             dataType: 'json',
             success: function(data) {
@@ -196,7 +196,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     function renderWorks(works) {
         var htmlStr = '';
         works.forEach(function(obj, index) {
-            htmlStr += '<li><img src="http://localhost:3000/images/' + obj.id + '.png"><br>' + obj.name + '</li>'
+            htmlStr += '<li><img src="http://182.92.186.42:3000/images/' + obj.id + '.png"><br>' + obj.name + '</li>'
         });
         $('#workList ul').html(htmlStr);
     }
