@@ -13,6 +13,8 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     var ctx = canvasElem.getContext('2d');
     var workId = 0;
     window.ctx = ctx;
+//    var baseUrl = 'http://192.168.1.101';
+    var baseUrl = 'http://182.92.186.42';
     init();
 //    document.getContext('showArrow').addEventListener('touchstart', function(){
 //        document.getElementById('curType').innerHTML = '显示方向';
@@ -81,7 +83,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
         try{
             $.ajax({
                 type: 'get',
-                url: 'http://182.92.186.42:3000/work/count',
+                url: baseUrl + '/work/count',
                 dataType: 'json',
                 success: function(data) {
                     $('#worksCount').html('人民网<br>现已经收录了' + data.num + '个作品');
@@ -126,7 +128,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
         console.log(imageData)
         $.ajax({
             type: 'post',
-            url: 'http://182.92.186.42:3000/work',
+            url: baseUrl + '/work',
             dataType: 'json',
             data: {
                 imageData: imageData,
@@ -176,7 +178,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
 
     function getWorks() {
         $.ajax({
-            url: 'http://182.92.186.42:3000/work',
+            url: baseUrl + '/work',
             type: 'get',
             dataType: 'json',
             success: function(data) {
@@ -196,7 +198,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     function renderWorks(works) {
         var htmlStr = '';
         works.forEach(function(obj, index) {
-            htmlStr += '<li><img src="http://182.92.186.42:3000/images/' + obj.id + '.png"><br>' + obj.name + '</li>'
+            htmlStr += '<li><img src="' + baseUrl + ':3000/images/' + obj.id + '.png"><br>' + obj.name + '</li>'
         });
         $('#workList ul').html(htmlStr);
     }

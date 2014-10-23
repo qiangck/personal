@@ -7,3 +7,11 @@ ALTER TABLE `canvas_server`.`works`
 ADD COLUMN `praise` INT NULL DEFAULT 0 AFTER `name`;
 ALTER TABLE `canvas_server`.`works`
 CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+
+location ^~ /work/
+{
+proxy_cache js_cache;
+rewrite /static_js/(.+)$ /$1 break;
+proxy_pass http://127.0.0.1:3000;
+}
