@@ -39,7 +39,7 @@ router.post('/work', function(req, res) {
         }
         var workId = value.insertId;
         var imageName = workId + '.png';
-        var imagePath = '/xuan/personal/slide/server/public/images' + imageName;
+        var imagePath = '/xuan/personal/slide/server/public/images/' + imageName;
 //        var imagePath = '/Users/rechie/WebstormProjects/personal/slide/server/public/images/' + imageName;
         fs.writeFile(imagePath, data, 'base64', function(error, value) {
             if (error) {
