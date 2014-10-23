@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta name="robots" content="all" />
+  <title>打分系统Beta1.1_欢迎光临</title>
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+  <link href="scoring2013.css" type="text/css" rel="stylesheet" rev="stylesheet" media="all" />
+  <link href="/js_library/zome.css" type="text/css" rel="stylesheet" rev="stylesheet" media="all" />
+  <script type="text/javascript" src="/javascripts/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery.form.js"></script>
+   <script src="/js_library/scoring2013.min.js" type="text/javascript" ></script>
+   <script type="text/javascript">
+<!--
+   (function() {
+     if (!
+     /*@cc_on!@*/
+     0) return;
+     var e = "abbr, article, aside, audio, canvas, datalist, details, dialog, eventsource, figure, footer, header, hgroup, mark, menu, meter, nav, output, progress, section, time, video".split(', ');
+     var i= e.length;
+     while (i--){
+         document.createElement(e[i])
+     }
+})()
+   -->
+</script>
+<script type="text/javascript">
+ $(document).ready(function() {
+    var options = { 
+	target:'#iframe1',
+	error: function(){
+	  alert("出错了！")
+	},
+    success:function(data) { 
+	    console.log(data.filePath);
+		if(data.code == 200){
+		        $(".input_img").css({background:"url("+data.filePath+")",backgroundSize:"contain"});
+				$(".mengban").animate({
+				  height:0
+				},1500)
+				$(".up_text_show1").text("上传成功！").delay(1500).show();
+		}else{
+		      $(".up_text_show1").text("作品已上传三个，请覆盖同样名称的图片后再上传！");
+		}
+    }
+    };
+	var options2 = { 
+	target:'#iframe1',
+	error: function(){
+	  alert("出错了！")
+	},
+    success:function(data) { 
+	    console.log(data.filePath);
+		if(data.code == 200){
+		        $(".input_img1").css({background:"url("+data.filePath+")",backgroundSize:"contain"});
+				$(".mengban1").animate({
+				  height:0
+				},1500)
+				$(".up_text_show1").text("上传成功！").delay(1500).show();
+		}else{
+		      $(".up_text_show1").text("作品已上传三个，请覆盖同样名称的图片后再上传！");
+		}
+    }
+    };
+	var options3 = { 
+	target:'#iframe1',
+	error: function(){
+	  alert("出错了！")
+	},
+    success:function(data) { 
+	    console.log(data.filePath);
+		if(data.code == 200){
+		        $(".input_img2").css({background:"url("+data.filePath+")",backgroundSize:"contain"});
+				$(".mengban2").animate({
+				  height:0
+				},1500)
+				$(".up_text_show1").text("上传成功！").delay(1500).show();
+		}else{
+		      $(".up_text_show1").text("作品已上传三个，请覆盖同样名称的图片后再上传！");
+		}
+    }
+    };
+	$(".input_c_img").change(function(){
+	  $("#img_up_box1").ajaxSubmit(options);
+	   return false;
+	})
+	$(".input_c_img1").change(function(){
+	  $("#img_up_box2").ajaxSubmit(options2);
+	   return false;
+	})
+	$(".input_c_img2").change(function(){
+	  $("#img_up_box3").ajaxSubmit(options3);
+	   return false;
+	})
+	var options1 = { 
+	target:'#iframe1',
+	error: function(){
+	  alert("出错了！")
+	},
+    success:function(data) { 
+		 console.log(data);
+		 alert("更新成功！");
+    }
+    };  
+	$("#user_face").submit(function(){
+	   $(this).ajaxSubmit(options1);
+	   return false;
+	});
+ })
+</script>
+  </head>
+  <body>
+  <!--内容部分-->
+  <section class="content">
+      <h1><img src="/images/up_title.png" alt="" border="0" /></h1>
+	 <article class="up_img" id="up_img_c">
+	   <div class="file_list">
+	     <h3></h3>
+		 <p></p>
+	  </div>
+	  <form action="/works" method="post" id="img_up_box1" enctype="multipart/form-data" class="well form-vertical">
+       <fieldset>
+        <input type="file" class="input_c_img" name="client_file" id="client_file" /><br />
+		<div class="mengban"></div>
+		<input type="text" class="input_img" />
+	  </fieldset>
+	  </form>
+	  <form action="/works" method="post" id="img_up_box2" enctype="multipart/form-data" class="well form-vertical">
+       <fieldset>
+        <input type="file" class="input_c_img1" name="client_file" id="client_file" /><br />
+		<div class="mengban1"></div>
+		<input type="text" class="input_img1" />
+	  </fieldset>
+	  </form>
+	  <form action="/works" method="post" id="img_up_box3" enctype="multipart/form-data" class="well form-vertical">
+       <fieldset>
+        <input type="file" class="input_c_img2" name="client_file" id="client_file" /><br />
+		<div class="mengban2"></div>
+		<input type="text" class="input_img2" />
+	  </fieldset>
+	  </form>
+	  <iframe src="" width="0" height="0" id="iframe1" name="iframe1" style="display:none"></iframe>
+	  <p class="up_text_show1"></p>
+	  <p class="up_text_show">请点击图片框，进行上传，谢谢！</p>
+      </article>
+    </section>
+	<!--历史回顾-->
+	<section class="history">
+	   <article class="review">
+        <div class="review_box">
+         <div class="review_list">
+          <!--  <div>
+            <h3>2013年</h3>
+            <ul>
+              <li><span>08</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>07</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>06</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>05</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>04</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+            </ul>
+            <ul>
+              <li><span>03</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>02</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>01</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li></li>
+              <li></li>
+            </ul>
+            <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            </div>
+            <div>
+            <h3>2012年</h3>
+            <ul>
+              <li><span>12</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>11</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>10</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>09</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>08</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+            </ul>
+            <ul>
+              <li><span>07</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>06</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>05</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>04</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>03</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+            </ul>
+            <ul>
+              <li><span>02</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>01</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            </div>
+            <div>
+            <h3>2011年</h3>
+            <ul>
+              <li><span>12</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>11</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>10</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>09</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>08</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+            </ul>
+            <ul>
+              <li><span>07</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>06</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>05</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>04</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>03</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+            </ul>
+            <ul>
+              <li><span>02</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li><span>01</span>月&nbsp;&nbsp;&nbsp;<a href="" target="_blank">查看</a></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            </div>-->
+			<h4 style="text-align:center;">暂无回顾功能</h4>
+         </div>
+         </div>
+        <p><input type="button" class="up_submit" value="" /></p>
+      </article>
+	</section>
+	<!--查看成绩-->
+	<section class="view_score" id="chakan_c">
+      <h1><img src="/images/score_title.png" alt="" border="0" /></h1>
+      <article class="user_list">
+          <div class="title_tab" id="chakan_tab">
+              <!--<ul>
+                <li class="focus">设计组</li>
+                <li>代码组</li>
+                <li>互动组</li>
+              </ul>-->
+              <span><a href="jieshao.html" target="_blank">查看评分标准&gt;&gt;</a></span>
+          </div>
+          <div class="user_list_c score_list clearfix clear">
+            <ul id="chakan_list">
+            </ul>
+          </div>
+      </article>
+        </section>
+	<!--查看作品-->
+	<section class="view_works">
+      <article class="view">
+         <div class="title"><h3>上传作品/<span>8月作品</span></h3><input type="button" value="" class="replay" /></div>
+         <div class="user_list_c clearfix clear">
+            <ul>
+              <li>
+                <span><img src="images/1.jpg" alt="" border="0" /></span>
+                <b>人物名</b>
+                设计师
+              </li>
+            </ul>
+          </div>
+          <ul class="view_zuopin clearfix clear">
+            <li><img src="images/2.jpg" alt="" border="0" /></li>
+            <li><img src="images/2.jpg" alt="" border="0" /></li>
+            <li><img src="images/2.jpg" alt="" border="0" /></li>
+          </ul>
+      </article>
+       </section>
+	  <!--打分情况-->
+	<section class="view_scoring" id="dafen_qingkuang">
+      <h1><img src="images/score_c_title.png" alt="" border="0" /></h1>
+      <article class="user_list">
+          <div class="title_tab" id="qk_tab">
+              <!--<ul>
+                <li class="focus">设计组</li>
+                <li>代码组</li>
+                <li>互动组</li>
+              </ul>-->
+              <span><select><option>孙莉娜</option><option>刘茆涵</option><option>李博实</option><option>杨溪</option><option>哈嘉琪</option><option>张瑞婷</option><option>高子龙</option><option>裴籽霖</option><option>谢晓宇</option><option>郭颖</option><option>毛然</option><option>曹宏晔</option><option>李冰</option><option>崔丽华</option><option>李芳</option><option>关雪松</option><option>雷涓</option><option>张锐</option><option>李树亮</option><option>邓艳刚</option><option>李冬</option><option>刘专</option></select></span>
+          </div>
+          <div class="scoring clearfix clear">
+            <!--单人得分情况-->
+              <div class="scoring_c clearfix clear">
+                  <div class="fl">
+                      <img src="images/1.jpg" alt="" border="0" />
+                      <span class="fl"><b id="point_name"></b><br />
+                      设计师</span>
+                      <span>(<em id="pingjun_fen"></em>分)</span>
+					  <p class="clear"><input class="dafen_qingkuang_b" type="button" value="↓查看本月个人评分" /></p>
+					  <div class="scoring_list_from"></div>
+                  </div>
+                  <div class="fr">
+				  <div id="zuopin_list"></div>
+                     打分: <select id="zuizhong_pingfen"><option value='0'>0</option><option  value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option><option value='6'>6</option><option value='7'>7</option><option value='8'>8</option><option value='9'>9</option><option value='10'>10</option><option value='11'>11</option><option value='12'>12</option><option value='13'>13</option><option value='14'>14</option><option value='15'>15</option><option value='16'>16</option><option value='17'>17</option><option value='18'>18</option><option value='19'>19</option><option value='20'>20</option><option value='21'>21</option><option value='22'>22</option><option value='23'>23</option><option value='24'>24</option><option value='25'>25</option></select>分
+                  </div>
+              </div>
+              <div class="scoring_list clearfix clear">
+ 
+              </div>
+              <!--end 单人得分情况-->
+          </div>
+           <p><input type="button" class="true_score" value="" /></p>
+      </article>
+	  </section>
+	 <!--个人打分-->
+	  <section class="view_scoring" id="dafen_c">
+      <h1><img src="/images/people_score.png" alt="" border="0" /></h1>
+      <article class="user_list">
+          <div class="title_tab" id="people_dafen_tab">
+              <ul>
+                <li class="focus">设计组</li>
+                <li>代码组</li>
+                <li>互动组</li>
+              </ul>
+              <span><a href="jieshao.html" target="_blank">查看评分标准&gt;&gt;</a></span>
+          </div>
+          <div class="people_score_list clearfix clear">
+              <dl>
+                <dt>
+                <img src="images/1.jpg" alt="" border="0" />
+                <span><b>人物名</b>
+                设计师</span>
+                </dt>
+                <dd>
+                   <ul class="clearfix clear">
+                     <li><img src="images/2.jpg" width="55" height="83" alt="" border="0" /></li>
+                     <li><img src="images/2.jpg" width="55" height="83" alt="" border="0" /></li>
+                     <li><img src="images/2.jpg" width="55" height="83" alt="" border="0" /></li>
+                   </ul>
+                   <p class="tc"><select><option>0</option></select>分</p>
+                </dd>
+              </dl>
+             <dl>
+                <dt>
+                <img src="images/1.jpg" alt="" border="0" />
+                <span><b>人物名</b>
+                设计师</span>
+                </dt>
+                <dd>
+                   <ul class="clearfix clear">
+                     <li><img src="images/2.jpg" width="55" height="83" alt="" border="0" /></li>
+                     <li><img src="images/2.jpg" width="55" height="83" alt="" border="0" /></li>
+                     <li><img src="images/2.jpg" width="55" height="83" alt="" border="0" /></li>
+                   </ul>
+                   <p class="tc"><select><option>0</option></select>分</p>
+                </dd>
+              </dl>
+                            <dl>
+                <dt>
+                <img src="images/1.jpg" alt="" border="0" />
+                <span><b>人物名</b>
+                设计师</span>
+                </dt>
+                <dd>
+                   <ul class="clearfix clear">
+                     <li><img src="images/2.jpg" width="55" height="83" alt="" border="0" /></li>
+                     <li><img src="images/2.jpg" width="55" height="83" alt="" border="0" /></li>
+                     <li><img src="images/2.jpg" width="55" height="83" alt="" border="0" /></li>
+                   </ul>
+                   <p class="tc"><select><option>0</option></select>分</p>
+                </dd>
+              </dl>
+          </div>
+          <p><input type="button" class="true_submit" id="tijiao1" value="" /><input type="button" style="display:none;" class="true_submit" id="tijiao2" value="" /><input type="button" class="true_submit" style="display:none;" id="tijiao3" value="" /></p>
+      </article>
+  </section>
+  	<!--用户管理-->
+	<section class="user_Management" id="yonghu">
+      <!--用户管理-->
+        <h1><img src="/images/user_title.png" alt="" border="0" /></h1>
+	  <article class="user_list">
+	   <div class="title_tab" id="user_tab">
+              <ul>
+                <li class="focus">设计组</li>
+                <li>代码组</li>
+                <li>互动组</li>
+              </ul>
+          </div>
+          <div class="user_list_c clearfix clear">
+            <ul id="people_user_list">
+            </ul>
+          </div>
+          <p><input type="button" class="add_user" value="" /></p>
+		  </article>
+	</section>
+    <!--添加用户功能-->
+	<section class="user_Management" id="add_u">
+      <!--用户管理-->
+        <h1><img src="/images/user_title.png" alt="" border="0" /></h1>
+      <article class="user">
+          <div class="title"><h3>用户管理/<span>添加成员</span></h3><input type="button" value="" class="replay" /></div>
+          <p><input type="text" class="login_input" id="userName" name="user_name" placeholder="姓名" /></p>
+          <p><input type="password" id="password" name="password" placeholder="密码"  class="login_input" /></p>
+          <!--<p><input type="text" class="login_input"  value="头像" /></p>-->
+		  <p><input type="text" name="user_team" class="login_input" id="userTeam" placeholder="学习小组" /></p>
+          <p><input type="text" name="user_profession" class="login_input" id="userProfession" placeholder="职业" /></p>
+          <!--<p><select><option>组别</option></select><select><option>职位</option></select></p>-->
+          <p><input type="button" class="add_submit" id="adUserBtn" value="" /></p>
+      </article>
+	</section>
+	<!--个人设置-->
+	<section class="user_Management" id="shezhi_people">
+      <!--个人设置-->
+        <h1><img src="/images/user_title.png" alt="" border="0" /></h1>
+      <article class="user">
+          <div class="title shezhi_tab"><h3>个人设置---<span>密码修改</span>/<span class="focus">修改头像</span></h3></div>
+		  <div class="edit_password">
+		  <p><input type="password" id="password_new" name="password" placeholder="输入新密码"  class="login_input" /></p>
+		  <p><input type="password" id="password_new1" name="password" placeholder="重新输入新密码"  class="login_input" /></p>
+          <p><a class="add_submit1" id="changePwdBtn" value="" style="display:inline-block;"/></a></p>
+		  </div>
+		  <div class="edit_face" style="display:none;">
+		  <form action="/user/icon" method="post" enctype="multipart/form-data" id="user_face">
+		  <p><input type="file" id="face_news" name="user_icon" placeholder="上传新头像"  class="login_input" /></p>
+          <p><input type="submit" class="add_submit1" value="" style="display:inline-block;"/></a></p>
+		  </form>
+		  </div>
+      </article>
+	</section>
+	<!--结束添加用户功能-->
+    <script type="text/javascript">
+        $(document).ready(function() {
+          // 3.领导打分 同2，后台进行判断是否为高级用户
+          // 4.查看最终分数
+          function getPoint() {
+            $.ajax({
+              type: 'GET',
+              dataType: "json",
+              url: '/point',
+              data: {
+                //point_status: 2,   //2为领导打的分
+                point_from: '李树亮',    //谁打的
+                //point_to: '小一',         //打给谁
+                //dt_created: '2013-08'     //打分的日期  格式  YYYY-MM
+              },
+              success: function(data) {
+                if (data.code == 200) {
+                  console.log(data.pointList);
+                }
+              }
+            });
+          }
+          getPoint();
+          // 5.查看所有人对某人的打分情况
+
+          // 添加用户功能
+          $('#adUserBtn').click(function() {
+            var params = {
+              user_name: $('#userName').val(),
+              password: $('#password').val(),
+              user_team: $('#userTeam').val(),
+              user_profession: $('#userProfession').val()
+            };
+            $.ajax({
+              url: '/signup',
+              data: params,
+              type: 'POST',
+              success: function(data){
+                //console.log(data.code);
+				if(data.code == 200){
+				alert("注册成功!")
+				}else{
+				alert("用户已存在!")
+				}
+              },
+              error: function(error) {
+                alert(error.message);
+              }
+            });
+          });
+
+          // 修改密码
+          $('#changePwdBtn').click(function(event) {
+            var pwd = $('#password_new').val();
+            var pwd1 = $('#password_new1').val();
+            if(pwd.length < 6) {
+                alert('密码长度要6位以上');
+            } else if(pwd !== pwd) {
+                alert('两次密码输入不一致');
+            } else {
+                $.ajax({
+                  url: '/pwd',
+                  data: {password: pwd},
+                  type: 'POST',
+                  success: function(data){
+                    //console.log(data.code);
+                    if(data.code == 200){
+                    alert("修改成功!")
+                    }else{
+                    alert(data.message)
+                    }
+                  },
+                  error: function(error) {
+                    alert('修改失败，请重试或联系管理员');
+                  }
+                });
+            }
+          });
+        });
+    </script>
+	   <script src="/js_library/zome.js" type="text/javascript" ></script>
+		<script type="text/javascript">
+	 $(document).ready(function(){
+	 $(".zoomer_basic").zoomer();;
+	    	//$("#close_id").bind("click",function(){
+//	alert(1);
+//					 $("table.img_show_big").hide();
+//	  })
+	 })
+    </script>
+	<nav>
+      <ul>
+	  <% if(user.user_status == 1){ %>
+       <%- '<li class="up_nav"><p><span class="nav_ico"></span>上传作品</p></li><li class="dafen_nav"><p><span class="nav_ico nav_ico1"></span>打分</p></li>' %>
+		<% } %>
+        <li class="focus chakan_nav"><p><span class="nav_ico nav_ico2"></span>查看成绩</p></li>
+		<li class="shezhi_nav"><p><span class="nav_ico nav_ico4"></span>个人设置</p></li>
+		<% if(user.user_status == 2){ %>
+		<%- '<li class="dafenqk_nav"><p><span class="nav_ico nav_ico3"></span>打分情况</p></li><li class="yonghu_nav"><p><span class="nav_ico nav_ico4"></span>用户管理</p></li>' %>
+		<% } %>
+		<li><p style="border:none;"><span class="nav_ico nav_ico4"></span><a href="/signout">退出系统</a></p></li>
+      </ul>
+  </nav>
+  <ul id="users_list" style="display:none;"></ul>
+  </body>
+</html>

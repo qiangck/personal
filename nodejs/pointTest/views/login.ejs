@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta name="robots" content="all" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+  <link href="scoring2013.css" type="text/css" rel="stylesheet" rev="stylesheet" media="all" />
+  <script src="/js_library/jquery-1.7.1.min.js" type="text/javascript" ></script>
+  <script type="text/javascript">
+<!--
+   (function() {
+     if (!
+     /*@cc_on!@*/
+     0) return;
+     var e = "abbr, article, aside, audio, canvas, datalist, details, dialog, eventsource, figure, footer, header, hgroup, mark, menu, meter, nav, output, progress, section, time, video".split(', ');
+     var i= e.length;
+     while (i--){
+         document.createElement(e[i])
+     }
+})()
+   -->
+</script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".login_input").bind({
+      focus:function(){$(this).attr({value:""})}
+    })
+    $("#login_text").focus(function(){
+      $(this).hide();
+      $("#login_password").show();
+    });
+  })
+</script>
+<title>打分系统_用户登录</title>
+</head>
+<body>
+  <section class="login_box">
+      <h1><img src="/images/system_title.png" alt="" border="0" /></h1>
+	  <% if(error){%>
+        <%- error.message %>
+    <%} %>
+    <form action="/signin" method="post">
+      <article class="system_login">
+         <p><input type="text" class="login_input" name="user_name" placeholder=""  value="姓名" /></p>
+         <p><input type="text" class="login_input" id="login_text"  value="密码" /><input type="password" class="login_input" name="password" placeholder="" id="login_password"  value="" /></p>
+         <p><input type="submit" class="login_submit" value="" /></p>
+      </article>
+	  </form>
+  </section>
+</body>
+</html>

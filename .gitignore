@@ -1,7 +1,9 @@
 .idea*
 *.log
 */**/public/*
+*/**/**/public/*
 */**/node_modules/*
+**/**/**/node_modules/*
 
 site/formatJs/1.js
 slide/server/views

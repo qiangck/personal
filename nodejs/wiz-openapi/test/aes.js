@@ -1,0 +1,10 @@
+var crypto = require('crypto');
+var cipher = crypto.createCipher('aes-256-cbc','WizNote2013');
+var text = "rechie1985@163.com-561213";
+var crypted = cipher.update(text,'utf8','hex');
+crypted += cipher.final('hex');
+var decipher = crypto.createDecipher('aes-256-cbc','WizNote2013');
+var dec = decipher.update(crypted,'hex','utf8');
+dec += decipher.final('utf8');
+console.log(crypted);
+console.log(dec);
