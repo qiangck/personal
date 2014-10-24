@@ -213,8 +213,8 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
             var wxData = {
                 "imgUrl": $('#workList .viewMyWork .work img').attr('src'),
                 "link":window.location.href,
-                "desc":'人民日报新大楼',
-                "title":"人民日报新大楼"
+                "desc":'我的爸爸（妈妈）',
+                "title":"我的爸爸（妈妈）"
             };
 
         // 分享的回调
