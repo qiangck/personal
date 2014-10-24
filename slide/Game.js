@@ -67,10 +67,10 @@ define( function() {
     };
 
     Game.prototype.resize = function() {
-        this.canvasElem.width = window.outerWidth;
-        this.canvasElem.height = window.outerHeight-150;
-        this.ctx.width = window.outerWidth;
-        this.ctx.height = window.outerHeight-150;
+        this.canvasElem.width = $(window).width();
+        this.canvasElem.height = $(window).height()-150;
+        this.ctx.width = $(window).width();
+        this.ctx.height = $(window).height()-150;
     }
     Game.prototype.record = function(point, bNew, radius) {
         if(bNew) {

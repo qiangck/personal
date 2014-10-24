@@ -125,7 +125,6 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
         var dataUrl = canvasElem.toDataURL('images/png');
         var imageData = encodeURIComponent(dataUrl);
         var imageData = dataUrl;
-        console.log(imageData)
         $.ajax({
             type: 'post',
             url: baseUrl + '/work',
@@ -142,7 +141,8 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
                 $('.update-name .inner').hide();
                 workId = data.id;
             },
-            error: function () {
+            error: function (e) {
+                alert(e.message || e);
                 console.error(arguments);
             }
         })
@@ -172,7 +172,7 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './Game'], func
     });
     $('.update-name .result').on('click', function(){
         $('#workList .viewMyWork').show();
-        $('#workList .viewMyWork .work').html('<img src="http://182.92.186.42:3000/images/' + workId + '.png">');
+        $('#workList .viewMyWork .work').html('<img src="' + baseUrl + ':3000/images/' + workId + '.png">');
         getWorks();
     });
 

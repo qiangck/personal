@@ -228,6 +228,7 @@ em,i{ font-style:normal;}
     position:relative;
     z-index:232;
     text-align:center;
+    top: 100px;
 }
 #workList .viewMyWork .work img{
     width: 85%;
