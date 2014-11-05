@@ -8,6 +8,11 @@ ADD COLUMN `praise` INT NULL DEFAULT 0 AFTER `name`;
 ALTER TABLE `canvas_server`.`works`
 CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
 
+#修改字符编码
+ CHANGE COLUMN `name` `name` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL ;
+
+ALTER TABLE `canvas_server`.`works`
+CHANGE COLUMN `name` `name` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL ;
 
 location ^~ /work/
 {
@@ -15,3 +20,9 @@ proxy_cache js_cache;
 rewrite /static_js/(.+)$ /$1 break;
 proxy_pass http://127.0.0.1:3000;
 }
+0
+
+/* 服务器forever配置*/
+tail -f /root/.forever/NQD9.log
+/usr/local/node/lib/node_modules/forever/bin
+sudo ./forever start /xuan/personal/slide/server/bin/www

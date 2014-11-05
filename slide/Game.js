@@ -6,7 +6,7 @@ define( function() {
     var arrowImg = new Image();
     arrowImg.src = 'images/arrow.png';
     var rectRecords = [];
-    var Game = function(id){
+    function Game(id){
         this.canvasElem = document.getElementById('gameScreen');
         this.ctx = this.canvasElem.getContext('2d');
         this.init();
