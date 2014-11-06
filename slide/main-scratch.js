@@ -1,9 +1,6 @@
 /**
  * Created by rechie on 14-11-5.
  */
-/**
- * Created by rechie on 14-8-7.
- */
 define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './ScratchGame'], function (Slide, MathUtil, ElemUtil, ScratchGame){
     var game;
     var startPoint = null;
@@ -57,19 +54,6 @@ define(['../core/Slide', '../util/MathUtil', '../util/ElemUtil', './ScratchGame'
 
     function init() {
         try{
-            $.ajax({
-                type: 'get',
-                url: baseUrl + '/work/count',
-                dataType: 'json',
-                success: function(data) {
-                    $('#worksCount').html('人民网<br>现已经收录了' + data.num + '个作品');
-                },
-                error: function() {
-
-                }
-            });
-//            canvasElem.width = window.outerWidth;
-//            canvasElem.height = window.outerHeight;
             game = new ScratchGame('gameScreen');
         } catch(e) {
             console.log('init error');
