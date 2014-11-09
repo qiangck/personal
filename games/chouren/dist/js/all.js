@@ -2698,11 +2698,11 @@ $(document).ready(function() {
         }
     });
     game.setTimer(timer);
-    $('#play img').bind('touchstart', function(){
+    $('#play img').bind('click', function(){
 //        loadAssets(prepare)
         prepare();
     });
-    $('#replay img').bind('touchstart', function(){
+    $('#replay img').bind('click', function(){
         $('#gameIntro').hide();
         $('#result').hide();
         $('#gameScreen').show();
