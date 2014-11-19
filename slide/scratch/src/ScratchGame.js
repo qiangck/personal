@@ -1,10 +1,11 @@
 /**
  * Created by rechie on 14-11-5.
  */
-define(['../../Game'], function(Game) {
+define(['ft/Game'], function(Game) {
     var bgImg = new Image();
     //实现集成
     function ScratchGame(id) {
+        console.log('init ScratchGame')
         Game.apply(this, [id]);
         // this.ctx.globalCompositeOperation = 'destination-out';
         // this.canvasElem.style.backgroundImage = 'url(http://f.hiphotos.baidu.com/image/pic/item/8b13632762d0f7039c94beb40afa513d2697c5b7.jpg)';
@@ -32,6 +33,7 @@ define(['../../Game'], function(Game) {
      *  重写resize方法
      */
     Game.prototype.resize = function() {
+        console.log('resize')
         this.canvasElem.width = $(window).width();
         this.canvasElem.height = $(window).height();
         this.ctx.width = $(window).width();

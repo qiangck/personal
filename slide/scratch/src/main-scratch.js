@@ -1,7 +1,7 @@
 /**
  * Created by rechie on 14-11-5.
  */
-define(['../../../core/Slide', '../../../util/MathUtil', '../../../util/ElemUtil', './ScratchGame'], function (Slide, MathUtil, ElemUtil, ScratchGame){
+define(['core/Slide', 'util/MathUtil', 'util/ElemUtil', 'src/ScratchGame'], function (Slide, MathUtil, ElemUtil, ScratchGame){
     var game;
     var startPoint = null;
     var endPoint = null;
@@ -62,6 +62,7 @@ define(['../../../core/Slide', '../../../util/MathUtil', '../../../util/ElemUtil
     });
 
     function init() {
+        console.log('start init')
         try{
             game = new ScratchGame(canvasId);
             $('.sl-slider').height($(window).height());
