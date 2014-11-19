@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>
+            刮刮卡
+        </title>
+        <link rel="stylesheet" type="text/css" href="css/demo.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/custom.css" />
+        <link rel="stylesheet" href="../page.css" />
+        <meta name="viewport" content="width=device-width,height=device-height,minimum-scale=1.0,maximum-scale=1.0,target-densitydpi=device-dpi"
+        />
+        <script type="text/javascript" src="src/modernizr.custom.79639.js">
+        </script>
+    </head>
+    
+    <body>
+        <div id="drawWrap">
+            <canvas id="gameScreen" class="scratchScreen" width="100%" height="100%">
+            </canvas>
+        </div>
+        <div id="loading" class="loading">
+            <div class="loadbox">
+                <div class="loadlogo">
+                </div>
+                <div class="loadbg">
+                </div>
+            </div>
+        </div>
+        <div id="slider" class="sl-slider-wrapper">
+            <div class="sl-slider">
+                <div class="sl-slide bg-3" data-orientation="horizontal" data-slice1-rotation="3"
+                data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
+                    <div class="sl-slide-inner">
+                        <div class="bg" style="background-image:url(../images/1.jpg)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sl-slider">
+                <div class="sl-slide bg-3" data-orientation="horizontal" data-slice1-rotation="3"
+                data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
+                    <div class="sl-slide-inner">
+                        <div class="bg" style="background-image:url(../images/2.jpg)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sl-slider">
+                <div class="sl-slide bg-3" data-orientation="horizontal" data-slice1-rotation="3"
+                data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
+                    <div class="sl-slide-inner">
+                        <div class="bg" style="background-image:url(../images/3.jpg)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sl-slider">
+                <div class="sl-slide bg-3" data-orientation="horizontal" data-slice1-rotation="3"
+                data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
+                    <div class="sl-slide-inner">
+                        <div class="bg" style="background-image:url(../images/4.jpg)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="jt_left">
+            <img src="../images/jt.png">
+        </span>
+        <!-- /slider-wrapper -->
+        <script type="application/javascript" src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js">
+        </script>
+        <script type="application/javascript" src="../WeixinApi.js">
+        </script>
+        <script type="application/javascript" src="../require.js">
+        </script>
+        <script type="text/javascript" src="src/jquery.ba-cond.min.js">
+        </script>
+        <script type="text/javascript" src="src/jquery.slitslider.js">
+        </script>
+        <script type="text/javascript" src="src/jquery.touchSwipe.min.js">
+        </script>
+        <script>
+            require.config({
+                urlArgs: "bust=" + (new Date()).getTime()
+            });
+            require(["src/main-scratch"],
+            function() {});
+    
+            window.onload = function() {
+                var id = document.getElementById("loading");
+                setTimeout(function() {
+                    document.body.removeChild(id)
+                },
+                1000);
+            }
+            
+    $(function() {
+        var index = 0;
+        var gd = true; 
+        var Page = (function() {
+
+            var slitslider = $('#slider').slitslider({
+                onBeforeChange: function(slide, pos) {
+                    index = pos;
+
+                }
+            }),
+
+            init = function() {
+
+                initEvents();
+
+            },
+            initEvents = function() {
+                $("#slider").swipe({
+                    tap: function() {
+                        var url = $(".bg-img").eq(index).attr("href");
+                        window.location = url;
+                    },
+                    swipeLeft: function() {
+                        var nums = $(".sl-slide").length;
+                        if (nums == index + 1) {
+                            if (!gd) return;
+                        }
+                        if (!gd) {
+                            if (nums == index + 2) {
+                                $(".jt_left").hide()
+                            } else {
+                                $(".jt_left").show()
+                            };
+                        }
+                        slitslider.next();
+                    },
+                    swipeRight: function() {
+                        if (index == 0) return;
+                        slitslider.previous();
+                        var nums = $(".sl-slide").length;
+                        if (!gd) {
+                            if (nums == index + 1) {
+                                $(".jt_left").hide()
+                            } else {
+                                $(".jt_left").show()
+                            };
+                        }
+                    }
+                });
+
+            };
+            return {
+                init: init
+            };
+
+        })();
+
+        Page.init();
+
+    });
+        </script>
+        <script type="text/javascript">
+        </script>
+    </body>
+
+</html>
