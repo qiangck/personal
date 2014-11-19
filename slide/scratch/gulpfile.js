@@ -13,9 +13,13 @@ gulp.task("scripts", function () {
         'util/MathUtil': '../../util/MathUtil',
         'util/ElemUtil': '../../util/ElemUtil',
         'ft/Game': '../Game'
-      }
+      },
+      loader : amdOptimize.loader(
+        // Used for turning a moduleName into a filepath glob.
+        function (moduleName) {  return moduleName + ".js" }
+      )
     }))
-    .pipe(concat("main-scratch.js"))
+    .pipe(concat("main.js"))
   .pipe(uglify())
     .pipe(gulp.dest("dist/"));
 
