@@ -211,8 +211,11 @@ var UserRoute = {
 };
 
 
-var FILE_BASE = 'E:\\point\\pointTest\\public\\works';
-var FILE_SEPARATOR = '\\';
+//var FILE_BASE = 'E:\\point\\pointTest\\public\\works';
+//var FILE_SEPARATOR = '\\';
+var FILE_BASE = '/Users/rechie/WebstormProjects/personal/nodejs/pointTest/public/works';
+var FILE_SEPARATOR = '/';
+
 // 处理客户端上传的表单
 UserRoute.receiveClient = function(req, res) {
     var responseJson = {};
@@ -297,4 +300,71 @@ UserRoute.getWorks = function(req, res) {
     };
     res.end(JSON.stringify(responseJson));
 };
+
+/**
+ * 下载作品
+ * @param req
+ * @param res
+ */
+UserRoute.downloadWork = function(req, res) {
+    var params = HttpHelper.getHttpGetParams(req);
+    var responseJson = {};
+//    res.writeHead(200, { 'Content-Type': 'application/json;charset=UTF-8' })
+    var contentDisposition = HttpHelper.getContentDispositionByUserAgent(req.headers['user-agent'], 'test.zip');
+    res.writeHead(200, {'Content-Type': 'application/octet-stream', 'Content-Disposition': contentDisposition});
+    if(!params) {
+        responseJson = {status: 'failed', code: 433, message:  '参数错误'};
+        res.end(JSON.stringify(responseJson));
+        return ;
+    }
+    initAndGetZipPath(params.year, params.month, function(err, value) {
+        if(err) {
+            responseJson = {status: 'failed', code: 433, message: '获取压缩目录失败'};
+            res.end(JSON.stringify(responseJson));
+            return;
+        } else {
+            var folderPath = zipPath + FILE_SEPARATOR + params.year + FILE_SEPARATOR + params.month
+            var zipFilePath = folderPath + FILE_SEPARATOR + 'test.zip';
+            fs.readFile(zipFilePath,function (err, buffer) {
+                if(!err){
+                    res.write(buffer, "binary");
+                    res.end();
+                }else{
+                    responseJson = {status: 'failed', code: 433, message:  '读取压缩文件错误'};
+                    res.end(JSON.stringify(responseJson));
+                }
+            });
+        }
+    })
+}
+var zipPath = '/Users/rechie/WebstormProjects/personal/nodejs/pointTest/download';
+
+function initAndGetZipPath ( year, month, callback) {
+    User.getTeamUsers('设计组', function(err, value) {
+//        if(err) {
+//            //出错了
+//            if(err) {
+//                callback(err);
+//                return;
+//            }
+//        }
+        value.forEach(function(user, index) {
+            var path = FILE_BASE + FILE_SEPARATOR + user.user_id + FILE_SEPARATOR + year + FILE_SEPARATOR + month;
+            if(fs.existsSync(path)) {
+                var zipFilePath = zipPath + FILE_SEPARATOR + year + FILE_SEPARATOR + month + FILE_SEPARATOR + user.user_name
+                Util.mkdirSync(zipFilePath);
+                Util.copyFile(path + FILE_SEPARATOR + '*', zipFilePath)
+            }
+        });
+        var folderPath = zipPath + FILE_SEPARATOR + year + FILE_SEPARATOR + month
+        var zipFilePath = folderPath + FILE_SEPARATOR + 'test.zip';
+        Util.zip(folderPath, zipFilePath, function(err, value){
+//            if(err) {
+//                callback(err);
+//                return;
+//            }
+            callback(null, {filePath: zipFilePath})
+        });
+    });
+}
 module.exports = UserRoute;

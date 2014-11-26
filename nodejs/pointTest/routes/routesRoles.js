@@ -99,6 +99,12 @@ var routesRules = {
         action: 'get',
         bCheck: true,
         callback: UserRoute.getWorks
+    },
+    DOWNLOAD_WORKS: {
+        url: API_BASE + '/works/download',
+        action: 'get',
+        bCheck: true,
+        callback: UserRoute.downloadWork
     }
 };
 function checkSession(req, res, next) {

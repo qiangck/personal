@@ -1,4 +1,4 @@
-var UserService = require('../libs/UserService');
+var UserService = require('../routes/UserRoute');
 function addUser() {
 	UserService.addUser({user_name:'李树亮'}, function(error, data) {
 		console.log(arguments);
@@ -13,4 +13,9 @@ function login() {
 	});
 }
 
-login();
+function downloadwork() {
+	UserService.download(2014, 10, function() {
+		console.log(arguments);
+	})
+}
+downloadwork();
