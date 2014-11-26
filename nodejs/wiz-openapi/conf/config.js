@@ -1,18 +1,8 @@
-// 正式
-// var HOST = 'as-internal.wiz.cn',
-// PORT = 8800;
-// 本机测试
-// var HOST = 'as.wiz.cn',
-// PORT = 80;
-// 备机
-// var HOST = '42.121.57.81',
-// PORT = 8080;
+
 // 联调
 var HOST = '192.168.0.99',
     PORT = 80;
 // 线上测试
-// var HOST = '42.121.35.107'
-// PORT = 80;
 var config = {
   rpc: {
     host: HOST,
@@ -41,11 +31,8 @@ var config = {
   // express实现的静态服务器的相关配置
   // 增加图片的地址信息
   httpService: {
-    // 正式
-    // host: 'http://www.wiz.cn',
     // 测试
     host: 'http://localhost',
-    // host: 'http://42.121.133.131',
     port: 80,
     path: '/unzip'
   },
@@ -69,8 +56,6 @@ var config = {
     ZIP_PATH: 'D:\\rechie\\jsWork\\wiz-openapi\\cache',
     UNZIP_PATH: 'D:\\rechie\\jsWork\\wiz-openapi\\public'
     // 正式环境的目录
-    // ZIP_PATH: '/wiz/temp/openapi',
-    // UNZIP_PATH: '/wiz/temp/openapi'
   },
   // 分块下载默认的最小块  512kb
   // 未实现
@@ -94,7 +79,6 @@ var config = {
     },
     // 邮件发送失败后，把错误的邮件写入
     cachePath: 'D:\\rechie\\jsWork\\wiz-openapi\\mail-error'
-    // cachePath: '/wiz/temp/openapi/mail-error'
   }
 }
 

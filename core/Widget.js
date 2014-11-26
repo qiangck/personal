@@ -30,7 +30,9 @@ define('RC/Class/Widget', ['./RC'], function(){
             throw new TypeError('Widget.on: handler show be function');
         };
         if(this.elem) {
-            this.elem.addEventListener(type ,handler, useCapture);
+            // if('on' + type in document) {
+            //     this.elem.addEventListener(type ,handler, useCapture);
+            // }
             // TODO 如何可以减少当前的赋值操作
             this.handlerMap[type] = this.handlerMap[type] || [];
             // 参考jquery方法，手动调用绑定的事件

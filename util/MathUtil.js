@@ -51,6 +51,25 @@ define(function(){
                 }
             }
             return angle;
+        },
+        bezier: function(pa, pb, pc) {
+            var ratio = 0;
+            var dratio = 0.001;
+            var pList = []
+            var pab, pbc;
+            for(var r=0; r<1000; r++) {
+                pab = getPoint(pa, pb, r/1000);
+                pbc = getPoint(pb, pc, r/1000);
+                pe = getPoint(pab, pbc, r/1000);
+                pList.push(pe);
+            }
+            function getPoint(p0, p1, r) {
+                return {
+                    x: p0.x*(1-r) + p1.x*r,
+                    y: p0.y*(1-r) + p1.y*r
+                }
+            }
+            return pList;
         }
     };
     return MathUtil;
