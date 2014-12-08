@@ -13,7 +13,6 @@ slide/server/views
 # Logs
 logs
 *.log
-dist
 # Runtime data
 pids
 *.pid

@@ -19,8 +19,8 @@ gulp.task("scripts", function () {
         function (moduleName) {  return moduleName + ".js" }
       )
     }))
-    .pipe(concat("main.js"))
-  .pipe(uglify())
+    .pipe(concat("app.js"))
+  // .pipe(uglify())
     .pipe(gulp.dest("dist/"));
 
 });

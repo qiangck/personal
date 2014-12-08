@@ -85,14 +85,7 @@
         </script>
         <script>
             require.config({
-                urlArgs: "bust=" + (new Date()).getTime(),
-                paths: {
-                    'core': '../core',
-                    'util': '../../util',
-                    'ft': '../',
-                    'src': 'src/'
-
-                }
+                urlArgs: "bust=" + (new Date()).getTime()
             });
             require(["dist/main"],
             function() {});
