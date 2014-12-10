@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>
+            刮刮卡
+        </title>
+        <link rel="stylesheet" href="page.css" />
+        <meta name="viewport" content="width=device-width,height=device-height,minimum-scale=1.0,maximum-scale=1.0,target-densitydpi=device-dpi"
+        />
+    </head>
+    
+    <body>
+        <div id="drawWrap">
+            <canvas id="gameScreen1" class="scratchScreen" width="320" height="480">
+            </canvas>
+            <canvas id="gameScreen2" class="scratchScreen" width="320" height="480">
+            </canvas>
+        </div>
+        <!-- /slider-wrapper -->
+        <script type="application/javascript" src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js">
+        </script>
+        <script type="application/javascript" src="require.js">
+        </script>
+        <script>
+            require.config({
+                urlArgs: "bust=" + (new Date()).getTime()
+            });
+            require(["dist/main"],
+            function(app) {
+                app.init('gameScreen2', 'images/canvas.jpg')
+                app.init('gameScreen1', 'images/1.jpg')
+            });
+        </script>
+    </body>
+
+</html>

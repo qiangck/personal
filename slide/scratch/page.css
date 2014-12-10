@@ -1,0 +1,267 @@
+@charset "utf-8";
+/* CSS Document */
+body{ padding:0; margin:0;  font:normal 12px/190% "宋体"; color:#333;text-align:center; background:#ededed;}
+h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,button,input,textarea,th,td{margin:0;padding:0;}
+h1,h2,h3{font-family: "微软雅黑";}
+div{margin:0 auto;text-align:left;font:normal 12px/190% "宋体";text-align:center;}
+li,p{text-align:left;font:normal 12px/190% "宋体";}
+a:link,a:visited{color:#333; text-decoration:none;}
+a:hover{color:#333; text-decoration:underline;}
+img{ border:none;}
+ol,ul,li{list-style:none;}
+em,i{ font-style:normal;}
+/* clearfix */
+.clearfix:before, .clearfix:after {content:"";display:table;}
+.clearfix:after{clear:both;overflow:hidden;}
+.clearfix{zoom:1;}
+
+
+.block1{
+    width:100px;
+    height: 100px;
+    background-color: #445eaa;
+}
+.block2{
+    height:150px;
+    background-color:#daddaa;
+}
+.block3{
+    height:150px;
+    background-color:red;
+}
+.info{
+    display:inline-block;
+}
+
+.arrow{
+    position:absolute;
+    background: url("images/image.jpeg") center right no-repeat #000;
+    background-size: contain;
+    -webkit-transform:rotate(0deg);
+    height:50px;
+    -webkit-transform-origin:left  center;
+
+}
+.top{
+
+}
+.top .left{
+    float:left;
+}
+.top .right{
+    float:right;
+}
+#gameScreen{
+    position:absolute;
+    top:50px;
+    left:0;
+    z-index:1;
+}
+
+.btn{
+    display:inline-block;
+    background-color:#000;
+    color:#fff;
+    width: 75px;
+    line-height:40px;
+    height:40px;
+    font-size:16px;
+    font-weight:bold;
+    text-align:center;
+    text-decoration:none;
+    /*position:absolute;*/
+    left:10px;
+    /*-webkit-box-shadow: 0 0 15px #252222;*/
+    cursor:pointer;
+    z-index:3;
+}
+
+
+/*切换半径样式*/
+#changeRadius{
+    width: 120px;
+}
+#changeRadius div{
+    display: inline-block;
+}
+#changeRadius .radius4{
+    margin-bottom:2px;
+    width:4px;
+    height:4px;
+    border-radius: 4px;
+    border:1px solid #fff;
+    background-color:#000;
+}
+#changeRadius .radius6{
+    margin-bottom:1px;
+    width:6px;
+    height:6px;
+    border-radius: 6px;
+    border:1px solid #fff;
+    background-color:#000;
+}
+#changeRadius .radius8{
+    width:8px;
+    height:8px;
+    border-radius: 8px;
+    border:1px solid #fff;
+    background-color:#000;
+}
+#changeRadius div.active{
+    background-color:#fff;
+}
+
+.btn-group{
+    position:absolute;
+    bottom:0px;
+    height:90px;
+    width: 100%;
+    text-align:center;
+}
+.btn-group .btn{
+    position:relative;
+    border-radius:5px;
+    border:1px solid #fff;
+    margin-top: 2px;
+}
+
+#viewlist{
+    margin-top:5px;
+    margin-right:10px;
+    border-radius:5px;
+    border:1px solid #fff;
+}
+
+.update-name{
+    display:none;
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    top:0px;
+    left:0px;
+    z-index:22;
+}
+.update-name .opacity{
+    position:absolute;
+    width: 100%;
+    height:100%;
+    top: 0;
+    left:0;
+    z-index:221;
+    background: #000;
+    opacity: 0.7;
+}
+.update-name .inner{
+    padding-top:5px;
+    position:relative;
+    z-index:222;
+    margin:40% auto 0;
+    background-color:#fff;
+    width:200px;
+    height:95px;
+}
+.update-name input{
+    height:20px;
+    margin-top:5px;
+}
+.update-name .btn{
+    border-radius:5px;
+    border:1px solid #fff;
+    height:30px;
+    line-height:30px;
+    margin-top:5px;
+}
+.update-name .btn:hover {
+    color: #fff;
+    text-decoration: none;
+}
+.update-name .result{
+    display:none;
+    padding-top:5px;
+    position:relative;
+    z-index:222;
+    margin:40% auto 0;
+    background-color:#fff;
+    width:200px;
+    height:95px;
+}
+
+#workList{
+
+}
+#workList ul{
+
+}
+#workList ul li{
+    width: 32%;
+    float:left;
+    height:auto;
+    margin-top: 10px;
+    margin-left:3px;
+    text-align: center;
+}
+#workList ul li img{
+    width:100%;
+    height: auto;
+}
+
+#workList .viewMyWork{
+    display: none;
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:23;
+}
+#workList .viewMyWork .opacity{
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    position:absolute;
+    z-index:231;
+    background-color:#000;
+    opacity: 0.7;
+}
+#workList .viewMyWork .work{
+    position:relative;
+    z-index:232;
+    text-align:center;
+    top: 100px;
+}
+#workList .viewMyWork .work img{
+    width: 85%;
+}
+
+
+body{ height:100%; } 
+#gameScreen { position: absolute; top: 0; left: 0;
+z-index: 12; } 
+.sl-slider-wrapper{ z-index:11; } 
+.bg{ width:100%; height:100%;
+background-size:cover; } 
+@-webkit-keyframes move { 
+    from { right:8px; }
+    to { right:50px; } 
+} 
+.jt_left { position: absolute; top: 50%; display:
+block; width: 30px; height: 30px; margin-top: -15px; z-index: 100; right:
+8px; -webkit-animation: move 2s infinite; display:none; } 
+.jt_left img
+{ width: 30px; height: 30px; } 
+/*页面loading*/ 
+.loading {background: #e4e4e4;
+width: 100%; height: 100%; position: absolute; z-index: 999;} 
+.loadbox{display: block; position: relative; width: 70px; height: 70px; margin:
+0 auto; margin-top: 60%; }
+.loadlogo {display: block; position: absolute;
+z-index: 1001; width: 30px; height:34px; top:19px; left:23px; background:
+url(images/logo.png) no-repeat; background-size: 100%} 
+.loadbg {display:
+block; position: absolute; z-index: 1000; width: 70px; height: 70px;background:
+url(images/loadbg.png) no-repeat; background-size: 100%; -webkit-animation:load
+1s ease-in-out infinite both;-moz-animation:load 1s ease-in-out infinite
+both;} 
+@-webkit-keyframes load{0%{-webkit-transform:rotate(360deg)}100%{-webkit-transform:rotate(0)}}
+@-moz-keyframes load{0%{-moz-transform:rotate(360deg)}100%{-moz-transform:rotate(0)}}

@@ -65,6 +65,7 @@ define('core/Slide', [
             slideBegin: null,
             slideMove: null
         }, opt);
+        console.log(this.opt)
         this.elems = [].slice.call(document.querySelectorAll(that.opt.elemQuery));
         that.startHandler = function (e) {
             return that.StartHandler.apply(that, arguments);
@@ -149,15 +150,14 @@ define('core/Slide', [
 define('ft/Game', [], function () {
     var bgImg;
     var arrowImg = new Image();
-    arrowImg.src = 'images/arrow.png';
-    var rectRecords = [];
     function Game(id) {
-        this.canvasElem = document.getElementById('gameScreen');
-        this.ctx = this.canvasElem.getContext('2d');
-        this.init();
-    }
-    ;
+        this.id = id;
+    };
     Game.prototype.init = function () {
+        this.canvasElem = document.getElementById(this.id);
+        this.ctx = this.canvasElem.getContext('2d');
+        this.canvasElem.style.backgroundSize = 'cover';
+        this.canvasElem.style.backgroundPosition = 'center';
         this.resize();
         this.draw();
     };
@@ -175,12 +175,12 @@ define('ft/Game', [], function () {
     return Game;
 });
 define('src/ScratchGame', ['ft/Game'], function (Game) {
-    var bgImg = new Image();
-    function ScratchGame(id) {
+    function ScratchGame(id, bgUrl) {
         console.log('init ScratchGame');
+        console.log(id)
         Game.apply(this, [id]);
-        this.canvasElem.style.backgroundSize = 'cover';
-        this.canvasElem.style.backgroundPosition = 'center';
+        this.id = id;
+        this.bgUrl = bgUrl
     }
     ;
     ScratchGame.prototype = new Game();
@@ -189,11 +189,12 @@ define('src/ScratchGame', ['ft/Game'], function (Game) {
         var self = this;
         self.ctx.fillStyle = '#333';
         self.ctx.fillRect(0, 0, self.canvasElem.width, self.canvasElem.height);
+        var bgImg = new Image();
         bgImg.onload = function () {
             console.log(bgImg);
             self.ctx.drawImage(bgImg, 0, 0, self.canvasElem.width, self.canvasElem.height);
         };
-        bgImg.src = '../images/canvas.jpg';
+        bgImg.src = this.bgUrl;
     };
     Game.prototype.resize = function () {
         console.log('resize');
@@ -229,85 +230,70 @@ define('dist/main', [
     'core/Slide',
     'src/ScratchGame'
 ], function (Slide, ScratchGame) {
-    var game;
-    var startPoint = null;
-    var endPoint = null;
-    var lastPoint = null;
-    var showTrack = true;
-    var radius = 30;
-    var canvasId = 'gameScreen';
-    var canvasElem = document.getElementById(canvasId);
-    var ctx = canvasElem.getContext('2d');
-    var workId = 0;
-    var touchNum = 0;
-    window.ctx = ctx;
-    var baseUrl = 'http://182.92.186.42';
-    init();
-    var slide = new Slide({
-        elemQuery: '#gameScreen',
-        slideBegin: function (touch) {
-            touchNum++;
-            try {
-                lastPoint = startPoint = touch;
-                game.scratchArc(startPoint.pageX, startPoint.pageY, radius);
-            } catch (e) {
-                console.log('begin error: ' + e.message);
-            }
-        },
-        slideMove: function (touch) {
-            touchNum++;
-            try {
-                endPoint = touch;
-                game.scratch(lastPoint.pageX, lastPoint.pageY, endPoint.pageX, endPoint.pageY, radius);
-            } catch (e) {
-                console.log('move error: ' + e.message);
-            }
-            lastPoint = touch;
-        },
-        slideEnd: function (touch) {
-            try {
-                startPoint = lastPoint = endPoint = null;
-                if (touchNum > 100) {
-                    document.getElementById(canvasId).style.display = 'none';
-                    $('.jt_left').show();
-                }
-            } catch (e) {
-                console.log('end error: ' + e.message);
-            }
-        }
-    });
-    function init() {
+    // var canvasElem = document.getElementById(canvasId);
+    // var ctx = canvasElem.getContext('2d');
+    // window.ctx = ctx;
+    function init(canvasId, bgUrl) {
         console.log('start init');
+        canvasId;
+        var startPoint = null;
+        var endPoint = null;
+        var lastPoint = null;
+        var showTrack = true;
+        var radius = 30;
+        var game;
+        var touchNum = 0;
+        var offset = {
+            top:0,
+            left:0 
+        };
         try {
-            game = new ScratchGame(canvasId);
+            game = new ScratchGame(canvasId, bgUrl);
+            game.init()
+            offset = $('#' + canvasId).offset();
+
+            var slide = new Slide({
+                elemQuery: '#' + canvasId,
+                // elemQuery: '.scratchScreen',
+                slideBegin: function (touch) {
+                    touchNum++;
+                    try {
+                        lastPoint = startPoint = touch;
+                        game.scratchArc(startPoint.pageX, startPoint.pageY, radius);
+                    } catch (e) {
+                        console.log('begin error: ' + e.message);
+                    }
+                },
+                slideMove: function (touch) {
+                    touchNum++;
+                    console.log(canvasId, touchNum)
+                    try {
+                        endPoint = touch;
+                        game.scratch(lastPoint.pageX-offset.left, lastPoint.pageY-offset.top, endPoint.pageX-offset.left, endPoint.pageY-offset.top, radius);
+                    } catch (e) {
+                        console.log('move error: ' + e.message);
+                    }
+                    lastPoint = touch;
+                },
+                slideEnd: function (touch) {
+                    try {
+                        startPoint = lastPoint = endPoint = null;
+                        if (touchNum > 100) {
+                            document.getElementById(canvasId).style.display = 'none';
+                            $('.jt_left').show();
+                        }
+                    } catch (e) {
+                        console.log('end error: ' + e.message);
+                    }
+                }
+            });
             $('.sl-slider').height($(window).height());
         } catch (e) {
             console.log('init error');
             console.log(e);
         }
     }
-    WeixinApi.ready(function (Api) {
-        var wxData = {
-            'imgUrl': 'http://www.helloweba.com/demo/guaguaka/p_1.jpg',
-            'link': window.location.href,
-            'desc': '\u522E\u522E\u5361',
-            'title': '\u522E\u522E\u5361'
-        };
-        var wxCallbacks = {
-            ready: function () {
-            },
-            cancel: function (resp) {
-            },
-            fail: function (resp) {
-            },
-            confirm: function (resp) {
-            },
-            all: function (resp) {
-            }
-        };
-        Api.shareToFriend(wxData, wxCallbacks);
-        Api.shareToTimeline(wxData, wxCallbacks);
-        Api.shareToWeibo(wxData, wxCallbacks);
-    });
-    return {};
+    return {
+        init: init
+    }
 });
