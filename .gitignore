@@ -8,7 +8,7 @@ node_modules
 site/formatJs/1.js
 slide/server/views
 *.zip
-
+DS_Store
 
 # from https://github.com/github/gitignore/blob/master/Node.gitignore
 # Logs
@@ -38,3 +38,4 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
 node_modules
 download
+*.DS_Store
