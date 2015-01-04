@@ -173,7 +173,6 @@ define(function (require, exports, module) {
             function S4() {
                 return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
             }
-
             return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
         },
         // 数组的lastIndexOf方法，兼容低版本ecmaScript
@@ -334,43 +333,15 @@ define(function (require, exports, module) {
                 }
             }
             return filterList;
-        },
-        /**
-         * [object Array]----[]
-         * [object Object]---{}
-         * [object String]---''
-         * [object Number]--- 123|NaN
-         * [object Null]---null
-         * [object Undefined]---
-         * [object Function]---function(){}
-         * [object Date]---new Date
-         * @param str
-         * @returns {boolean}
-         */
-        getObjectType: function(obj) {
-            var type = Object.prototype.toString.call(obj);
-            return type.replace(/^\[object\s+|\]$/ig, '');
-        },
-        isString: function(str) {
-            //var type = Object.prototype.toString.call('str');
-            var type = this.getObjectType(str);
-            if(str === 'String') {
-                return true;
-            }
-            return false;
-        },
-        isFunction: function(obj) {
-            var type = this.getObjectType(str);
-            if(str === 'Function') {
-                return true;
-            }
-            return false;
         }
     };
+    /**
+     * 判断对象类型
+     */
     'String Function Object Array Number Null Undefined'.split(' ').forEach(function(obj, index) {
         GlobalUtil['is' + obj] = function(typeObj) {
-            var type = GlobalUtil.getObjectType(typeObj);
-            if(type === obj) {
+            var type = Object.prototype.toString.call(obj);
+            if(type === '[object ' + obj + ']') {
                 return true;
             }
             return false;
