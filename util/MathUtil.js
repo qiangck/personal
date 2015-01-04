@@ -1,7 +1,7 @@
 /**
  * Created by rechie on 14-8-19.
  */
-define(function(){
+define(function () {
     var MathUtil = {
         /**
          * 计算(x1, y1) (x2, y2)的夹角，方向不包含在内
@@ -11,7 +11,7 @@ define(function(){
          * @param y2
          * @returns {number}
          */
-        getAngle: function(x1, y1, x2, y2) {
+        getAngle: function (x1, y1, x2, y2) {
             // 直角的边长
             var x = Math.abs(x1 - x2);
             var y = Math.abs(y1 - y2);
@@ -22,7 +22,7 @@ define(function(){
             // 弧度
             var radina = Math.acos(cos);
             // 角度
-            var angle =  180 / (Math.PI / radina);
+            var angle = 180 / (Math.PI / radina);
             return angle;
         },
         /**
@@ -30,12 +30,12 @@ define(function(){
          * @param startPoint
          * @param endPoint
          */
-        getAngleDirect: function(startPoint, endPoint) {
+        getAngleDirect: function (startPoint, endPoint) {
             var offsetX = endPoint.pageX - startPoint.pageX;
             var offsetY = endPoint.pageY - startPoint.pageY;
-            var angle = MathUtil.getAngle(endPoint.pageX, endPoint.pageY,startPoint.pageX, startPoint.pageY);
-            if(offsetY > 0) {
-                if(offsetX > 0) {
+            var angle = MathUtil.getAngle(endPoint.pageX, endPoint.pageY, startPoint.pageX, startPoint.pageY);
+            if (offsetY > 0) {
+                if (offsetX > 0) {
                     angle = 360 - angle;
                     // 区域4
                 } else {
@@ -43,7 +43,7 @@ define(function(){
                     angle = 180 + angle;
                 }
             } else {
-                if(offsetX > 0) {
+                if (offsetX > 0) {
                     // 区域 1
                 } else {
                     // 区域2
@@ -52,23 +52,24 @@ define(function(){
             }
             return angle;
         },
-        bezier: function(pa, pb, pc) {
+        bezier: function (pa, pb, pc) {
             var ratio = 0;
             var dratio = 0.001;
             var pList = []
             var pab, pbc;
-            for(var r=0; r<1000; r++) {
-                pab = getPoint(pa, pb, r/1000);
-                pbc = getPoint(pb, pc, r/1000);
-                pe = getPoint(pab, pbc, r/1000);
+            for (var r = 0; r < 1000; r++) {
+                pab = getPoint(pa, pb, r / 1000);
+                pbc = getPoint(pb, pc, r / 1000);
+                pe = getPoint(pab, pbc, r / 1000);
                 pList.push(pe);
             }
             function getPoint(p0, p1, r) {
                 return {
-                    x: p0.x*(1-r) + p1.x*r,
-                    y: p0.y*(1-r) + p1.y*r
+                    x: p0.x * (1 - r) + p1.x * r,
+                    y: p0.y * (1 - r) + p1.y * r
                 }
             }
+
             return pList;
         }
     };
