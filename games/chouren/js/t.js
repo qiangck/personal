@@ -19,9 +19,15 @@ function getUrlParam(paras) {
         return returnValue;
     }
 }
+var userName;
+try{
+    userName = decodeURIComponent(getUrlParam('userName'));
+} catch(e){
+    userName = getUrlParam('userName');
+}
 var wxData = {
     "imgUrl":'http://182.92.186.42/personal/slide/images/tfz.jpg',
     "link":window.location.href,
-    "desc": '哈哈！我太坏了，把' + getUrlParam('userName') + '抽的满地找牙，大家继续整他',
-    "title": '哈哈！我太坏了，把' + getUrlParam('userName') + '抽的满地找牙，大家继续整他'
+    "desc": '哈哈！我太坏了，把' + userName + '抽的满地找牙，大家继续整他',
+    "title": '哈哈！我太坏了，把' + userName + '抽的满地找牙，大家继续整他'
 };
