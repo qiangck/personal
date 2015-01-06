@@ -338,7 +338,7 @@ define(function (require, exports, module) {
     /**
      * 判断对象类型
      */
-    'String Function Object Array Number Null Undefined'.split(' ').forEach(function(obj, index) {
+    'String Function Object Array Number Null Undefined Boolean'.split(' ').forEach(function(obj, index) {
         GlobalUtil['is' + obj] = function(typeObj) {
             var type = Object.prototype.toString.call(obj);
             if(type === '[object ' + obj + ']') {
@@ -347,6 +347,15 @@ define(function (require, exports, module) {
             return false;
         }
     });
+    /**
+     * 借鉴underscore.js
+     * http://www.css88.com/doc/underscore/docs/underscore.html
+     * @param obj
+     * @returns {*|boolean}
+     */
+    GlobalUtil.isNaN = function(obj) {
+        return GlobalUtil.isNumber(obj) && obj !== +obj;
+    };
 
     module.exports = GlobalUtil;
 });
