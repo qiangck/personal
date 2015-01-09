@@ -7,10 +7,25 @@ var offsetLimit = {
     max: 30,
     min: -100
 };
+var swipeLeftFlag = false;
 var options = {
     elemQuery: '.container ul li',
     direction: 'horizontal',
     respOffset: 15, 
+    beforeSwipe: function(elems) {
+    	if(swipeLeftFlag === true) {
+    		var count = 0;
+    		elems.forEach(function(obj, index) {
+    			Animate(obj.getElementsByTagName('span')[0], -50, 0, function() {
+    				count ++;
+    				if(count > elems.length-1) {
+    					swipeLeftFlag = false;
+    				}
+    			});
+    		});
+    	}
+    	return swipeLeftFlag;
+    },
     swipeMove: function(Xoffset){
         if(Xoffset < offsetLimit.min ||  Xoffset > offsetLimit.max) {
             return;
@@ -25,6 +40,7 @@ var options = {
         } else if(Math.abs(Xoffset) > 49) {
             Xoffset < offsetLimit.min ? Xoffset = offsetLimit.min : ''
             Animate(this.getElementsByTagName('span')[0], Xoffset, offsetLimit.min);
+            swipeLeftFlag = true;
         }
     }   
 }
@@ -34,10 +50,13 @@ var options = {
  * @param {Number} Xoffset      现在的偏移量
  * @param {Number} targetOffset 要移动到的偏移量
  */
-function Animate($elem, Xoffset, targetOffset) {
+function Animate($elem, Xoffset, targetOffset, callback) {
     targetOffset = targetOffset ? targetOffset : 0;
     $elem.style['transform'] = 'translateX(' + Xoffset + 'px)'
     if(Xoffset == targetOffset) {
+    	if(typeof callback === 'function') {
+    		callback();
+    	}
         return;
     }
     if(Xoffset > targetOffset) {
@@ -46,7 +65,7 @@ function Animate($elem, Xoffset, targetOffset) {
         Xoffset ++
     }
     setTimeout(function() {
-        Animate($elem, Xoffset, targetOffset);
+        Animate($elem, Xoffset, targetOffset, callback);
     });
 }
 function init(){

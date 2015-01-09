@@ -32,7 +32,8 @@
 		        direction: 'vertical', // horizontal水平, vertical垂直方向
 		        respOffset: 0,		//滑动开始响应的偏移量
 		        swipeMove: null,		
-		        swipeEnd: null			
+		        swipeEnd: null,
+		        beforeSwipe: null
 		    };
             this.settings = _.merge(defaults, options);
             this.elems = [].slice.call(document.querySelectorAll(this.settings.elemQuery));
@@ -51,7 +52,10 @@
          * @return {}         
          */
         Swipe.prototype.begin = function(touches, elem) {
-            if(this._swipeElem) {
+        	if(typeof this.settings.beforeSwipe === 'function') {
+        		this.settings.beforeSwipe.call(this, this.elems);
+        	}
+            if(this._swipeElem || (typeof this.settings.beforeSwipe === 'function' && this.settings.beforeSwipe.call(this, this.elems))) {
                 return;
             }
             if(this.touchIdentifier == null) {
@@ -157,8 +161,7 @@
          */
         Swipe.prototype.endSwipe = function(touches) {
         	var _this = this;
-        	console.log(_this._isSwipe)
-            if(_this._swipeElem === null || _this._isSwipe === false) {
+            if(_this._swipeElem === null) {
                 return;
             }
             _this.getSwipeTouch(touches, function(touch) {
