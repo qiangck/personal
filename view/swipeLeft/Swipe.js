@@ -55,7 +55,7 @@
         	if(typeof this.settings.beforeSwipe === 'function') {
         		this.settings.beforeSwipe.call(this, this.elems);
         	}
-            if(this._swipeElem || (typeof this.settings.beforeSwipe === 'function' && this.settings.beforeSwipe.call(this, this.elems))) {
+            if(this._swipeElem) {
                 return;
             }
             if(this.touchIdentifier == null) {
@@ -211,6 +211,11 @@
 	            function startHandler (e) {
 	                e = e.originalEvent ? e.originalEvent : e;
 	                var touches = e.touches;
+	                if(typeof _this.settings.beforeSwipe === 'function' && _this.settings.beforeSwipe.call(_this, _this.elems)) {
+	                	console.log('preventDefault')
+	                	e.preventDefault();
+	                	return ;
+	                }
 	                _this.begin.call(_this, touches, this);
 	            }
             });

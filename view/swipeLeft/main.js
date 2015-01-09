@@ -16,7 +16,9 @@ var options = {
     	if(swipeLeftFlag === true) {
     		var count = 0;
     		elems.forEach(function(obj, index) {
-    			Animate(obj.getElementsByTagName('span')[0], -50, 0, function() {
+    			var reg = /(\+|\-\d*)/ig;
+    			var curoffset = obj.getElementsByTagName('span')[0].style.cssText.match(reg);
+    			Animate(obj.getElementsByTagName('span')[0], curoffset, 0, function() {
     				count ++;
     				if(count > elems.length-1) {
     					swipeLeftFlag = false;
@@ -72,6 +74,8 @@ function init(){
 	var swipe = new Swipe(options);
 	FastClick.attach(document.querySelectorAll('.container')[0]);
 	document.querySelectorAll('.container')[0].addEventListener('click', function() {
-		console.log(123)
+		if(!swipeLeftFlag) {
+			console.log(123)
+		}
 	});
 }
