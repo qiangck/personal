@@ -1,24 +1,24 @@
-(function(window){
-	var Swipe;  
 
-	// 内部调用方法
+define('js/Swipe', function() {
+
+    // 内部调用方法
     var _ = {};
-	/**
-	 * 判断是否为父元素
-	 * @param  {HTMLElement}  obj       目标元素
-	 * @param  {HTMLElement}  parentObj 父元素
-	 * @return {Boolean}           [description]
-	 */
+    /**
+     * 判断是否为父元素
+     * @param  {HTMLElement}  obj       目标元素
+     * @param  {HTMLElement}  parentObj 父元素
+     * @return {Boolean}           [description]
+     */
     _.isParent = function (obj, parentObj) {
         while (obj != undefined && obj != null && obj.tagName.toUpperCase() != 'BODY') {
-            if (obj == parentObj) {	
+            if (obj == parentObj) { 
                 return true;
             }
             obj = obj.parentNode;
         }
         return false;
     }
-	_.merge = function (a, b) {
+    _.merge = function (a, b) {
         for(var key in b) {
             if(b.hasOwnProperty(key)) {
                 a[key] = b[key]
@@ -26,45 +26,64 @@
         }
         return a;
     }
-    Swipe = (function () {
+    var Swipe = (function () {
         function Swipe(options) {
             var _this = this;
-        	_defaults = {
-		        direction: 'vertical', // horizontal水平, vertical垂直方向
-		        respOffset: 0,		//滑动开始响应的偏移量
-		        swipeMove: null,		
-		        swipeEnd: null,
-		        beforeSwipe: null
-		    };
-            _touchIdentifier = null;
-            _startPoint = null;
-            _swipeElem = null;
-            _isSwipe = false; 
+            _defaults = {
+                direction: 'vertical', // horizontal水平, vertical垂直方向
+                respOffset: 0,      //滑动开始响应的偏移量
+                swipeMove: null,        
+                swipeEnd: null,
+                beforeSwipe: null
+            },
+            _touchIdentifier = null,
+            _startPoint = null,
+            _swipeElem = null,
+            _isSwipe = false,
 
-            _settings = _.merge(_defaults, options);
-            _elems = [].slice.call(document.querySelectorAll(_settings.elemQuery));
+            _settings = _.merge(_defaults, options),
+            _elems = [].slice.call(document.querySelectorAll(_settings.elemQuery)),
+            moveDir = (_settings.direction === 'horizontal') ? 'pageX' : 'pageY',
+            oppositeDir = (_settings.direction === 'horizontal') ? 'pageY' : 'pageX';
 
-	        function moveHandler(e) {
-                e.preventDefault();
-	            e = e.originalEvent ? e.originalEvent : e;
-	            var touches = (e.targetTouches.length) ? e.targetTouches : e.changedTouches;
-                doSwip(touches);
-	        }
+
+
+            function moveHandler(e) {
+                console.log('move')
+                e = e.originalEvent ? e.originalEvent : e;
+                var touches = (e.targetTouches.length) ? e.targetTouches : e.changedTouches;
+                // 判断是否要禁止默认行为，例如滚动页面
+                getSwipeTouch(touches, function(touch) {
+                    if(touch !== null) {
+                        console.log(Math.abs(touch[oppositeDir]-_startPoint[oppositeDir]))
+                        if(_isSwipe === true || Math.abs(touch[oppositeDir]-_startPoint[oppositeDir]) < _settings.respOffset) {
+                            console.log(Math.abs(touch[oppositeDir]-_startPoint[oppositeDir]))
+                            console.log('preventDefault')
+                            e.preventDefault();
+                            doSwip(touches);
+                        } else {
+                            // console.log('clearSwipe')
+                            // 如果开始滚动页面，则直接取消swipe事件
+                            clearSwipe();
+                        }
+                    }
+                    // doSwip(touches);
+                })
+            }
             function endHandler(e) {
-                e.preventDefault();
                 e = e.originalEvent ? e.originalEvent : e;
                 var touches = e.changedTouches;
                 endSwipe(touches);
             }
             function bindRelateHandler() {
-	            document.body.addEventListener('touchmove', moveHandler, false);
-	            document.body.addEventListener('touchend', endHandler, false);
-	            document.body.addEventListener('touchcancel', endHandler, false);
+                document.body.addEventListener('touchmove', moveHandler, false);
+                document.body.addEventListener('touchend', endHandler, false);
+                document.body.addEventListener('touchcancel', endHandler, false);
             }
             function removeRelateHandler(){
-	            document.body.removeEventListener('touchmove', moveHandler, false);
-	            document.body.removeEventListener('touchend', endHandler, false);
-	            document.body.removeEventListener('touchcancel', endHandler, false);
+                document.body.removeEventListener('touchmove', moveHandler, false);
+                document.body.removeEventListener('touchend', endHandler, false);
+                document.body.removeEventListener('touchcancel', endHandler, false);
             }
             /**
              * 当touchstart时，记录当前的touch点和HTMLElement对象
@@ -74,9 +93,6 @@
              * @return {}         
              */
             function begin(touches, elem) {
-                // if(typeof _settings.beforeSwipe === 'function') {
-                //     _settings.beforeSwipe.call(_this, _elems);
-                // }
                 if(_swipeElem) {
                     return;
                 }
@@ -107,6 +123,7 @@
                     if(touch.identifier == _touchIdentifier) {
                         // 判断是否在滑动未开始时，触点已经离开当前元素范围
                         if(_isSwipe === false && checkTouchLeave(touch)) {
+                            console.log('clearSwipe')
                             clearSwipe();
                             return;
                         }
@@ -126,7 +143,7 @@
                 var obj = {};
                 [].slice.apply(touches).forEach(function(touch, index) {
                     if(touch.identifier == _touchIdentifier) {
-                        obj = touch;
+                        obj = _.merge({}, touch);
                         return;
                     }
                 });
@@ -140,8 +157,8 @@
              * @return {Boolean}       是否离开
              */
             function checkTouchLeave(touch) {
-                var overElem = document.elementFromPoint(touch.pageX, touch.pageY);
-                var bOver = _.isParent(overElem, _swipeElem);
+                var overElem = document.elementFromPoint(touch.clientX, touch.clientY);
+                var bOver = _.isParent(touch.target, _swipeElem);
                 if(bOver === false) {
                     return true;
                 }
@@ -153,10 +170,11 @@
              * @return {[type]}       
              */
             function executeSwipe(touch) {
-                var key = (_settings.direction === 'horizontal') ? 'pageX' : 'pageY';
-                var offset = touch[key] - _startPoint[key];
+                console.log('executeSwipe')
+                var offset = touch[moveDir] - _startPoint[moveDir];
                  if(_isSwipe || Math.abs(offset) > _settings.respOffset) {
                     _isSwipe = true;
+                    console.log('start swipe')
                     if(typeof _settings.swipeMove === 'function') {
                         _settings.swipeMove.call(_swipeElem, offset);
                     }
@@ -171,6 +189,8 @@
             function clearSwipe() {
                 _swipeElem = null;
                 _startPoint = null;
+                _touchIdentifier = null;
+                _isSwipe = false;
                 removeRelateHandler();
             }
 
@@ -184,7 +204,7 @@
                     return;
                 }
                 getSwipeTouch(touches, function(touch) {
-                    var Xoffset = touch.pageX - _startPoint.pageX;
+                    var Xoffset = touch[moveDir] - _startPoint[moveDir];
                     if(_isSwipe === false) {
                         Xoffset = 0;
                     }
@@ -198,8 +218,6 @@
                     clearSwipe();
                 });
             }
-
-            
             this.init = function() {
                 // start事件绑定 
                 _elems.forEach(function(elem, index){
@@ -208,7 +226,7 @@
                         e = e.originalEvent ? e.originalEvent : e;
                         var touches = e.touches;
                         if(typeof _settings.beforeSwipe === 'function' && _settings.beforeSwipe.call(e, _elems)) {
-                            // console.log('preventDefault')
+                            console.log('touch preventDefault')
                             e.preventDefault();
                             return ;
                         }
@@ -218,17 +236,6 @@
             }
         };
         return Swipe;
- 
     })();
-	if (typeof define == "function" && typeof define.amd == "object" && define.amd) {
-	    define("mod/common/m.fastclick", [], function() {
-	        return Swipe
-	    })
-	} else if (typeof module !== "undefined" && module.exports) {
-	    module.exports = Swipe;
-	} else {
-	    window.Swipe = Swipe
-	}
-})(window);
-
-
+    return Swipe;
+})

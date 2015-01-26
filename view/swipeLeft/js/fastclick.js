@@ -372,7 +372,7 @@ FastClick.attach = function(layer, options) {
     return new FastClick(layer, options)
 };
 if (typeof define == "function" && typeof define.amd == "object" && define.amd) {
-    define("mod/common/m.fastclick", [], function() {
+    define("js/Fastclick", [], function() {
         return FastClick
     })
 } else if (typeof module !== "undefined" && module.exports) {
