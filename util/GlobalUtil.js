@@ -1,15 +1,17 @@
-define(function (require, exports, module) {
+define(function(require, exports, module) {
     'use strict';
     // var moment = require('./moment');
     var GlobalUtil = {
-        getCookieOptions: function () {
-            var options = {path: '/'}
+        getCookieOptions: function() {
+            var options = {
+                path: '/'
+            }
             if (/^[0-9]\.+|\.[0-9]+$/g.test(document.domain) === false && document.domain.indexOf('localhost') < 0) {
                 options.domain = GlobalUtil.getTopDomain();
             }
             return options;
         },
-        getTopDomain: function () {
+        getTopDomain: function() {
             var domain = document.domain;
             var matchList = domain.match(/\.([^\.])+\.([^\.])+$/g);
             if (matchList && matchList.length > 0) {
@@ -18,14 +20,14 @@ define(function (require, exports, module) {
             return domain;
         },
         // 对电子邮件的验证
-        verifyEmail: function (str_email) {
+        verifyEmail: function(str_email) {
             var myreg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
             if (myreg.test(str_email)) {
                 return true;
             }
         },
         // 对密码的验证
-        checkValidPasswd: function (str_password) {
+        checkValidPasswd: function(str_password) {
             var password = $.trim(str_password);
 
             if (password == "") {
@@ -56,7 +58,7 @@ define(function (require, exports, module) {
             return true;
         },
         // 由于需要在调试、测试和正式上都单独修改，所以封装个获取host的方法，传入二级域名的开头，如果host是域名的格式，即可返回相应的二级域名
-        getHost: function (pref) {
+        getHost: function(pref) {
             var host = location.host;
             /\.[0-9]$/.test(host)
             if (/\.[0-9]$/.test(host) === false) {
@@ -66,12 +68,12 @@ define(function (require, exports, module) {
         },
 
         /*判断是否为合法密码*/
-        isGoodPassword: function (str) {
+        isGoodPassword: function(str) {
             var badChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             badChar += "abcdefghijklmnopqrstuvwxyz";
             badChar += "0123456789";
-            badChar += " " + "　";//半角与全角空格
-            badChar += "`~*!@#$%^&.()-_=+]\\|:;\"\\'<,>?/";//不包含*或.的英文符号 支持*和.，lsl-2013.02.05
+            badChar += " " + "　"; //半角与全角空格
+            badChar += "`~*!@#$%^&.()-_=+]\\|:;\"\\'<,>?/"; //不包含*或.的英文符号 支持*和.，lsl-2013.02.05
             // 密码长度限制为6-24
             if ("" == str || str.length < 6 || str.length > 24) {
                 return false;
@@ -87,12 +89,12 @@ define(function (require, exports, module) {
         },
 
         /* 函数功能：改变指定id元素的class属性值 */
-        changeClass: function (obj_id, obj_class) {
+        changeClass: function(obj_id, obj_class) {
             $("#" + obj_id + "").removeClass().addClass(obj_class);
         },
 
         /* 取得url参数 (未经过decodeURIComponent处理的)*/
-        getUrlParam: function (paras) {
+        getUrlParam: function(paras) {
             var url = location.href;
             var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
             var paraObj = {};
@@ -101,16 +103,16 @@ define(function (require, exports, module) {
                 paraObj[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length);
             }
             var returnValue = paraObj[paras.toLowerCase()];
-            if (typeof (returnValue) == "undefined") {
+            if (typeof(returnValue) == "undefined") {
                 return "";
             } else {
                 return returnValue;
             }
         },
         // 判断系统信息
-        isWinPlatform: function () {
+        isWinPlatform: function() {
             var platform = window.navigator.platform,
-                isMac = (platform.toLowerCase().indexOf('mac') === 0),//(platform === "Mac68K") || (platform === "MacPPC") || (platform === "Macintosh");
+                isMac = (platform.toLowerCase().indexOf('mac') === 0), //(platform === "Mac68K") || (platform === "MacPPC") || (platform === "Macintosh");
                 isLinux = (platform.toLowerCase().indexOf('linux') === 0);
             if (isMac || isLinux) {
                 return false;
@@ -118,7 +120,7 @@ define(function (require, exports, module) {
             return true;
         },
         // 格式化日期timestamp
-        formatDate: function (dateStr, formatStr) {
+        formatDate: function(dateStr, formatStr) {
             //标准游览器，如果数组里面最后一个字符为逗号，JS引擎会自动剔除它。
             //参考https://developer.mozilla.org/en-US/docs/JavaScript/Guide/Values,_variables,_and_literals?redirectlocale=en-US&redirectslug=Core_JavaScript_1.5_Guide%2FValues%2C_Variables%2C_and_Literals#Literals
             var ie = GlobalUtil.bIe();
@@ -130,21 +132,21 @@ define(function (require, exports, module) {
             return moment(date).format(formatStr);
         },
         //判断是否为ie浏览器
-        bIe: function () {
+        bIe: function() {
             if (document.all) {
                 return true;
             }
             return false;
         },
         // 通过classname获取jquery对象
-        getJqObjByClass: function (className) {
+        getJqObjByClass: function(className) {
             return $('.' + className);
         },
         // 通过id获取jquery对象
-        getJqObjById: function (id) {
+        getJqObjById: function(id) {
             return $('#' + id);
         },
-        isConSpeCharacters: function (value) {
+        isConSpeCharacters: function(value) {
             var special = '\\,/,:,<,>,*,?,\",&,\'',
                 specialList = special.split(',');
             for (var index = 0, length = specialList.length; index < length; index++) {
@@ -154,13 +156,12 @@ define(function (require, exports, module) {
             }
             return false;
         },
-        fireEvent: function (element, event) {
+        fireEvent: function(element, event) {
             if (document.createEventObject) {
                 // IE浏览器支持fireEvent方法
                 var evt = document.createEventObject();
                 return element.fireEvent('on' + event, evt)
-            }
-            else {
+            } else {
                 // 其他标准浏览器使用dispatchEvent方法
                 var evt = document.createEvent('HTMLEvents');
                 // initEvent接受3个参数：
@@ -169,14 +170,14 @@ define(function (require, exports, module) {
                 return !element.dispatchEvent(evt);
             }
         },
-        genGuid: function () {
+        genGuid: function() {
             function S4() {
                 return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
             }
             return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
         },
         // 数组的lastIndexOf方法，兼容低版本ecmaScript
-        lastIndexOfArray: function (array, item) {
+        lastIndexOfArray: function(array, item) {
             if (Array.prototype.lastIndexOf) {
                 return Array.prototype.lastIndexOf.call(array, item);
             } else {
@@ -194,7 +195,7 @@ define(function (require, exports, module) {
             }
         },
         // 实现类似String.trim功能，不在Global Object上做扩展
-        trimString: String.trim || function (str) {
+        trimString: String.trim || function(str) {
             return str.replace(/^\s+|\s+$/g, '');
         },
         /**
@@ -202,7 +203,7 @@ define(function (require, exports, module) {
          * 数字小于10补零
          * @return {[type]} [description]
          */
-        getCurTime: function () {
+        getCurTime: function() {
             var curDate = new Date();
             var hours = curDate.getHours();
             var minutes = curDate.getMinutes();
@@ -219,9 +220,8 @@ define(function (require, exports, module) {
          * @param  {[type]} frameObj [description]
          * @return {[type]}          [description]
          */
-        getFrameDocument: function (frameObj) {
-            var fdoc = (frameObj.contentDocument) ? frameObj.contentDocument
-                : frameObj.contentWindow.document;//兼容firefox和ie
+        getFrameDocument: function(frameObj) {
+            var fdoc = (frameObj.contentDocument) ? frameObj.contentDocument : frameObj.contentWindow.document; //兼容firefox和ie
             return fdoc;
         },
 
@@ -233,7 +233,7 @@ define(function (require, exports, module) {
          * @param  {[type]} event [description]
          * @return {[type]}       [description]
          */
-        preventDefaultEvent: function (event) {
+        preventDefaultEvent: function(event) {
             if (event.preventDefault) {
                 event.preventDefault();
             } else {
@@ -245,7 +245,7 @@ define(function (require, exports, module) {
          * @param {string} url    指定的url
          * @param {json object} params key-value必须都为string
          */
-        addParamsToUrl: function (url, params) {
+        addParamsToUrl: function(url, params) {
             if (typeof url === 'string') {
                 var paramsStr = join(params),
                     connector = '&'
@@ -269,7 +269,7 @@ define(function (require, exports, module) {
                 return paramsStr;
             }
         },
-        getMousePoint: function (ev) {
+        getMousePoint: function(ev) {
             var point = {
                 x: 0,
                 y: 0
@@ -290,19 +290,18 @@ define(function (require, exports, module) {
 
             return point;
         },
-        stopBubble: function (e) {
+        stopBubble: function(e) {
             //如果提供了事件对象，则这是一个非IE浏览器
             if (e && e.stopPropagation) {
                 //因此它支持W3C的stopPropagation()方法
                 e.stopPropagation();
-            }
-            else {
+            } else {
                 //否则，我们需要使用IE的方式来取消事件冒泡
                 window.event.cancelBubble = true;
             }
         },
         //阻止浏览器的默认行为
-        stopDefault: function (e) {
+        stopDefault: function(e) {
             //阻止默认浏览器动作(W3C)
             if (e && e.preventDefault) {
                 e.preventDefault();
@@ -314,16 +313,17 @@ define(function (require, exports, module) {
             return false;
         },
         // 简单处理
-        formatISODateString: function (dateStr) {
+        formatISODateString: function(dateStr) {
             if (!dateStr) {
                 return '';
             }
             return dateStr.replace('T', ' ').replace(/:\d+.\d+Z/, '');
         },
-        filterDocList: function (docList) {
+        filterDocList: function(docList) {
             var filterList = [];
             if (docList && docList.length > 0) {
-                var i = 0, length = docList.length;
+                var i = 0,
+                    length = docList.length;
                 var doc;
                 for (; i < length; i++) {
                     doc = docList[i];
@@ -333,7 +333,28 @@ define(function (require, exports, module) {
                 }
             }
             return filterList;
-        }
+        },
+        // Figure out what browser is being used 
+        browser = (function() {
+            var ua = navigator.userAgent.toLowerCase();
+            var browser = {
+                version: (ua.match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [0, '0'])[1],
+                safari: /webkit/.test(ua),
+                opera: /opera/.test(ua),
+                msie: /msie/.test(ua) && !/opera/.test(ua),
+                mozilla: /mozilla/.test(ua) && !/(compatible|webkit)/.test(ua),
+                trident: ua.indexOf("Trident") > -1, //IE内核
+                presto: ua.indexOf("Presto") > -1, //opera内核
+                webKit: ua.indexOf("AppleWebKit") > -1, //苹果、谷歌内核
+                gecko: ua.indexOf("Gecko") > -1 && ua.indexOf("KHTML") == -1, //火狐内核
+                mobile: !!ua.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                ios: !!ua.match(/\(i[^;]+;( U;)? CPUa.+Mac OS X/), //ios终端
+                android: ua.indexOf("Android") > -1 || ua.indexOf("Linux") > -1, //android终端或者uc浏览器
+                iPhone: ua.indexOf("iPhone") > -1 , //是否为iPhone或者QQHD浏览器
+                iPad: ua.indexOf("iPad") > -1, //是否iPad
+                webApp: ua.indexOf("Safari") == -1 //是否web应该程序，没有头部与底部
+            };
+        })();
     };
     /**
      * 判断对象类型
@@ -341,7 +362,7 @@ define(function (require, exports, module) {
     'String Function Object Array Number Null Undefined Boolean'.split(' ').forEach(function(obj, index) {
         GlobalUtil['is' + obj] = function(typeObj) {
             var type = Object.prototype.toString.call(obj);
-            if(type === '[object ' + obj + ']') {
+            if (type === '[object ' + obj + ']') {
                 return true;
             }
             return false;
