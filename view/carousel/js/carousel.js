@@ -2,15 +2,16 @@ define(function() {
 	var carousel = (function() {
 
 		var opt = {};
-		var ctElem, 
-			itemList, 
-			itemLength, 
-			winWidth, 
+		var ctElem,
+			itemList,
+			itemLength,
+			winWidth,
 			curIndex = 0,
 			curCount = 0,
 			timeId = null,
-			changeIndex, 
-			incNum, 
+			changeIndex,
+			incNum,
+			needResetOther = true,
 			changeLeft;
 		var carousel = {
 			init: function(opts) {
@@ -24,7 +25,17 @@ define(function() {
 				curCount = 0;
 				timeId = null;
 				changeIndex = itemLength - 1;
-				incNum = 1;
+				if(opt.dir === 'left') {
+					incNum = 1;
+				} else if(opt.dir === 'right') {
+					incNum = -1;
+				} else {
+					console.warn('dir should be left or right');
+					console.warn('set dir default: left');
+					incNum = 1;
+				}
+				changeIndex = (curIndex + incNum + itemLength) % itemLength;
+				changeLeft = (curCount + incNum) * winWidth;
 				this.initWrapPostion();
 				this.initListPostion();
 				this.bindTransitionHandler();
@@ -57,7 +68,7 @@ define(function() {
 				var that = this;
 				itemList.each(function(index, item) {
 					var left = winWidth * index;
-					if (index === itemLength - 1) {
+					if (index === itemLength - 1 && itemLength > 2) {
 						left = -winWidth;
 					}
 					setPostion(item, winWidth, 'absolute', left);
@@ -78,6 +89,9 @@ define(function() {
 					x: 0,
 					y: 0
 				}
+				if (itemLength === 2) {
+					var bSpecial = true;
+				}
 				ctElem.bind('touchstart', function(e) {
 					console.log('touchstart')
 					that.stopAuto();
@@ -89,6 +103,22 @@ define(function() {
 					that.stopAuto();
 					var touch = e.changedTouches[0];
 					var offsetX = touch.pageX - offset.x;
+					// 对于只有两个子元素做特殊处理
+					console.log(changeLeft);
+					if (bSpecial === true) {
+						var curIndex = (curCount + 1) % itemLength;
+						// console.log(curIndex)
+						// console.log(changeLeft, 'changeLeft')
+						if (offsetX * incNum < 0) {
+							itemList.eq(curIndex).css({
+								'left': changeLeft
+							})
+						} else {
+							itemList.eq(curIndex).css({
+								'left': changeLeft - (winWidth * 2 * incNum)
+							})
+						}
+					}
 					if (Math.abs(offsetX) > 10) {
 						ctElem.css({
 							'-webkit-transition': '0ms ' + opt.timeFunc,
@@ -97,23 +127,27 @@ define(function() {
 					}
 				});
 				ctElem.bind('touchend', function(e) {
+					console.log('touchend');
 					var touch = e.changedTouches[0];
 					var offsetX = touch.pageX - offset.x;
-					if (Math.abs(offsetX) < winWidth / 10) {
-						that.move(0);
-					} else {
+					var moveDir = 0;
+					if (Math.abs(offsetX) > winWidth / 10) {
 						if (offsetX > 0) {
-							that.move(-1);
+							moveDir = -1;
 						} else {
-							that.move(1);
+							moveDir = 1;
 						}
 					}
+					if (moveDir * incNum < 0 && bSpecial) {
+						// needResetOther = false;	
+					}
+					that.move(moveDir);
 					that.runAuto();
 				});
 			},
-			move: function(num) {
-				incNum = typeof num === 'number' ? num : incNum;
-				curCount += incNum;
+			move: function(dirNum) {
+				var curIncNum = typeof dirNum === 'number' ? dirNum : incNum;
+				curCount += curIncNum;
 				curIndex = curCount % itemLength;
 				var duration = opt.duration || 250;
 				var timeFunc = opt.timeFunc || 'ease'
@@ -121,13 +155,21 @@ define(function() {
 					'-webkit-transition': duration + 'ms ' + timeFunc,
 					'-webkit-transform': 'translate3d(' + (-winWidth * curCount) + 'px,0,0)'
 				});
-				changeIndex = (curIndex + incNum + itemLength) % itemLength;
-				changeLeft = (curCount + incNum) * winWidth;
+				console.log('curCount', curCount);
+				console.log('curIncNum', curIncNum);
+				var changeNum = (itemLength === 2 ? incNum : curIncNum)
+				changeIndex = (curIndex + changeNum + itemLength) % itemLength;
+				changeLeft = (curCount + changeNum) * winWidth;
+				console.log('changeLeft', changeLeft);
 			},
 			setChange: function() {
-				itemList.eq(changeIndex).css({
-					'left': changeLeft
-				})
+				console.log('setChange')
+				if (needResetOther === true) {
+					itemList.eq(changeIndex).css({
+						'left': changeLeft
+					})
+				}
+				needResetOther = true;
 			},
 			runAuto: function(incNum) {
 				var that = this;

@@ -5,7 +5,7 @@ require(['js/carousel'], function(carousel) {
 			wrapSelector: '.pc_banner',
 			ctSelector: '.pc_banner>ul',
 			delay: 2000,
-			duration: 250,
+			duration: 300,
 			timeFunc: 'ease-in-out'
 		});
 		carousel.run();
