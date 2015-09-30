@@ -28,19 +28,18 @@ define(function() {
 			this.changeLeft = (this.curCount + this.incNum) * this.winWidth;
 			this.initWrapPostion();
 			this.initListPostion();
-			this.bindTransitionHandler();
 			this.bindTouchEvent();
 		},
 		bindTransitionHandler: function() {
 			var that = this;
 			// 先取消以前的transition属性，否则之前的transition结束后会触发transitionend事件句柄
-			this.ctElem.css({
-				'-webkit-transition': 'none',
-				'transition': 'none'
-			});
-			this.ctElem[0].addEventListener('webkitTransitionEnd', function() {
-				that.setChange.call(that)
-			}, false);
+			// this.ctElem.css({
+			// 	'-webkit-transition': 'none',
+			// 	'transition': 'none'
+			// });
+			// this.ctElem[0].addEventListener('webkitTransitionEnd', function() {
+			// 	that.setChange.call(that)
+			// }, false);
 		},
 		// 设置上两级父元素的位置，如在css设置，这里可以不设置最外层容器的高度
 		initWrapPostion: function() {
@@ -96,6 +95,7 @@ define(function() {
 				var offsetX = touch.pageX - offset.x;
 				// 对于只有两个子元素做特殊处理
 				if (bSpecial === true) {
+					e.preventDefault();
 					that.curIndex = (that.curCount + 1) % that.itemLength;
 					if (offsetX * that.incNum < 0) {
 						that.itemList.eq(that.curIndex).css({
@@ -130,14 +130,16 @@ define(function() {
 			});
 		},
 		move: function(dirNum) {
+			var _this = this;
 			this.IncNum = typeof dirNum === 'number' ? dirNum : this.incNum;
 			this.curCount += this.IncNum;
 			this.curIndex = this.curCount % this.itemLength;
 			var duration = this.opt.duration || 250;
 			var timeFunc = this.opt.timeFunc || 'ease'
-			this.ctElem.css({
-				'-webkit-transition': duration + 'ms ' + timeFunc,
+			this.ctElem.animate({
 				'-webkit-transform': 'translate3d(' + (-this.winWidth * this.curCount) + 'px,0,0)'
+			}, duration, function() {
+				_this.setChange();
 			});
 			var changeNum = (this.itemLength === 2 ? this.incNum : this.IncNum)
 			this.changeIndex = (this.curIndex + changeNum + this.itemLength) % this.itemLength;

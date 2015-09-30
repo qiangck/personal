@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<style>
+			#elem1 {
+				width: 200px;
+				height:100px;
+				background-color: #eaeaea;
+			}
+			#elem2{
+				width: 200px;
+				height: 100px;
+				background-color: #daa;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="elem1">
+			<span id="child1">触发标签</span>
+			<div class="container">
+				<a href="javascript:void(0);">A标签</a>
+			</div>
+		</div>
+		<div id="elem2">
+			
+		</div>
+		<div id="result">
+			
+		</div>
+		<script>
+
+			var child1 = document.getElementById('child1');
+			bind(child1, 'click', 'child1');
+			bind(child1, 'focus', 'child1');
+			bind(child1, 'blur', 'child1');
+
+
+			var content1 = document.getElementById('elem1');
+			bind(content1, 'click', 'elem1');
+			bind(content1, 'focus', 'elem1');
+			bind(content1, 'blur', 'elem1');
+
+			var content2 = document.getElementById('elem2');
+			bind(content2, 'click', 'elem2');
+			bind(content2, 'focus', 'elem2');
+			bind(content2, 'blur', 'elem2');
+
+			var children = document.querySelectorAll('#elem1 a');
+			bind(children, 'click', 'tag A ');
+			bind(children, 'focus', 'tag A ');
+			bind(children, 'blur', 'tag A ');
+
+			function bind(elem, type, name) {
+				if(elem.addEventListener) {
+					elem.addEventListener(type, function() {
+						console.log(name + ' ' + type);
+						document.getElementById('result').innerHTML += '<div>' + name + ' ' + type + '</div>'
+					}, false);
+				}
+				if(elem[0] && elem[0].addEventListener) {
+					elem[0].addEventListener(type, function(e) {
+						console.log(name + ' ' + type);
+						document.getElementById('result').innerHTML += '<div>' + name + ' ' + type + '</div>'
+						// e.preventDefault();
+						// e.stopPropagation();
+					}, false);
+				}
+			}
+		</script>
+	</body>
+</html>
