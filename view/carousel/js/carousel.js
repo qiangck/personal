@@ -109,7 +109,6 @@ define(function() {
 				}
 				if (Math.abs(offsetX) > 10) {
 					that.ctElem.css({
-						'-webkit-transition': '0ms ' + that.opt.timeFunc,
 						'-webkit-transform': 'translate3d(' + (-that.winWidth * (that.curCount) + offsetX) + 'px,0,0)'
 					});
 				}
