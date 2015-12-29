@@ -7,6 +7,5 @@ require(['js/carousel'], function(carousel) {
 			duration: 300,
 			timeFunc: 'ease-in-out'
 		});
-		// carousel.run();
 	})
 });
