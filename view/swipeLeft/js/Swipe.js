@@ -103,7 +103,8 @@ define('js/Swipe', function() {
                     // 增加点触摸时，不处理
                     return;
                 }
-                _startPoint = _.merge({}, touches[0]);
+                // 不能用merge，touch中属性不属于touch的自有属性
+                _startPoint = touches[0];
                 _swipeElem = elem;
                 // 点击后再绑定move事件，如果判断不是swipe动作时，在解绑touchmove事件
                 bindRelateHandler();
@@ -143,7 +144,7 @@ define('js/Swipe', function() {
                 var obj = {};
                 [].slice.apply(touches).forEach(function(touch, index) {
                     if(touch.identifier == _touchIdentifier) {
-                        obj = _.merge({}, touch);
+                        obj = touch;
                         return;
                     }
                 });
